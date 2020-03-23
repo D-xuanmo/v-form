@@ -71,7 +71,7 @@ export default {
       immediate: true,
       handler (v) {
         for (let [key, { value, rules }] of Object.entries(v)) {
-          rules.type !== 'VCell' && this.$set(this.formValues, key, value)
+          rules.type !== 'VCell' && rules.type !== 'VText' && this.$set(this.formValues, key, value)
         }
       }
     },
