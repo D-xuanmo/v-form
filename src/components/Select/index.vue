@@ -41,6 +41,9 @@ export default {
     }
   },
   watch: {
+    value (v) {
+      v ? this._valueToIndex() : this._reset()
+    },
     isShow (v) {
       v && this.$nextTick(() => {
         this.$refs.picker.setValues(this.format.map(({ text }) => text))
@@ -67,6 +70,11 @@ export default {
       })
       this.$set(this, 'format', format)
       this.innerValue = format.map(({ text }) => text).join('/')
+    },
+
+    _reset () {
+      this.format = []
+      this.innerValue = ''
     }
   }
 }

@@ -44,6 +44,9 @@ export default {
     }
   },
   watch: {
+    value (v) {
+      v ? this._valueToIndex() : this._reset()
+    },
     isShow (v) {
       v && this.$nextTick(() => {
         this.$refs.picker.setValues(this.format.map(({ label }) => label))
@@ -88,6 +91,11 @@ export default {
       const query = this.value.split(',')
       this.$set(this, 'format', this._findValue(this.addressData, query, 'value'))
       this.innerValue = this.format.map(({ label }) => label).join('/')
+    },
+
+    _reset () {
+      this.format = []
+      this.innerValue = ''
     }
   }
 }
