@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <div class="v-form__input-wrapper">
     <van-field
       ref="input"
       :value="innerValue"
@@ -63,7 +63,7 @@ export default {
       const indexs = this.value.split(',')
       let format = []
       this.formModel.rules.options.forEach((_, index) => {
-        format.push(_.values.find(v => v.value === indexs[index]))
+        format.push(_.values.find(v => v.value.toString() === indexs[index].toString()))
       })
       this.$set(this, 'format', format)
       this.innerValue = format.map(({ text }) => text).join('/')

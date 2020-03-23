@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <div class="v-form__input-wrapper">
     <van-field
       ref="input"
       :value="innerValue"

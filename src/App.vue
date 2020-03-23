@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <v-form :model="model" label-position="right" @change="change" @event="_event"></v-form>
+    <v-form ref="vform" :model="model" label-position="right" @change="change" @event="_event"></v-form>
+    <button @click="_reset">重置</button>
   </div>
 </template>
 
@@ -93,11 +94,11 @@ export default {
             options: [
               {
                 values: [
-                  { text: '杭州', value: '1' },
-                  { text: '宁波', value: '2' },
-                  { text: '温州', value: '3' },
-                  { text: '嘉兴', value: '4' },
-                  { text: '湖州', value: '5' }
+                  { text: '杭州', value: 1 },
+                  { text: '宁波', value: 2 },
+                  { text: '温州', value: 3 },
+                  { text: '嘉兴', value: 4 },
+                  { text: '湖州', value: 5 }
                 ]
               }
             ]
@@ -175,6 +176,9 @@ export default {
     },
     _event (v) {
       console.log(1, v)
+    },
+    _reset () {
+      this.$refs.vform.reset()
     }
   }
 }

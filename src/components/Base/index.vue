@@ -51,12 +51,6 @@ export default {
     labelPosition: {
       type: String,
       default: 'left'
-    },
-
-    // 自定义校验规则
-    validator: {
-      type: Object,
-      default: () => ({})
     }
   },
 
@@ -91,7 +85,7 @@ export default {
       deep: true,
       immediate: true,
       handler (v) {
-        this.$nextTick(() => this._change(v))
+        this._change(v)
       }
     }
   },
@@ -104,10 +98,12 @@ export default {
     },
 
     _change (value) {
-      this.$emit('change', {
-        value,
-        isValid: this.errorBag.length === 0,
-        errorMsg: this.errorBag
+      this.$nextTick(() => {
+        this.$emit('change', {
+          value,
+          isValid: this.errorBag.length === 0,
+          errorMsg: this.errorBag
+        })
       })
     },
 
