@@ -1,7 +1,9 @@
 @import "./var";
 .v-form-row {
   display: flex;
+  padding: 0 @padding;
   border-bottom: 1px solid @border-color;
+  background: #fff;
 
   .v-form-row__label {
     width: 20%;
@@ -19,7 +21,7 @@
     display: flex;
     align-items: center;
     padding: 10px;
-
+    word-break: break-all;
 
     /deep/ .van-cell {
       padding: 0;

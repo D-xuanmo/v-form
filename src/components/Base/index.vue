@@ -1,25 +1,28 @@
 <template>
   <div class="v-form-conatiner">
-    <row-2-col
-      v-for="(v, key, index) in model"
-      :key="key"
-      :label="v.rules.label"
-      :required="(v.rules.vRules || '').indexOf('required') !== -1"
-    >
-      <component
-        :is="_splitComponentType(v.rules.type)[0]"
-        :customer-type="_splitComponentType(v.rules.type)[1]"
-        :value="v.value"
-        :form-model="{
-          ...v,
-          name: key,
-          index
-        }"
-        @input="_updateFormValues"
-        @error="_getError"
-        @event="$emit('event', $event)"
-      ></component>
-    </row-2-col>
+    <template v-for="(v, key, index) in model">
+      <v-cell v-if="v.rules.type === 'VCell'" :key="key" :form-model="v"></v-cell>
+      <row-2-col
+        v-else
+        :key="key"
+        :label="v.rules.label"
+        :required="(v.rules.vRules || '').indexOf('required') !== -1"
+      >
+        <component
+          :is="_splitComponentType(v.rules.type)[0]"
+          :customer-type="_splitComponentType(v.rules.type)[1]"
+          :value="v.value"
+          :form-model="{
+            ...v,
+            name: key,
+            index
+          }"
+          @input="_updateFormValues"
+          @error="_getError"
+          @event="$emit('event', $event)"
+        ></component>
+      </row-2-col>
+    </template>
   </div>
 </template>
 
@@ -67,8 +70,8 @@ export default {
       deep: true,
       immediate: true,
       handler (v) {
-        for (let [key, { value }] of Object.entries(v)) {
-          this.$set(this.formValues, key, value)
+        for (let [key, { value, rules }] of Object.entries(v)) {
+          rules.type !== 'VCell' && this.$set(this.formValues, key, value)
         }
       }
     },

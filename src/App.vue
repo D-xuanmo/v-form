@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <v-form ref="vform" :model="model" label-position="right" @change="change" @event="_event"></v-form>
-    <button @click="_reset">重置</button>
+    <v-form ref="vform" :model="model" @change="change" @event="_event"></v-form>
   </div>
 </template>
 
@@ -19,6 +18,23 @@ export default {
             vRules: 'required',
             placeholder: '请输入文字',
             errMsg: '请输入文字'
+          }
+        },
+        cell: {
+          value: '',
+          rules: {
+            label: '文字',
+            type: 'VCell',
+            style: {
+              background: '#fff'
+            }
+          }
+        },
+        text1: {
+          value: '123123123123123123123123123123123123123123123123123123123123',
+          rules: {
+            label: '文字',
+            type: 'VText'
           }
         },
         checkbox: {
@@ -176,9 +192,6 @@ export default {
     },
     _event (v) {
       console.log(1, v)
-    },
-    _reset () {
-      this.$refs.vform.reset()
     }
   }
 }
@@ -186,7 +199,7 @@ export default {
 
 <style>
 #app {
-  padding: 0 10px;
+  background: cornsilk;
   font-size: 14px;
 }
 </style>
