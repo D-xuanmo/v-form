@@ -1,0 +1,24 @@
+@import "./var";
+.v-form-row {
+  display: flex;
+  border-bottom: 1px solid @border-color;
+
+  .v-form-row__label {
+    width: 20%;
+    padding: 10px 0;
+  }
+
+  .v-form-row__required-mark {
+    vertical-align: middle;
+    color: @warning;
+  }
+
+  .v-form-row__content {
+    flex: 1;
+    padding: 10px;
+
+    /deep/ .van-cell {
+      padding: 0;
+    }
+  }
+}
