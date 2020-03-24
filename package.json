@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "private": false,
   "main": "src/components/index.js",
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@xuanmo/datejs": "^1.0.3",
     "core-js": "^3.6.4",
     "vant": "^2.5.7",
     "vue": "^2.6.11"

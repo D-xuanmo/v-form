@@ -10,7 +10,7 @@
       @focus="isShow = true"
       @click-right-icon="isShow = true"
     ></van-field>
-    <van-popup v-model="isShow" position="bottom">
+    <v-popup v-model="isShow" position="bottom">
       <van-picker
         ref="picker"
         show-toolbar
@@ -18,19 +18,20 @@
         @confirm="_confirm"
         @cancel="isShow = false"
       />
-    </van-popup>
+    </v-popup>
   </div>
 </template>
 
 <script>
-import { Popup, Field, Picker } from 'vant'
+import { Field, Picker } from 'vant'
+import VPopup from '../Base/popup'
 import formBase from '../mixins/form'
 export default {
   name: 'VSelect',
   components: {
-    'van-popup': Popup,
     'van-field': Field,
-    'van-picker': Picker
+    'van-picker': Picker,
+    'v-popup': VPopup
   },
   mixins: [formBase],
   data () {

@@ -6,6 +6,7 @@ import VCheckbox from '../Checkbox'
 import VRadio from '../Radio'
 import VAddress from '../Address'
 import VText from '../Text'
+import VDatePicker from '../DatePicker'
 
 export default {
   Row2Col,
@@ -15,5 +16,6 @@ export default {
   VCheckbox,
   VRadio,
   VAddress,
-  VText
+  VText,
+  VDatePicker
 }

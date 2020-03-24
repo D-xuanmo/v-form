@@ -1,0 +1,88 @@
+<template>
+  <div class="v-form__input-wrapper">
+    <van-field
+      ref="input"
+      :value="innerValue"
+      readonly
+      :disabled="formModel.rules.disabled"
+      :placeholder="formModel.rules.placeholder"
+      right-icon="arrow-down"
+      @focus="isShowPicker = true"
+      @click-right-icon="isShowPicker = true"
+    ></van-field>
+    <v-popup v-model="isShowPicker">
+      <v-datetime-picker
+        v-if="customerType === 'datetime' || customerType === 'year-month'"
+        :form-model="formModel"
+        :type="customerType"
+        @confirm="_confirm"
+        @cancel="isShowPicker = false"
+      />
+      <v-time-picker
+        v-else-if="customerType === 'time'"
+        :value="innerValue"
+        :form-model="formModel"
+        :type="customerType"
+        @confirm="_confirm"
+        @cancel="isShowPicker = false"
+      />
+    </v-popup>
+  </div>
+</template>
+
+<script>
+import { Field } from 'vant'
+import VPopup from '../Base/popup'
+import DatetimePicker from './datetime'
+import TimePicker from './time'
+import formBase from '../mixins/form'
+import datejs from '@xuanmo/datejs'
+export default {
+  name: 'VDatePicker',
+  components: {
+    'van-field': Field,
+    'v-popup': VPopup,
+    'v-datetime-picker': DatetimePicker,
+    'v-time-picker': TimePicker
+  },
+  mixins: [formBase],
+  data () {
+    return {
+      isShowPicker: false,
+      innerValue: '',
+      format: ''
+    }
+  },
+  watch: {
+    value (v) {
+      this.innerValue = this._innerValueFormat(v)
+    }
+  },
+  created () {
+    this.innerValue = this._innerValueFormat(this.value)
+  },
+  methods: {
+    _innerValueFormat (v) {
+      if (!v) return ''
+      const currentFormat = datejs(new Date(v))
+      if (this.customerType === 'year-month') {
+        return currentFormat.format('yyyy-MM')
+      } else if (this.customerType === 'datetime') {
+        return currentFormat.format('yyyy-MM-dd HH:mm')
+      } else if (this.customerType === 'time') {
+        return currentFormat.format('HH:mm')
+      }
+    },
+
+    _confirm ({ innerValue, value }) {
+      this.isShowPicker = false
+      this.innerValue = innerValue
+      this.e__input(value)
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+
+</style>

@@ -7,7 +7,7 @@ export default {
   inject: ['VFormRoot'],
   props: {
     value: {
-      type: [String, Array, Number],
+      type: [String, Array, Number, Date],
       default: ''
     },
 
