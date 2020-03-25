@@ -54,6 +54,11 @@ export default {
     labelPosition: {
       type: String,
       default: 'left'
+    },
+
+    labelColor: {
+      type: String,
+      default: ''
     }
   },
 

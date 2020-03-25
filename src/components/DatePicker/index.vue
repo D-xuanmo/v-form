@@ -6,13 +6,13 @@
       readonly
       :disabled="formModel.rules.disabled"
       :placeholder="formModel.rules.placeholder"
-      right-icon="arrow-down"
+      :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShowPicker = true"
       @click-right-icon="isShowPicker = true"
     ></van-field>
     <v-popup v-model="isShowPicker">
       <v-datetime-picker
-        v-if="customerType === 'datetime' || customerType === 'year-month'"
+        v-if="customerType === 'datetime' || customerType === 'year-month' || customerType === 'date'"
         :form-model="formModel"
         :type="customerType"
         @confirm="_confirm"
@@ -69,6 +69,8 @@ export default {
         return currentFormat.format('yyyy-MM')
       } else if (this.customerType === 'datetime') {
         return currentFormat.format('yyyy-MM-dd HH:mm')
+      } else if (this.customerType === 'date') {
+        return currentFormat.format('yyyy-MM-dd')
       } else if (this.customerType === 'time') {
         return currentFormat.format('HH:mm')
       }

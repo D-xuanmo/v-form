@@ -21,8 +21,16 @@ export default {
   methods: {
     _format (value) {
       const currentFormat = this.datejs(new Date(value))
+      let innerValue = ''
+      if (this.type === 'year-month') {
+        innerValue = currentFormat.format('yyyy-MM')
+      } else if (this.type === 'date') {
+        innerValue = currentFormat.format('yyyy-MM-dd')
+      } else {
+        innerValue = currentFormat.format('yyyy-MM-dd HH:mm')
+      }
       return {
-        innerValue: this.type === 'year-month' ? currentFormat.format('yyyy-MM') : currentFormat.format('yyyy-MM-dd HH:mm'),
+        innerValue,
         value: this.formModel.rules.valueFormat
           ? (this.formModel.rules.valueFormat === 'timestamp'
             ? new Date(value).getTime()

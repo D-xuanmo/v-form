@@ -6,7 +6,7 @@
       readonly
       :disabled="formModel.rules.disabled"
       :placeholder="formModel.rules.placeholder"
-      right-icon="arrow-down"
+      :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShow = true"
       @click-right-icon="isShow = true"
     ></van-field>

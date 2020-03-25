@@ -4,7 +4,8 @@
       class="v-form-row__label"
       :style="{
         width: VFormRoot.labelWidth,
-        textAlign: VFormRoot.labelPosition
+        textAlign: VFormRoot.labelPosition,
+        color: VFormRoot.labelColor
       }"
     >
       {{ label }}

@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.0.13",
+  "version": "1.0.16",
   "private": false,
   "main": "src/components/index.js",
   "scripts": {
