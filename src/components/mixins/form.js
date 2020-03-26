@@ -41,6 +41,12 @@ export default {
       handler (v) {
         this.generationRules(v.rules)
       }
+    },
+
+    value: {
+      handler (v) {
+        this.__validator(v)
+      }
     }
   },
   created () {
@@ -66,9 +72,9 @@ export default {
       }
     },
 
-    __eventHandler (type, value) {
+    __eventHandler (type) {
       this.$nextTick(() => this.$emit('event', {
-        event: type,
+        type,
         value: this.formModel
       }))
     },
@@ -77,7 +83,7 @@ export default {
     e__input (val) {
       this.$emit('input', this.formModel.name, val)
       this.__validator(val)
-      this.__eventHandler('input', val)
+      this.__eventHandler('input')
     },
 
     // 向父级传递校验结果

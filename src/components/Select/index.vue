@@ -9,6 +9,7 @@
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShow = true"
       @click-right-icon="isShow = true"
+      @click="__eventHandler('click')"
     ></van-field>
     <v-popup v-model="isShow" position="bottom">
       <van-picker
@@ -43,6 +44,7 @@ export default {
   },
   watch: {
     value (v) {
+      this.__validator(v)
       v ? this._valueToIndex() : this._reset()
     },
     isShow (v) {
@@ -64,7 +66,7 @@ export default {
 
     _valueToIndex () {
       if (!this.value) return
-      const indexs = this.value.split(',')
+      const indexs = this.value.toString().split(',')
       let format = []
       this.formModel.rules.options.forEach((_, index) => {
         format.push(_.values.find(v => v.value.toString() === indexs[index].toString()))

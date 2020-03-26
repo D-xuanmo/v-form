@@ -9,6 +9,7 @@
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShow = true"
       @click-right-icon="isShow = true"
+      @click="__eventHandler('click')"
     ></van-field>
     <v-popup v-model="isShow">
       <van-picker
@@ -89,7 +90,7 @@ export default {
 
     _valueToIndex () {
       if (!this.value) return
-      const query = this.value.split(',')
+      const query = this.value.toString().split(',')
       this.$set(this, 'format', this._findValue(this.addressData, query, 'value'))
       this.innerValue = this.format.map(({ label }) => label).join('/')
     },

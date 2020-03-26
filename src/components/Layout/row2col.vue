@@ -11,7 +11,12 @@
       {{ label }}
       <span v-show="required" class="v-form-row__required-mark">*</span>
     </div>
-    <div class="v-form-row__content"><slot></slot></div>
+    <div class="v-form-row__content">
+      <slot></slot>
+    </div>
+    <div class="v-form-row__extra">
+      <slot name="extra"></slot>
+    </div>
   </div>
 </template>
 

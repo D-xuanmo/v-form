@@ -6,7 +6,9 @@
     :readonly="formModel.rules.readonly"
     :disabled="formModel.rules.disabled"
     :clearable="formModel.rules.clearable"
+    :autosize="formModel.rules.autosize"
     @input="e__input"
+    @click="__eventHandler('click')"
   ></Field>
 </template>
 
