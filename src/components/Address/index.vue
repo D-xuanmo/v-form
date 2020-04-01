@@ -26,7 +26,7 @@
 
 <script>
 import { Field, Picker } from 'vant'
-import VPopup from '../Base/popup'
+import VPopup from '../components/popup'
 import formBase from '../mixins/form'
 import addressData from './data'
 export default {

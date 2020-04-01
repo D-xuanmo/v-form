@@ -2,9 +2,10 @@
  * 基础表单公用
  */
 
-import * as validator from '../validator'
+// import * as validator from '../validator'
+// import { extend as veeExtend } from '../validator'
 export default {
-  inject: ['VFormRoot'],
+  inject: ['VFormRoot', '$validate'],
   props: {
     value: {
       type: [String, Array, Number, Date],
@@ -30,8 +31,7 @@ export default {
     return {
       rulesList: [],
       rules: {},
-      errorMessage: {},
-      validator
+      errorMessage: {}
     }
   },
   watch: {
@@ -39,7 +39,7 @@ export default {
       immediate: true,
       deep: true,
       handler (v) {
-        this.generationRules(v.rules)
+        this.generationRules(v.rules, v)
       }
     },
 
@@ -50,26 +50,13 @@ export default {
     }
   },
   created () {
+    // console.log(this)
     this.__validator(this.value)
   },
   methods: {
     // 创建校验规则
-    generationRules ({ errMsg, vRules }) {
-      const required = {
-        validate: value => Boolean(value),
-        message: errMsg || ''
-      }
-      this.$set(this, 'validator', {
-        required,
-        ...validator,
-        ...this.$VForm.validator
-      })
-      if (vRules) {
-        this.rulesList = vRules.split('|')
-        this.rulesList.forEach(rule => {
-          this.$set(this.rules, rule, this.validator[rule])
-        })
-      }
+    generationRules ({ vRules }) {
+      vRules && (this.rulesList = vRules.split('|'))
     },
 
     __eventHandler (type) {
@@ -82,7 +69,7 @@ export default {
     // 向父级提交当前组件的值
     e__input (val) {
       this.$emit('input', this.formModel.name, val)
-      this.__validator(val)
+      // this.__validator(val)
       this.__eventHandler('input')
     },
 
@@ -92,15 +79,17 @@ export default {
     },
 
     // 执行校验
-    __validator (val) {
+    async __validator (val) {
       for (let i = 0; i < this.rulesList.length; i++) {
-        let current = this.rules[this.rulesList[i]]
-        if (!current.validate(val)) {
+        let { valid, failedRules, errors } = await this.$validate(val, this.rulesList[i])
+        if (!valid) {
           this.$set(this, 'errorMessage', {
             name: this.formModel.name,
             value: val,
             index: this.formModel.index,
-            errMsg: current.message
+            errMsg: failedRules.required
+              ? this.formModel.rules.errMsg
+              : errors[0].replace('{field}', this.formModel.rules.label)
           })
           break
         } else {

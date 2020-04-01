@@ -1,10 +1,9 @@
 import Vue from 'vue'
-import Base from './Base'
+import Base from './Base/index.vue'
 
 const VForm = {
-  name: Base.name,
   install (vue, opt = {}) {
-    Vue.component(Base.name, Base)
+    Vue.component('VForm', Base)
     Vue.prototype.$VForm = opt
   }
 }

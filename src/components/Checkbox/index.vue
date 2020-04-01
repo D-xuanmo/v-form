@@ -9,6 +9,8 @@
       v-for="item in formModel.rules.options"
       :key="item.value"
       :name="item.value"
+      :shape="formModel.rules.shape"
+      :checked-color="formModel.rules.checkColor"
     >{{ item.label }}</van-checkbox>
   </van-checkbox-group>
 </template>

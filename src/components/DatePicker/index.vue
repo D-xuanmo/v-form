@@ -32,7 +32,7 @@
 
 <script>
 import { Field } from 'vant'
-import VPopup from '../Base/popup'
+import VPopup from '../components/popup'
 import DatetimePicker from './datetime'
 import TimePicker from './time'
 import formBase from '../mixins/form'

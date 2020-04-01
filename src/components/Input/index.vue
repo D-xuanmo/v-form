@@ -7,6 +7,9 @@
     :disabled="formModel.rules.disabled"
     :clearable="formModel.rules.clearable"
     :autosize="formModel.rules.autosize"
+    :maxlength="formModel.rules.maxlength"
+    :is-link="formModel.rules.isLink"
+    :show-word-limit="formModel.rules.showWordLimit"
     @input="e__input"
     @click="__eventHandler('click')"
   ></Field>
