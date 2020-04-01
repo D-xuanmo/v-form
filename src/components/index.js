@@ -5,7 +5,7 @@ const VForm = {
   name: Base.name,
   install (vue, opt = {}) {
     Vue.component(Base.name, Base)
-    Vue.prototype.$VFrom = opt
+    Vue.prototype.$VForm = opt
   }
 }
 

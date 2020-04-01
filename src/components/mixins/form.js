@@ -56,13 +56,13 @@ export default {
     // 创建校验规则
     generationRules ({ errMsg, vRules }) {
       const required = {
-        validate: value => value.length,
+        validate: value => Boolean(value),
         message: errMsg || ''
       }
       this.$set(this, 'validator', {
         required,
         ...validator,
-        ...this.$VFrom.validator
+        ...this.$VForm.validator
       })
       if (vRules) {
         this.rulesList = vRules.split('|')
