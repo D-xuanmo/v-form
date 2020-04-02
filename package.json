@@ -1,8 +1,12 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "private": false,
   "main": "src/components/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xuanmos/v-form"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -26,6 +30,7 @@
     "less-loader": "^5.0.0",
     "vue-template-compiler": "^2.6.11"
   },
+  "license": "MIT",
   "browserslist": [
     "> 1%",
     "last 2 versions"
