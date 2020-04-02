@@ -5,6 +5,11 @@ extend('phone', {
   validate: value => /^1[3456789]\d{9}$/g.test(value)
 })
 
+extend('telphone', {
+  message: '固定电话格式错误',
+  validate: value => /^0\d{2,3}((-\d{7,8}$)|(\d{7,8}$))/.test(value)
+})
+
 extend('idcard', {
   message: '身份证格式错误',
   validate: (value, args) => {
