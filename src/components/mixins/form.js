@@ -2,8 +2,6 @@
  * 基础表单公用
  */
 
-// import * as validator from '../validator'
-// import { extend as veeExtend } from '../validator'
 export default {
   inject: ['VFormRoot', '$validate'],
   props: {
@@ -30,7 +28,6 @@ export default {
   data () {
     return {
       rulesList: [],
-      rules: {},
       errorMessage: {}
     }
   },
