@@ -2,7 +2,7 @@
   "name": "@xuanmo/v-form",
   "version": "1.0.29",
   "private": false,
-  "main": "src/components/index.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/xuanmos/v-form"
