@@ -3,10 +3,8 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-import VForm from './components'
-Vue.use(VForm, {
-  a: 1
-})
+import VForm from '@'
+Vue.use(VForm)
 
 new Vue({
   render: h => h(App),

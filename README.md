@@ -35,6 +35,7 @@ module.exports = {
 |model|数据模型(具体类型参考后续文档)|object|{}|
 |label-width|label宽度|string|20%|
 |label-position|label对齐方式，可选：left/right|string|left|
+|label-color|label文字颜色|string|-|
 
 ## events
 
@@ -75,3 +76,7 @@ model = {
   }
 }
 ```
+
+## 示例图片
+
+![示例](./example/assets/example.png)

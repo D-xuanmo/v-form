@@ -20,16 +20,6 @@ export default {
             errMsg: '请输入文字'
           }
         },
-        cell: {
-          value: '',
-          rules: {
-            label: '文字',
-            type: 'VCell',
-            style: {
-              background: '#fff'
-            }
-          }
-        },
         text1: {
           value: '123123123123123123123123123123123123123123123123123123123123',
           rules: {
