@@ -98,15 +98,11 @@ export default {
             errMsg: 'picker选择器',
             vRules: 'required',
             options: [
-              {
-                values: [
-                  { text: '杭州', value: 1 },
-                  { text: '宁波', value: 2 },
-                  { text: '温州', value: 3 },
-                  { text: '嘉兴', value: 4 },
-                  { text: '湖州', value: 5 }
-                ]
-              }
+              { text: '杭州', value: 1 },
+              { text: '宁波', value: 2 },
+              { text: '温州', value: 3 },
+              { text: '嘉兴', value: 4 },
+              { text: '湖州', value: 5 }
             ]
           }
         },
@@ -118,61 +114,23 @@ export default {
             placeholder: 'picker选择器',
             errMsg: 'picker选择器',
             options: [
-              {
-                values: [
-                  { text: '杭州', value: '1' },
-                  { text: '宁波', value: '2' },
-                  { text: '温州', value: '3' },
-                  { text: '嘉兴', value: '4' },
-                  { text: '湖州', value: '5' }
-                ]
-              },
-              {
-                values: [
-                  { text: '杭州', value: '1' },
-                  { text: '宁波', value: '2' },
-                  { text: '温州', value: '3' },
-                  { text: '嘉兴', value: '4' },
-                  { text: '湖州', value: '5' }
-                ]
-              }
+              [
+                { text: '杭州', value: '1' },
+                { text: '宁波', value: '2' },
+                { text: '温州', value: '3' },
+                { text: '嘉兴', value: '4' },
+                { text: '湖州', value: '5' }
+              ],
+              [
+                { text: '杭州', value: '1' },
+                { text: '宁波', value: '2' },
+                { text: '温州', value: '3' },
+                { text: '嘉兴', value: '4' },
+                { text: '湖州', value: '5' }
+              ]
             ]
           }
-        },
-        // selectCascade: {
-        //   value: '4,2',
-        //   rules: {
-        //     label: '多列选择器',
-        //     type: 'VSelect',
-        //     placeholder: 'picker选择器',
-        //     errMsg: 'picker选择器',
-        //     options: [{
-        //       text: '浙江',
-        //       value: '1',
-        //       children: [{
-        //         text: '杭州',
-        //         value: '1-1',
-        //         children: [{ text: '西湖区', value: '1-1-1' }, { text: '余杭区', value: '1-1-2' }]
-        //       }, {
-        //         text: '温州',
-        //         value: '1-2',
-        //         children: [{ text: '鹿城区', value: '1-2-1' }, { text: '瓯海区', value: '1-2-2' }]
-        //       }]
-        //     }, {
-        //       text: '福建',
-        //       value: '2',
-        //       children: [{
-        //         text: '福州',
-        //         value: '2-1',
-        //         children: [{ text: '鼓楼区', value: '2-1-1' }, { text: '台江区', value: '2-1-2' }]
-        //       }, {
-        //         text: '厦门',
-        //         value: '2-2',
-        //         children: [{ text: '思明区', value: '2-2-1' }, { text: '海沧区', value: '2-2-2' }]
-        //       }]
-        //     }]
-        //   }
-        // }
+        }
       }
     }
   },

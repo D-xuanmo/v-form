@@ -15,7 +15,7 @@
       <van-picker
         ref="picker"
         show-toolbar
-        :columns="formModel.rules.options"
+        :columns="options"
         @confirm="_confirm"
         @cancel="isShow = false"
       />
@@ -27,6 +27,7 @@
 import { Field, Picker } from 'vant'
 import VPopup from '../components/popup'
 import formBase from '../mixins/form'
+import { isObject } from '../utils'
 export default {
   name: 'VSelect',
   components: {
@@ -39,10 +40,33 @@ export default {
     return {
       isShow: false,
       innerValue: '',
-      format: []
+      format: [],
+      options: []
     }
   },
   watch: {
+    'formModel.rules.options': {
+      immediate: true,
+      deep: true,
+      handler (val) {
+        console.log(val)
+        let result = []
+        if (val.length) {
+          if (isObject(val[0])) {
+            result.push({
+              values: val
+            })
+          } else if (Array.isArray(val[0])) {
+            val.forEach(item => {
+              result.push({
+                values: item
+              })
+            })
+          }
+        }
+        this.options = result
+      }
+    },
     value (v) {
       this.__validator(v)
       v ? this._valueToIndex() : this._reset()
@@ -68,7 +92,7 @@ export default {
       if (!this.value) return
       const indexs = this.value.toString().split(',')
       let format = []
-      this.formModel.rules.options.forEach((_, index) => {
+      this.options.forEach((_, index) => {
         format.push(_.values.find(v => v.value.toString() === indexs[index].toString()))
       })
       this.$set(this, 'format', format)
