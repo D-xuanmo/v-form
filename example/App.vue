@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <v-form ref="vform" :model="model" @change="change" @event="_event"></v-form>
+    <v-form
+      ref="vform"
+      :model="model"
+      :disabled="disabled"
+      label-width="100px"
+      @change="change"
+      @event="_event"
+    ></v-form>
   </div>
 </template>
 
@@ -9,7 +16,15 @@ export default {
   name: 'App',
   data () {
     return {
+      disabled: false,
       model: {
+        switch: {
+          value: true,
+          rules: {
+            label: '是否启用编辑',
+            type: 'VSwitch'
+          }
+        },
         text: {
           value: '',
           rules: {
@@ -146,8 +161,11 @@ export default {
     change (v) {
       console.log('change', v)
     },
-    _event (v) {
-      console.log(1, v)
+    _event ({ type, value }) {
+      console.log(type, value)
+      if ((type === 'input') && (value.name === 'switch')) {
+        this.disabled = value.value
+      }
     }
   }
 }
