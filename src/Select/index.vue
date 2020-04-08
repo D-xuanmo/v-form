@@ -45,11 +45,11 @@ export default {
     }
   },
   watch: {
+    // 生成vant picker所需要的数据格式
     'formModel.rules.options': {
       immediate: true,
       deep: true,
       handler (val) {
-        console.log(val)
         let result = []
         if (val.length) {
           if (isObject(val[0])) {
