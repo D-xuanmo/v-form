@@ -1,5 +1,5 @@
 # 基于vant-ui表单封装的表单组件
-> 目前只是集成了常用的（Address/Chackbox/DatePicker/Input/Radio/Select/Text），其他组件还在完善中...
+> 目前只是集成了常用的（Address/Chackbox/DatePicker/Input/Radio/Select/Text/Switch），其他组件还在完善中...
 > 组件的调用方式采取json配置的形式，具体参数见model数据说明
 > 校验规则已经集成VeeValidate插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
 

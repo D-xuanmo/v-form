@@ -7,6 +7,7 @@ import VRadio from '../Radio'
 import VAddress from '../Address'
 import VText from '../Text'
 import VDatePicker from '../DatePicker'
+import VSwitch from '../Switch'
 
 export default {
   Row2Col,
@@ -17,5 +18,6 @@ export default {
   VRadio,
   VAddress,
   VText,
-  VDatePicker
+  VDatePicker,
+  VSwitch
 }

@@ -6,7 +6,7 @@ export default {
   inject: ['VFormRoot', '$validate'],
   props: {
     value: {
-      type: [String, Array, Number, Date],
+      type: [String, Array, Number, Date, Boolean],
       default: ''
     },
 
