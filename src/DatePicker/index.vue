@@ -65,15 +65,23 @@ export default {
     _innerValueFormat (v) {
       if (!v) return ''
       const currentFormat = datejs(new Date(v))
-      if (this.customerType === 'year-month') {
-        return currentFormat.format('yyyy-MM')
-      } else if (this.customerType === 'datetime') {
-        return currentFormat.format('yyyy-MM-dd HH:mm')
-      } else if (this.customerType === 'date') {
-        return currentFormat.format('yyyy-MM-dd')
-      } else if (this.customerType === 'time') {
-        return currentFormat.format('HH:mm')
+      let result = ''
+      /* eslint-disable */
+      switch (this.customerType) {
+        case 'year-month':
+          result = currentFormat.format('yyyy-MM')
+          break
+        case 'datetime':
+          result = currentFormat.format('yyyy-MM-dd HH:mm')
+          break
+        case 'date':
+          result = currentFormat.format('yyyy-MM-dd')
+          break
+        case 'time':
+          result = currentFormat.format('HH:mm')
+          break
       }
+      return result
     },
 
     _confirm ({ innerValue, value }) {

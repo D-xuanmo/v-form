@@ -59,6 +59,14 @@ export default {
             ]
           }
         },
+        date: {
+          value: Date.now(),
+          rules: {
+            label: '时间',
+            type: 'VDatePicker|datetime',
+            valueFormat: 'yyyy-MM-dd'
+          }
+        },
         number: {
           value: '',
           rules: {

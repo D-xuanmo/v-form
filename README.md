@@ -76,6 +76,17 @@ const model = {
       placeholder: '请输入文字',
       errMsg: '请输入文字'
     }
+  },
+  // 时间选择器
+  date: {
+    value: Date.now(),
+    rules: {
+      label: '时间',
+      // 共4种类型：datetime、year-month、date、time
+      type: 'VDatePicker|datetime',
+      // 数据格式处理：timestamp时间戳，其他用法参考：https://github.com/xuanmos/datejs
+      valueFormat: 'yyyy-MM-dd'
+    }
   }
 }
 ```
