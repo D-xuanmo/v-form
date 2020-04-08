@@ -4,12 +4,12 @@
       ref="input"
       :value="innerValue"
       readonly
-      :disabled="formModel.rules.disabled"
+      :disabled="formModel.rules.disabled || VFormRoot.disabled"
       :placeholder="formModel.rules.placeholder"
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShow = true"
-      @click-right-icon="isShow = true"
-      @click="__eventHandler('click')"
+      @click-right-icon="!VFormRoot.disabled && (isShow = true)"
+      @click="__eventHandler('click', formModel)"
     ></van-field>
     <v-popup v-model="isShow">
       <van-picker

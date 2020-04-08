@@ -2,6 +2,7 @@
   <van-radio-group
     :value="value"
     :direction="formModel.rules.direction"
+    :disabled="formModel.rules.disabled || VFormRoot.disabled"
     @input="e__input"
   >
     <van-radio

@@ -4,11 +4,11 @@
       ref="input"
       :value="innerValue"
       readonly
-      :disabled="formModel.rules.disabled"
+      :disabled="formModel.rules.disabled || VFormRoot.disabled"
       :placeholder="formModel.rules.placeholder"
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShowPicker = true"
-      @click-right-icon="isShowPicker = true"
+      @click-right-icon="!VFormRoot.disabled && (isShowPicker = true)"
     ></van-field>
     <v-popup v-model="isShowPicker">
       <v-datetime-picker

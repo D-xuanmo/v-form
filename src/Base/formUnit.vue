@@ -21,6 +21,11 @@ const formUnitBase = Vue.extend({
       default: () => ({})
     },
 
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+
     labelWidth: {
       type: String,
       default: ''

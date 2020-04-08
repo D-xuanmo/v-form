@@ -3,6 +3,7 @@
     :value="value"
     :direction="formModel.rules.direction"
     :max="formModel.rules.max || 0"
+    :disabled="formModel.rules.disabled || VFormRoot.disabled"
     @input="e__input"
   >
     <van-checkbox
