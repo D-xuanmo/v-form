@@ -15,7 +15,7 @@ export default {
           rules: {
             label: '文字',
             type: 'VInput',
-            vRules: 'required',
+            vRules: 'required|customer:2',
             placeholder: '请输入文字',
             errMsg: '请输入文字'
           }

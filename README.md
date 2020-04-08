@@ -1,5 +1,7 @@
 # 基于vant-ui表单封装的表单组件
-> 目前只是集成了常用的，其他组件还在完善中...
+> 目前只是集成了常用的（Address/Chackbox/DatePicker/Input/Radio/Select/Text），其他组件还在完善中...
+> 组件的调用方式采取json配置的形式，具体参数见model数据说明
+> 校验规则已经集成VeeValidate插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
 
 ## 安装
 ```bash
@@ -12,6 +14,22 @@ yarn add @xuanmo/v-form
 ```js
 import VForm from '@xuanmo/v-form'
 Vue.use(VForm)
+
+/**
+ * 自定义校验规则示例，规则遵循VeeValidate规则扩展
+ * 更多资料查看：https://logaretm.github.io/vee-validate/guide/basics.html#validation-provider
+ */
+Vue.use(VForm, {
+  validator: {
+    customer: {
+      message: '长度不能大于{length}',
+      validate: (value, { length }) => {
+        return value.length <= length
+      },
+      params: ['length']
+    }
+  }
+})
 ```
 
 - html
@@ -45,9 +63,10 @@ module.exports = {
 |event|数据发生改变所发送的事件|object{event,formModel}|
 
 ## model数据格式
+> 以下是一个简单的数据格式，生成一个输入框，详细使用见目录example
 
 ```js
-model = {
+const model = {
   text: {
     value: '',
     rules: {
@@ -57,23 +76,16 @@ model = {
       placeholder: '请输入文字',
       errMsg: '请输入文字'
     }
-  },
-  radio: {
-    value: 'b',
-    rules: {
-      label: '单选框',
-      type: 'VRadio',
-      vRules: 'required',
-      placeholder: '请输入单选框',
-      errMsg: '请输入单选框',
-      direction: 'horizontal',
-      options: [
-        { label: '复选框 a', value: 'a' },
-        { label: '复选框 b', value: 'b' },
-        { label: '复选框 c', value: 'c' }
-      ]
-    }
   }
+}
+```
+
+## 组件发生change事件返回的数据
+```json
+{
+  "value": {}, // 所有的数据经过处理后会以一个对象存放在这个字段
+  "errorMsg": [], // 所有的校验失败的错误信息集合
+  "isValid": false // 是否有通过所有的校验标识
 }
 ```
 
