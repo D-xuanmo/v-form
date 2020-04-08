@@ -56,10 +56,10 @@ export default {
       vRules && (this.rulesList = vRules.split('|'))
     },
 
-    __eventHandler (type) {
+    __eventHandler (type, value) {
       this.$nextTick(() => this.$emit('event', {
         type,
-        value: this.formModel
+        value
       }))
     },
 
@@ -67,7 +67,7 @@ export default {
     e__input (val) {
       this.$emit('input', this.formModel.name, val)
       // this.__validator(val)
-      this.__eventHandler('input')
+      this.__eventHandler('input', this.formModel)
     },
 
     // 向父级传递校验结果

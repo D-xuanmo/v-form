@@ -64,6 +64,10 @@ export default {
       this.isShow = false
       this.innerValue = this.format.map(({ label }) => label).join('/')
       this.e__input(this.format.map(({ value }) => value).join(','))
+      this.__eventHandler('address-change', {
+        label: this.innerValue,
+        value: this.value
+      })
     },
 
     _findValue (arr, queryList, key = 'label') {
