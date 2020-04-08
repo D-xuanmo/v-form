@@ -51,7 +51,8 @@ const formUnitBase = Vue.extend({
       immediate: true,
       handler (v) {
         for (let [key, { value, rules }] of Object.entries(v)) {
-          rules.type !== 'VCell' && rules.type !== 'VText' && this.$set(this.formValues, key, value)
+          // 排除展示类组件
+          (rules.type !== 'VCell') && (rules.type !== 'VText') && this.$set(this.formValues, key, value)
         }
       }
     },

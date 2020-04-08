@@ -11,7 +11,7 @@
     :is-link="formModel.rules.isLink"
     :show-word-limit="formModel.rules.showWordLimit"
     @input="e__input"
-    @click="__eventHandler('click')"
+    @click="__eventHandler('click', formModel)"
   ></Field>
 </template>
 
