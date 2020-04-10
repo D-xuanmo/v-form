@@ -64,7 +64,7 @@ module.exports = {
 |event|数据发生改变所发送的事件|object{event,formModel}|
 
 ## slots
-> 组件可接受多个slot，用于替换当前行的表单组件，会为该slot传入该组件的原始数据，每个slot的name为当前行的key，注：该slot不继承所有的form事件、与校验规则
+> 组件可接受多个slot，用于替换当前行的表单组件，会为该slot传入该组件的原始数据，每个slot的name为当前行的key，注：该slot不继承所有校验规则
 ```html
 <!-- 示例如下 -->
 <v-form :model="model">

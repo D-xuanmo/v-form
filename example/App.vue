@@ -9,7 +9,6 @@
       @event="_event"
     >
       <template v-slot:text="{ data }">
-
         <van-field v-model="data.value"></van-field>
       </template>
     </v-form>
