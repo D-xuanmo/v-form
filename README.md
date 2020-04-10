@@ -63,6 +63,17 @@ module.exports = {
 |change|数据更改时触发|object{value,errorMsg,isValid}|
 |event|数据发生改变所发送的事件|object{event,formModel}|
 
+## slots
+> 组件可接受多个slot，用于替换当前行的表单组件，会为该slot传入该组件的原始数据，每个slot的name为当前行的key，注：该slot不继承所有的form事件、与校验规则
+```html
+<!-- 示例如下 -->
+<v-form :model="model">
+  <template v-slot:text="{ data }">
+    <van-field v-model="data.value"></van-field>
+  </template>
+</v-form>
+```
+
 ## model数据格式
 > 以下是一个简单的数据格式，生成一个输入框，详细使用见目录example
 

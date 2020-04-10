@@ -7,13 +7,22 @@
       label-width="100px"
       @change="change"
       @event="_event"
-    ></v-form>
+    >
+      <template v-slot:text="{ data }">
+
+        <van-field v-model="data.value"></van-field>
+      </template>
+    </v-form>
   </div>
 </template>
 
 <script>
+import { Field } from 'vant'
 export default {
   name: 'App',
+  components: {
+    'van-field': Field
+  },
   data () {
     return {
       disabled: false,

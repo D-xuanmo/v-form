@@ -8,23 +8,25 @@
           :label="v.rules.label"
           :required="(v.rules.vRules || '').indexOf('required') !== -1"
         >
-          <template #extra>
-            <!-- eslint-disable-next-line -->
-            <div v-html="v.rules.extra"></div>
-          </template>
-          <component
-            :is="_splitComponentType(v.rules.type)[0]"
-            :customer-type="_splitComponentType(v.rules.type)[1]"
-            :value="v.value"
-            :form-model="{
-              ...v,
-              name: key,
-              index
-            }"
-            @input="_updateFormValues"
-            @error="_getError"
-            @event="$emit('event', $event)"
-          ></component>
+          <slot :name="key" :data="v">
+            <template #extra>
+              <!-- eslint-disable-next-line -->
+              <div v-html="v.rules.extra"></div>
+            </template>
+            <component
+              :is="_splitComponentType(v.rules.type)[0]"
+              :customer-type="_splitComponentType(v.rules.type)[1]"
+              :value="v.value"
+              :form-model="{
+                ...v,
+                name: key,
+                index
+              }"
+              @input="_updateFormValues"
+              @error="_getError"
+              @event="$emit('event', $event)"
+            ></component>
+          </slot>
         </row-2-col>
       </template>
     </template>
