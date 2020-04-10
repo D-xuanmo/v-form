@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="v-form-cell"
-    :style="formModel.rules.style"
-  >
+  <div class="v-form-cell" :style="formModel.rules.style">
     {{ formModel.rules.label }}
   </div>
 </template>

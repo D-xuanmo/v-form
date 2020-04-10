@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Field from 'vant/lib/field'
+import { Field } from 'vant'
 import formBase from '../mixins/form'
 export default {
   name: 'VInput',

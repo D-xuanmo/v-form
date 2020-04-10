@@ -4,6 +4,7 @@
 
 export default {
   inject: ['VFormRoot', '$validate'],
+
   props: {
     value: {
       type: [String, Array, Number, Date, Boolean],
@@ -25,12 +26,14 @@ export default {
       default: () => ({})
     }
   },
+
   data () {
     return {
       rulesList: [],
       errorMessage: {}
     }
   },
+
   watch: {
     formModel: {
       immediate: true,
@@ -46,10 +49,11 @@ export default {
       }
     }
   },
+
   created () {
-    // console.log(this)
     this.__validator(this.value)
   },
+
   methods: {
     // 创建校验规则
     generationRules ({ vRules }) {
