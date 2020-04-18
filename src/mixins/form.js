@@ -34,12 +34,18 @@ export default {
     }
   },
 
+  computed: {
+    disabled () {
+      return this.formModel.rules.disabled || this.VFormRoot.disabled
+    }
+  },
+
   watch: {
     formModel: {
       immediate: true,
       deep: true,
       handler (v) {
-        this.generationRules(v.rules, v)
+        this.__generationRules(v.rules, v)
       }
     },
 
@@ -56,7 +62,7 @@ export default {
 
   methods: {
     // 创建校验规则
-    generationRules ({ vRules }) {
+    __generationRules ({ vRules }) {
       vRules && (this.rulesList = vRules.split('|'))
     },
 
@@ -70,7 +76,6 @@ export default {
     // 向父级提交当前组件的值
     e__input (val) {
       this.$emit('input', this.formModel.name, val)
-      // this.__validator(val)
       this.__eventHandler('input', this.formModel)
     },
 

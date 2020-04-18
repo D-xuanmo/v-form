@@ -4,7 +4,7 @@
       ref="input"
       :value="innerValue"
       readonly
-      :disabled="formModel.rules.disabled || VFormRoot.disabled"
+      :disabled="disabled"
       :placeholder="formModel.rules.placeholder"
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShowPicker = true"

@@ -4,7 +4,7 @@
     :type="customerType"
     :placeholder="formModel.rules.placeholder"
     :readonly="formModel.rules.readonly"
-    :disabled="formModel.rules.disabled || VFormRoot.disabled"
+    :disabled="disabled"
     :clearable="formModel.rules.clearable"
     :autosize="formModel.rules.autosize"
     :maxlength="formModel.rules.maxlength"

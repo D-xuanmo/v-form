@@ -2,7 +2,7 @@
   <van-switch
     :value="value"
     :size="formModel.rules.size || '20px'"
-    :disabled="formModel.rules.disabled || VFormRoot.disabled"
+    :disabled="disabled"
     :active-color="formModel.rules.activeColor"
     :active-value="formModel.rules.activeValue"
     :inactive-color="formModel.rules.inactiveColor"
