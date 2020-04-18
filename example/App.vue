@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <div style="margin-bottom: 30px">
+      <span style="vertical-align: super;">切换表单禁用状态</span>
+      <van-switch v-model="disabled" size="20px" />
+    </div>
     <v-form
       ref="vform"
       :model="model"
@@ -16,11 +20,12 @@
 </template>
 
 <script>
-import { Field } from 'vant'
+import { Field, Switch } from 'vant'
 export default {
   name: 'App',
   components: {
-    'van-field': Field
+    'van-field': Field,
+    'van-switch': Switch,
   },
   data () {
     return {
@@ -171,9 +176,6 @@ export default {
     },
     _event ({ type, value }) {
       console.log(type, value)
-      if ((type === 'input') && (value.name === 'switch')) {
-        this.disabled = value.value
-      }
     }
   }
 }
@@ -181,7 +183,6 @@ export default {
 
 <style>
 #app {
-  background: cornsilk;
   font-size: 14px;
 }
 </style>

@@ -3,8 +3,8 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-import VForm from '../dist/v-form.umd'
-import '../dist/v-form.css'
+import VForm from '@'
+
 Vue.use(VForm, {
   validator: {
     customer: {

@@ -1,7 +1,8 @@
 # 基于vant-ui表单封装的表单组件
-> 目前只是集成了常用的（Address/Chackbox/DatePicker/Input/Radio/Select/Text/Switch），其他组件还在完善中...
-> 组件的调用方式采取json配置的形式，具体参数见model数据说明
-> 校验规则已经集成VeeValidate插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
+* 目前只是集成了常用的（Address/Chackbox/DatePicker/Input/Radio/Select/Text/Switch），其他组件还在完善中...
+* 组件的调用方式采取json配置的形式，具体参数见model数据说明
+* 校验规则已经集成VeeValidate插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
+* [在线演示](https://codesandbox.io/s/v-formshili-3hs2c)
 
 ## 安装
 ```bash
@@ -12,7 +13,14 @@ yarn add @xuanmo/v-form
 
 - js
 ```js
+// 如果没有安装vant-ui可以采取这种方式引入组件
+import VForm from "@xuanmo/v-form/dist/v-form.umd.js"
+import "@xuanmo/v-form/dist/v-form.css"
+
+// 项目已经引入vant-ui推荐使用这种方式引入，后编译
 import VForm from '@xuanmo/v-form'
+
+// 注册组件
 Vue.use(VForm)
 
 /**
@@ -37,7 +45,7 @@ Vue.use(VForm, {
 <v-form :model="model"></v-form>
 ```
 
-- `vue.config.js`配置组件编译
+- `vue.config.js`配置组件编译(注：如果组件引入采取的后编译需要配置这一项)
 ```js
 module.exports = {
   transpileDependencies: [
