@@ -9,7 +9,7 @@
       :model="model"
       :disabled="disabled"
       label-width="100px"
-      @change="change"
+      @change="_change"
       @event="_event"
     >
       <template v-slot:text="{ data }">
@@ -31,6 +31,23 @@ export default {
     return {
       disabled: false,
       model: {
+        file: {
+          value: [{ path: 'https://upyun.xuanmo.xin/test/20200418225229.png' }],
+          rules: {
+            label: '文件上传',
+            type: 'VUpload',
+            action: 'xxx',
+            accept: 'image/png',
+            multiple: true,
+            name: 'file',
+            data: {
+              dir: 'test'
+            },
+            props: {
+              url: 'path'
+            }
+          }
+        },
         switch: {
           value: true,
           rules: {
@@ -171,8 +188,8 @@ export default {
     }
   },
   methods: {
-    change (v) {
-      console.log('change', v)
+    _change (v) {
+      // console.log('change', v)
     },
     _event ({ type, value }) {
       console.log(type, value)
