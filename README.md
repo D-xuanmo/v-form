@@ -1,5 +1,5 @@
 # 基于vant-ui表单封装的表单组件
-* 目前只是集成了常用的（Address/Chackbox/DatePicker/Input/Radio/Select/Text/Switch），其他组件还在完善中...
+* 目前只是集成了常用的（Address/Chackbox/DatePicker/Input/Radio/Select/Text/Switch/Upload），其他组件还在完善中...
 * 组件的调用方式采取json配置的形式，具体参数见model数据说明
 * 校验规则已经集成VeeValidate插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
 * [在线演示](https://codesandbox.io/s/v-formshili-3hs2c)
@@ -106,6 +106,28 @@ const model = {
       type: 'VDatePicker|datetime',
       // 数据格式处理：timestamp时间戳，其他用法参考：https://github.com/xuanmos/datejs
       valueFormat: 'yyyy-MM-dd'
+    }
+  },
+  // 图片上传
+  file: {
+    // 用于显示列表
+    value: [{ path: 'https://upyun.xuanmo.xin/test/20200418225229.png' }],
+    rules: {
+      label: '文件上传',
+      type: 'VUpload',
+      action: 'xxx',
+      accept: 'image/png',
+      multiple: true,
+      name: 'file',
+      headers: {},
+      // 上传附加的数据
+      data: {
+        dir: 'test'
+      },
+      // 自定义配置项，用于指定url字段为某个属性值
+      props: {
+        url: 'path'
+      }
     }
   }
 }

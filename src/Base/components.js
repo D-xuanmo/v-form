@@ -8,6 +8,7 @@ import VAddress from '../Address'
 import VText from '../Text'
 import VDatePicker from '../DatePicker'
 import VSwitch from '../Switch'
+import VUpload from '../Upload'
 
 export default {
   Row2Col,
@@ -19,5 +20,6 @@ export default {
   VAddress,
   VText,
   VDatePicker,
-  VSwitch
+  VSwitch,
+  VUpload
 }

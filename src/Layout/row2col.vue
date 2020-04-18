@@ -14,7 +14,7 @@
     <div class="v-form-row__content">
       <slot></slot>
     </div>
-    <div class="v-form-row__extra">
+    <div v-if="$slots.extra" class="v-form-row__extra">
       <slot name="extra"></slot>
     </div>
   </div>
