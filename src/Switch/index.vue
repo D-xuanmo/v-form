@@ -8,6 +8,7 @@
     :inactive-color="formModel.rules.inactiveColor"
     :inactive-value="formModel.rules.inactiveValue"
     @input="e__input"
+    @click="__eventHandler('click', formModel)"
   />
 </template>
 
