@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "private": false,
   "main": "src/index.js",
   "repository": {
@@ -10,6 +10,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:lib": "vue-cli-service build --target lib --name v-form src/index.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

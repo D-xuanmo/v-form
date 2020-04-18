@@ -104,10 +104,6 @@ const formUnitBase = Vue.extend({
     _getError (name, err) {
       this.$set(this.formErrors, name, err)
     }
-  },
-
-  render () {
-    return <div />
   }
 })
 
