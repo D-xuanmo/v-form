@@ -3,7 +3,10 @@
     <ul class="v-form__upload-preview">
       <li v-for="(item, index) in value" :key="index" class="v-form__upload-preview-item">
 
-        <img :src="item[fileUrlKey]" />
+        <template>
+          <img v-if="_isImg(item[fileUrlKey])" :src="item[fileUrlKey]" />
+          <p v-else class="v-form__upload-preview-text">{{ item[fileUrlKey] }}</p>
+        </template>
 
         <!-- 上传进度开始 -->
         <div v-if="item.loading" class="v-form__upload-preview-mask">
@@ -41,7 +44,7 @@
 <script>
 import formBase from '../mixins/form'
 import request from '../utils/request'
-import { isObject } from '../utils'
+import { isObject, isImageUrl } from '../utils'
 export default {
   name: 'VUpload',
 
@@ -78,6 +81,10 @@ export default {
   },
 
   methods: {
+    _isImg (url) {
+      return isImageUrl(url)
+    },
+
     _beforeUpload () {
       // 如果没有上传地址结束函数后续操作
       if (!this.formModel.rules.action) return false
