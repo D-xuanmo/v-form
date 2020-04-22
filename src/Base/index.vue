@@ -8,11 +8,11 @@
           :label="v.rules.label"
           :required="(v.rules.vRules || '').indexOf('required') !== -1"
         >
+          <template #extra>
+            <!-- eslint-disable-next-line -->
+            <div v-html="v.rules.extra"></div>
+          </template>
           <slot :name="key" :data="v">
-            <template #extra>
-              <!-- eslint-disable-next-line -->
-              <div v-html="v.rules.extra"></div>
-            </template>
             <component
               :is="_splitComponentType(v.rules.type)[0]"
               :customer-type="_splitComponentType(v.rules.type)[1]"

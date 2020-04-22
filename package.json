@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.0.37",
+  "version": "1.0.38",
   "private": false,
   "main": "src/index.js",
   "repository": {
@@ -35,5 +35,8 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "vetur": {
+    "attributes": "vetur/attributes.json"
+  }
 }
