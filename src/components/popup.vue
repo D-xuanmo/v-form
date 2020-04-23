@@ -1,5 +1,10 @@
 <template>
-  <van-popup :value="value" position="bottom" safe-area-inset-bottom @click-overlay="$emit('input', false)">
+  <van-popup
+    :value="value"
+    position="bottom"
+    safe-area-inset-bottom
+    @click-overlay="_close"
+  >
     <slot></slot>
   </van-popup>
 </template>
@@ -15,6 +20,12 @@ export default {
     value: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    _close () {
+      this.$emit('input', false)
+      this.$emit('close')
     }
   }
 }

@@ -1,6 +1,11 @@
 import datejs from '@xuanmo/datejs'
 export default {
   props: {
+    value: {
+      type: Number,
+      default: ''
+    },
+
     formModel: {
       type: Object,
       default: () => ({})
@@ -9,6 +14,11 @@ export default {
     type: {
       type: String,
       default: ''
+    },
+
+    showToolbar: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -20,6 +30,11 @@ export default {
 
     __cancel () {
       this.$emit('cancel')
+    },
+
+    __change (Picker) {
+      console.log(this, 0)
+      this.$emit('change', Picker.confirm())
     }
   }
 }

@@ -7,6 +7,7 @@ import VRadio from '../Radio'
 import VAddress from '../Address'
 import VText from '../Text'
 import VDatePicker from '../DatePicker'
+import VDatePickerRange from '../DatePicker/range.vue'
 import VSwitch from '../Switch'
 import VUpload from '../Upload'
 
@@ -20,6 +21,7 @@ export default {
   VAddress,
   VText,
   VDatePicker,
+  VDatePickerRange,
   VSwitch,
   VUpload
 }

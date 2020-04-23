@@ -32,7 +32,7 @@ export default {
       disabled: false,
       model: {
         file: {
-          value: [{ path: 'https://upyun.xuanmo.xin/test/20200418225229.png' }],
+          value: [{ path: 'https://www.xuanmo.xin/wp-content/uploads/2019/10/xuanmo_avatar.JPG' }],
           rules: {
             label: '文件上传',
             type: 'VUpload',
@@ -62,7 +62,8 @@ export default {
             type: 'VInput',
             vRules: 'required|customer:2',
             placeholder: '请输入文字',
-            errMsg: '请输入文字'
+            errMsg: '请输入文字',
+            extra: 'extra'
           }
         },
         text1: {
@@ -109,7 +110,16 @@ export default {
           rules: {
             label: '时间',
             type: 'VDatePicker|datetime',
-            valueFormat: 'yyyy-MM-dd'
+            valueFormat: 'timestamp'
+          }
+        },
+        dateRange: {
+          value: [Date.now(), Date.now()],
+          rules: {
+            label: '时间',
+            type: 'VDatePickerRange|year-month',
+            valueFormat: 'timestamp',
+            rangeSeparator: '至'
           }
         },
         number: {

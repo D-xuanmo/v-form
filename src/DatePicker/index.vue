@@ -11,18 +11,10 @@
       @click-right-icon="!VFormRoot.disabled && (isShowPicker = true)"
     ></van-field>
     <v-popup v-model="isShowPicker">
-      <v-datetime-picker
-        v-if="customerType === 'datetime' || customerType === 'year-month' || customerType === 'date'"
-        :form-model="formModel"
+      <date-picker
+        :value="+new Date(innerValue)"
         :type="customerType"
-        @confirm="_confirm"
-        @cancel="isShowPicker = false"
-      />
-      <v-time-picker
-        v-else-if="customerType === 'time'"
-        :value="innerValue"
         :form-model="formModel"
-        :type="customerType"
         @confirm="_confirm"
         @cancel="isShowPicker = false"
       />
@@ -33,19 +25,20 @@
 <script>
 import { Field } from 'vant'
 import VPopup from '../components/popup'
-import DatetimePicker from './datetime'
-import TimePicker from './time'
+import DatePicker from './components/index'
 import formBase from '../mixins/form'
 import datejs from '@xuanmo/datejs'
 export default {
   name: 'VDatePicker',
+
   components: {
     'van-field': Field,
     'v-popup': VPopup,
-    'v-datetime-picker': DatetimePicker,
-    'v-time-picker': TimePicker
+    DatePicker
   },
+
   mixins: [formBase],
+
   data () {
     return {
       isShowPicker: false,
@@ -53,14 +46,17 @@ export default {
       format: ''
     }
   },
+
   watch: {
     value (v) {
       this.innerValue = this._innerValueFormat(v)
     }
   },
+
   created () {
     this.innerValue = this._innerValueFormat(this.value)
   },
+
   methods: {
     _innerValueFormat (v) {
       if (!v) return ''

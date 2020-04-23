@@ -1,11 +1,15 @@
 <template>
   <van-datetime-picker
-    :value="new Date(formModel.value)"
+    :value="value"
     :type="type"
-    :min-date="formModel.rules.minDate"
-    :max-date="formModel.rules.maxDate"
+    :min-hour="formModel.rules.minHour"
+    :max-hour="formModel.rules.minHour"
+    :min-minute="formModel.rules.minMinute"
+    :max-minute="formModel.rules.minMinute"
+    :show-toolbar="showToolbar"
     @confirm="__confirm"
     @cancel="__cancel"
+    @change="__change"
   ></van-datetime-picker>
 </template>
 
@@ -13,27 +17,23 @@
 import { DatetimePicker } from 'vant'
 import mixin from './mixin'
 export default {
-  name: 'VDatetimePicker',
+  name: 'VTimePicker',
   components: {
     'van-datetime-picker': DatetimePicker,
   },
   mixins: [mixin],
   methods: {
     _format (value) {
-      const currentFormat = this.datejs(new Date(value))
-      let innerValue = ''
-      if (this.type === 'year-month') {
-        innerValue = currentFormat.format('yyyy-MM')
-      } else if (this.type === 'date') {
-        innerValue = currentFormat.format('yyyy-MM-dd')
-      } else {
-        innerValue = currentFormat.format('yyyy-MM-dd HH:mm')
-      }
+      const date = new Date()
+      const year = date.getFullYear()
+      const month = date.getMonth()
+      const day = date.getDate()
+      const currentFormat = this.datejs(new Date(`${year}/${month}/${day} ${value}`))
       return {
-        innerValue,
+        innerValue: value,
         value: this.formModel.rules.valueFormat
           ? (this.formModel.rules.valueFormat === 'timestamp'
-            ? new Date(value).getTime()
+            ? new Date(`${year}/${month}/${day} ${value}`).getTime()
             : currentFormat.format(this.formModel.rules.valueFormat))
           : value
       }
