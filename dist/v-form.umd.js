@@ -12822,7 +12822,6 @@ var datejs_umd_min_default = /*#__PURE__*/__webpack_require__.n(datejs_umd_min);
       this.$emit('cancel');
     },
     __change: function __change(Picker) {
-      console.log(this, 0);
       this.$emit('change', Picker.confirm());
     }
   }
@@ -13591,6 +13590,8 @@ function request(_ref) {
   });
 }
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Upload/index.vue?vue&type=script&lang=js&
+
+
 
 
 

@@ -33,7 +33,6 @@ export default {
     },
 
     __change (Picker) {
-      console.log(this, 0)
       this.$emit('change', Picker.confirm())
     }
   }
