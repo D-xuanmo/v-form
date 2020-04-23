@@ -1,6 +1,6 @@
 <template>
   <van-datetime-picker
-    :value="value"
+    :value="_value"
     :type="type"
     :min-hour="formModel.rules.minHour"
     :max-hour="formModel.rules.minHour"
@@ -18,10 +18,19 @@ import { DatetimePicker } from 'vant'
 import mixin from './mixin'
 export default {
   name: 'VTimePicker',
+
   components: {
     'van-datetime-picker': DatetimePicker,
   },
+
   mixins: [mixin],
+
+  computed: {
+    _value () {
+      return this.datejs(new Date(this.value)).format('HH:mm')
+    }
+  },
+
   methods: {
     _format (value) {
       const date = new Date()

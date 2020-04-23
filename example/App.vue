@@ -117,7 +117,7 @@ export default {
           value: [Date.now(), Date.now()],
           rules: {
             label: '时间',
-            type: 'VDatePickerRange|year-month',
+            type: 'VDatePickerRange|time',
             valueFormat: 'timestamp',
             rangeSeparator: '至'
           }

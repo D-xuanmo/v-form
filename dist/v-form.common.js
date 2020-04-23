@@ -12884,12 +12884,12 @@ var datetime_component = normalizeComponent(
 )
 
 /* harmony default export */ var datetime = (datetime_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5b0f9a2c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/DatePicker/components/time.vue?vue&type=template&id=7e66bc82&scoped=true&
-var timevue_type_template_id_7e66bc82_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('van-datetime-picker',{attrs:{"value":_vm.value,"type":_vm.type,"min-hour":_vm.formModel.rules.minHour,"max-hour":_vm.formModel.rules.minHour,"min-minute":_vm.formModel.rules.minMinute,"max-minute":_vm.formModel.rules.minMinute,"show-toolbar":_vm.showToolbar},on:{"confirm":_vm.__confirm,"cancel":_vm.__cancel,"change":_vm.__change}})}
-var timevue_type_template_id_7e66bc82_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5b0f9a2c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/DatePicker/components/time.vue?vue&type=template&id=289875b9&scoped=true&
+var timevue_type_template_id_289875b9_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('van-datetime-picker',{attrs:{"value":_vm._value,"type":_vm.type,"min-hour":_vm.formModel.rules.minHour,"max-hour":_vm.formModel.rules.minHour,"min-minute":_vm.formModel.rules.minMinute,"max-minute":_vm.formModel.rules.minMinute,"show-toolbar":_vm.showToolbar},on:{"confirm":_vm.__confirm,"cancel":_vm.__cancel,"change":_vm.__change}})}
+var timevue_type_template_id_289875b9_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/DatePicker/components/time.vue?vue&type=template&id=7e66bc82&scoped=true&
+// CONCATENATED MODULE: ./src/DatePicker/components/time.vue?vue&type=template&id=289875b9&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -12919,6 +12919,11 @@ var es_array_concat = __webpack_require__("99af");
     'van-datetime-picker': datetime_picker
   },
   mixins: [mixin],
+  computed: {
+    _value: function _value() {
+      return this.datejs(new Date(this.value)).format('HH:mm');
+    }
+  },
   methods: {
     _format: function _format(value) {
       var date = new Date();
@@ -12945,11 +12950,11 @@ var es_array_concat = __webpack_require__("99af");
 
 var time_component = normalizeComponent(
   components_timevue_type_script_lang_js_,
-  timevue_type_template_id_7e66bc82_scoped_true_render,
-  timevue_type_template_id_7e66bc82_scoped_true_staticRenderFns,
+  timevue_type_template_id_289875b9_scoped_true_render,
+  timevue_type_template_id_289875b9_scoped_true_staticRenderFns,
   false,
   null,
-  "7e66bc82",
+  "289875b9",
   null
   
 )
