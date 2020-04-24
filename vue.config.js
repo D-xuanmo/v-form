@@ -7,15 +7,6 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true
-    },
-    proxy: {
-      '/upyun': {
-        target: 'https://assets.xuanmo.xin',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      }
     }
   },
   configureWebpack: {
