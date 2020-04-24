@@ -4,8 +4,8 @@
       <li v-for="(item, index) in value" :key="index" class="v-form__upload-preview-item">
 
         <template>
-          <img v-if="_isImg(item[fileUrlKey])" :src="item[fileUrlKey]" />
-          <p v-else class="v-form__upload-preview-text">{{ item[fileUrlKey] }}</p>
+          <img :src="item[fileUrlKey]" />
+          <!-- <p v-else class="v-form__upload-preview-text">{{ item[fileUrlKey] }}</p> -->
         </template>
 
         <!-- 上传进度开始 -->
@@ -68,6 +68,14 @@ export default {
 
     fileUrlKey () {
       return this.formModel.rules.props.url || 'url'
+    },
+
+    loadingText () {
+      return this.formModel.rules.loadingText || '上传中'
+    },
+
+    uploadErrorText () {
+      return this.formModel.rules.uploadErrorText || '上传失败'
     }
   },
 
@@ -132,7 +140,7 @@ export default {
         ...this.files.map(({ file, index }) => ({
           [this.fileUrlKey]: this._fileToBlob(file),
           loading: true,
-          loadingText: '上传中...',
+          loadingText: this.loadingText,
           index
         }))
       ]
@@ -168,6 +176,12 @@ export default {
           headers: this.formModel.rules.headers
         })
 
+        // 接收自定义处理数据
+        if (typeof this.formModel.rules.onSuccess === 'function') {
+          const _res = this.formModel.rules.onSuccess(response)
+          response = _res ? _res : response
+        }
+
         const [{ path: _removed }] = this.previewList.splice(_index, 1, response)
 
         // 释放本地预览的对象，防止继续停留在内存中
@@ -179,7 +193,7 @@ export default {
 
       } catch ({ status, statusText }) {
         // 上传失败
-        this.previewList[_index].loadingText = '上传失败'
+        this.previewList[_index].loadingText = this.uploadErrorText
         this.__eventHandler('file-error', {
           status,
           statusText
