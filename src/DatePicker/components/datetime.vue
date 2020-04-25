@@ -7,7 +7,7 @@
     :show-toolbar="showToolbar"
     @confirm="__confirm"
     @cancel="__cancel"
-    @change="__change"
+    @change="!showToolbar && __change($event)"
   ></van-datetime-picker>
 </template>
 
