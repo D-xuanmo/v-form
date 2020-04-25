@@ -45,8 +45,7 @@ const formUnitBase = Vue.extend({
   data () {
     return {
       formValues: {},
-      formErrors: {},
-      errorBag: []
+      formErrors: {}
     }
   },
 
@@ -60,38 +59,44 @@ const formUnitBase = Vue.extend({
           (rules.type !== 'VCell') && (rules.type !== 'VText') && this.$set(this.formValues, key, value)
         }
       }
-    },
-
-    formErrors: {
-      deep: true,
-      handler (v) {
-        // 生成错误信息
-        this.$set(this, 'errorBag', Object.values(v).sort((a, b) => a['index'] - b['index']).filter(v => Object.values(v).length !== 0))
-      }
-    },
-
-    formValues: {
-      deep: true,
-      immediate: true,
-      handler (v) {
-        this._change(v)
-      }
     }
   },
 
+  created () {
+    this._watchValueAndError()
+  },
+
   methods: {
+    // 监听value和errorMsg发生改变，对父组件提供本次改变之后的新数据
+    _watchValueAndError () {
+      this.$watch(() => {
+        return {
+          value: this.formValues,
+          errorMsg: this.formErrors
+        }
+      }, ({ value, errorMsg }) => {
+        this._change(
+          value,
+          Object.values(errorMsg).sort((a, b) => a['index'] - b['index']).filter(v => Object.values(v).length !== 0)
+        )
+      }, {
+        deep: true,
+        immediate: true
+      })
+    },
+
     // 分割组件类型
     _splitComponentType (type) {
       let [compType, compParameter = ''] = type.split('|')
       return [compType, compParameter]
     },
 
-    _change (value) {
+    _change (value, errorMsg) {
       this.$nextTick(() => {
         this.$emit('change', {
           value,
-          isValid: this.errorBag.length === 0,
-          errorMsg: this.errorBag
+          isValid: errorMsg.length === 0,
+          errorMsg
         })
       })
     },
