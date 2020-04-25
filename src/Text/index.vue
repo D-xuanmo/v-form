@@ -12,7 +12,3 @@ export default {
   mixins: [formBase]
 }
 </script>
-
-<style lang="less" scoped>
-
-</style>

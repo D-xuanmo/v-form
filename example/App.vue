@@ -16,19 +16,26 @@
         <van-field v-model="data.value"></van-field>
       </template>
     </v-form>
+    <div style="margin: 20px 0;text-align: center;">
+      <van-button type="primary" @click="_submit">提交数据</van-button>
+    </div>
   </div>
 </template>
 
 <script>
-import { Field, Switch } from 'vant'
+import { Field, Switch, Button } from 'vant'
 export default {
   name: 'App',
   components: {
     'van-field': Field,
     'van-switch': Switch,
+    'van-button': Button
   },
   data () {
     return {
+      formData: {},
+      formError: [],
+      isValid: false,
       disabled: false,
       model: {
         file: {
@@ -198,11 +205,20 @@ export default {
     }
   },
   methods: {
-    _change (v) {
-      // console.log('change', v)
+    _change ({ value, errorMsg, isValid }) {
+      this.formData = value
+      this.formError = errorMsg
+      this.isValid = isValid
     },
     _event ({ type, value }) {
       console.log(type, value)
+    },
+    _submit () {
+      if (!this.isValid) {
+        this.$toast(this.formError[0].errMsg)
+        return
+      }
+      this.$toast('提交成功')
     }
   }
 }
