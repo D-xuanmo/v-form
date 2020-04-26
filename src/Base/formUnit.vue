@@ -92,12 +92,10 @@ const formUnitBase = Vue.extend({
     },
 
     _change (value, errorMsg) {
-      this.$nextTick(() => {
-        this.$emit('change', {
-          value,
-          isValid: errorMsg.length === 0,
-          errorMsg
-        })
+      this.$emit('change', {
+        value,
+        isValid: errorMsg.length === 0,
+        errorMsg
       })
     },
 

@@ -47,12 +47,6 @@ export default {
       handler (v) {
         this.__generationRules(v.rules, v)
       }
-    },
-
-    value: {
-      handler (v) {
-        this.__validator(v)
-      }
     }
   },
 
@@ -76,7 +70,11 @@ export default {
     // 向父级提交当前组件的值
     e__input (val) {
       this.$emit('input', this.formModel.name, val)
-      this.__eventHandler('input', this.formModel)
+      this.__validator(val)
+      this.__eventHandler('input', {
+        ...this.formModel,
+        value: val
+      })
     },
 
     // 向父级传递校验结果
