@@ -105,7 +105,6 @@ const formUnitBase = Vue.extend({
 
     // 获取子级错误信息
     _getError (name, err) {
-      console.log(name, err)
       this.$set(this.formErrors, name, err)
     }
   }
