@@ -67,7 +67,7 @@ export default {
     },
 
     fileUrlKey () {
-      return this.formModel.rules.props.url || 'url'
+      return (this.formModel.rules.props && this.formModel.rules.props.url) || 'url'
     },
 
     loadingText () {
