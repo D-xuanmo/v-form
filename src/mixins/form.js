@@ -30,7 +30,8 @@ export default {
   data () {
     return {
       rulesList: [],
-      errorMessage: {}
+      errorMessage: {},
+      debounce: null
     }
   },
 
@@ -46,6 +47,13 @@ export default {
       deep: true,
       handler (v) {
         this.__generationRules(v.rules, v)
+      }
+    },
+
+    value: {
+      deep: true,
+      handler (val) {
+        this.__validator(val)
       }
     }
   },
@@ -70,7 +78,6 @@ export default {
     // 向父级提交当前组件的值
     e__input (val) {
       this.$emit('input', this.formModel.name, val)
-      this.__validator(val)
       this.__eventHandler('input', {
         ...this.formModel,
         value: val
