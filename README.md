@@ -13,11 +13,11 @@ yarn add @xuanmo/v-form
 
 - js
 ```js
-// 如果没有安装vant-ui可以采取这种方式引入组件
+// 不需要编译方式引入
 import VForm from "@xuanmo/v-form/dist/v-form.umd.js"
 import "@xuanmo/v-form/dist/v-form.css"
 
-// 项目已经引入vant-ui推荐使用这种方式引入，后编译
+// 项目推荐使用以下方式引入，后编译
 import VForm from '@xuanmo/v-form'
 
 // 注册组件

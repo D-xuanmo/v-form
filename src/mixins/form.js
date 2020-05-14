@@ -98,8 +98,8 @@ export default {
             name: this.formModel.name,
             value: val,
             index: this.formModel.index,
-            errMsg: failedRules.required
-              ? this.formModel.rules.errMsg
+            errorMsg: failedRules.required
+              ? this.formModel.rules.errorMsg
               : errors[0].replace('{field}', this.formModel.rules.label)
           })
           break
