@@ -12,8 +12,9 @@
       @change="_change"
       @event="_event"
     >
-      <template v-slot:text="{ data }">
-        <van-field v-model="data.value"></van-field>
+      <template #text1-extra>
+        <!-- <van-field v-model="data.value"></van-field> -->
+        extra
       </template>
     </v-form>
     <div style="margin: 20px 0;text-align: center;">
@@ -23,11 +24,11 @@
 </template>
 
 <script>
-import { Field, Switch, Button } from 'vant'
+import { Switch, Button } from 'vant'
 export default {
   name: 'App',
   components: {
-    'van-field': Field,
+    // 'van-field': Field,
     'van-switch': Switch,
     'van-button': Button
   },
@@ -69,14 +70,14 @@ export default {
             type: 'VInput',
             vRules: 'required|customer:2',
             placeholder: '请输入文字',
-            errMsg: '请输入文字',
+            errorMsg: '请输入文字',
             extra: 'extra'
           }
         },
         text1: {
           value: '123123123123123123123123123123123123123123123123123123123123',
           rules: {
-            label: '文字',
+            label: '文字1',
             type: 'VText'
           }
         },
@@ -87,7 +88,7 @@ export default {
             type: 'VCheckbox',
             vRules: 'required',
             placeholder: '请输入复选框',
-            errMsg: '请输入复选框',
+            errorMsg: '请输入复选框',
             direction: 'horizontal',
             options: [
               { label: '复选框 a', value: 'a' },
@@ -103,7 +104,7 @@ export default {
             type: 'VRadio',
             vRules: 'required',
             placeholder: '请输入单选框',
-            errMsg: '请输入单选框',
+            errorMsg: '请输入单选框',
             direction: 'horizontal',
             options: [
               { label: '复选框 a', value: 'a' },
@@ -136,7 +137,7 @@ export default {
             type: 'VInput|digit',
             vRules: 'required',
             placeholder: '请输入数字',
-            errMsg: '请输入数字'
+            errorMsg: '请输入数字'
           }
         },
         address: {
@@ -146,7 +147,7 @@ export default {
             type: 'VAddress',
             vRules: 'required',
             placeholder: '请输入地址',
-            errMsg: '请输入地址'
+            errorMsg: '请输入地址'
           }
         },
         textarea: {
@@ -156,7 +157,7 @@ export default {
             type: 'VInput|textarea',
             vRules: 'required',
             placeholder: '文本域',
-            errMsg: '文本域'
+            errorMsg: '文本域'
           }
         },
         select: {
@@ -165,7 +166,7 @@ export default {
             label: '选择器',
             type: 'VSelect',
             placeholder: 'picker选择器',
-            errMsg: 'picker选择器',
+            errorMsg: 'picker选择器',
             vRules: 'required',
             options: [
               { text: '杭州', value: 1 },
@@ -182,7 +183,7 @@ export default {
             label: '多列选择器',
             type: 'VSelect',
             placeholder: 'picker选择器',
-            errMsg: 'picker选择器',
+            errorMsg: 'picker选择器',
             options: [
               [
                 { text: '杭州', value: '1' },
@@ -215,7 +216,7 @@ export default {
     },
     _submit () {
       if (!this.isValid) {
-        this.$toast(this.formError[0].errMsg)
+        this.$toast(this.formError[0].errorMsg)
         return
       }
       this.$toast('提交成功')
