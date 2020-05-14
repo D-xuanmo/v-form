@@ -39,6 +39,11 @@ const formUnitBase = Vue.extend({
     labelColor: {
       type: String,
       default: ''
+    },
+
+    showLabel: {
+      type: Boolean,
+      default: true
     }
   },
 

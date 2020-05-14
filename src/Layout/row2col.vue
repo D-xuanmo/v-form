@@ -1,6 +1,7 @@
 <template>
   <div class="v-form-row">
     <div
+      v-if="VFormRoot.showLabel"
       class="v-form-row__label"
       :style="{
         width: VFormRoot.labelWidth,

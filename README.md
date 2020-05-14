@@ -63,6 +63,7 @@ module.exports = {
 |label-width|label宽度|string|20%|
 |label-position|label对齐方式，可选：left/right|string|left|
 |label-color|label文字颜色|string|-|
+|show-label|是否显示label|boolean|true|
 
 ## events
 
@@ -78,6 +79,11 @@ module.exports = {
 <v-form :model="model">
   <template v-slot:text="{ data }">
     <van-field v-model="data.value"></van-field>
+  </template>
+
+  <!-- 行扩展字段slot，格式{key}-extra -->
+  <template #text-extra>
+    extra
   </template>
 </v-form>
 ```
