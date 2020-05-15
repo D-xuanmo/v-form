@@ -30,8 +30,7 @@ export default {
   data () {
     return {
       rulesList: [],
-      errorMessage: {},
-      debounce: null
+      errorMessage: {}
     }
   },
 

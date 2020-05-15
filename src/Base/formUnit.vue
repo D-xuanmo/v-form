@@ -21,6 +21,11 @@ const formUnitBase = Vue.extend({
       default: () => ({})
     },
 
+    value: {
+      type: Object,
+      default: () => ({})
+    },
+
     disabled: {
       type: Boolean,
       default: false
@@ -64,6 +69,16 @@ const formUnitBase = Vue.extend({
           (rules.type !== 'VCell') && (rules.type !== 'VText') && this.$set(this.formValues, key, value)
         }
       }
+    },
+
+    value: {
+      deep: true,
+      immediate: true,
+      handler (val) {
+        for (let [key, value] of Object.entries(val)) {
+          this.$set(this.model[key], 'value', value)
+        }
+      }
     }
   },
 
@@ -97,6 +112,7 @@ const formUnitBase = Vue.extend({
     },
 
     _change (value, errorMsg) {
+      this.$emit('input', value)
       this.$emit('change', {
         value,
         isValid: errorMsg.length === 0,

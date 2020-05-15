@@ -58,6 +58,7 @@ module.exports = {
 
 |字段名|说明|类型|默认值
 |---|---|---|---|
+|v-model(value)|获取组件处理完成的数据|object|{}|
 |model|数据模型(具体类型参考后续文档)|object|{}|
 |disabled|是否禁用表单|boolean|false|
 |label-width|label宽度|string|20%|
