@@ -6,12 +6,16 @@
     </div>
     <v-form
       ref="vform"
+      v-model="formValue"
       :model="model"
       :disabled="disabled"
       label-width="100px"
       @change="_change"
       @event="_event"
     >
+      <template #text1-label>
+        自定义label
+      </template>
       <template #text1-extra>
         <!-- <van-field v-model="data.value"></van-field> -->
         extra
@@ -34,6 +38,9 @@ export default {
   },
   data () {
     return {
+      formValue: {
+        text: 1
+      },
       formData: {},
       formError: [],
       isValid: false,
@@ -68,14 +75,14 @@ export default {
           rules: {
             label: '文字',
             type: 'VInput',
-            vRules: 'required|customer:2',
+            vRules: 'required|max:2',
             placeholder: '请输入文字',
             errorMsg: '请输入文字',
             extra: 'extra'
           }
         },
         text1: {
-          value: '123123123123123123123123123123123123123123123123123123123123',
+          value: '文字内容',
           rules: {
             label: '文字1',
             type: 'VText'

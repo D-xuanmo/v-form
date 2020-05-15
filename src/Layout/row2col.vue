@@ -9,8 +9,10 @@
         color: VFormRoot.labelColor
       }"
     >
-      {{ label }}
-      <span v-show="required" class="v-form-row__required-mark">*</span>
+      <slot name="label">
+        {{ label }}
+        <span v-show="required" class="v-form-row__required-mark">*</span>
+      </slot>
     </div>
     <div class="v-form-row__content">
       <slot></slot>

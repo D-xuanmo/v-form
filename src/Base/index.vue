@@ -8,6 +8,7 @@
           :label="v.rules.label"
           :required="(v.rules.vRules || '').indexOf('required') !== -1"
         >
+          <slot slot="label" :name="`${key}-label`"></slot>
           <slot slot="extra" :name="`${key}-extra`"></slot>
           <slot :name="key" :data="v">
             <component
