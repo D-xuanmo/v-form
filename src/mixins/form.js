@@ -52,13 +52,13 @@ export default {
     value: {
       deep: true,
       handler (val) {
-        this.__validator(val)
+        !this.disabled && this.__validator(val)
       }
     }
   },
 
   created () {
-    this.__validator(this.value)
+    !this.disabled && this.__validator(this.value)
   },
 
   methods: {
