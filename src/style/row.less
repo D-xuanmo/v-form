@@ -5,6 +5,12 @@
   border-bottom: 1px solid @border-color;
   background: #fff;
 
+  &.is-disabled {
+    /deep/ * {
+      color: @disabled-color !important;
+    }
+  }
+
   .v-form-row__label {
     width: 23%;
     padding: 10px 0;

@@ -7,6 +7,7 @@
           :key="key"
           :label="v.rules.label"
           :required="(v.rules.vRules || '').indexOf('required') !== -1"
+          :disabled="v.rules.disabled"
         >
           <slot slot="label" :name="`${key}-label`"></slot>
           <slot slot="extra" :name="`${key}-extra`"></slot>

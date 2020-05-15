@@ -1,5 +1,5 @@
 <template>
-  <div class="v-form-row">
+  <div :class="['v-form-row', disabled && 'is-disabled']">
     <div
       v-if="VFormRoot.showLabel"
       class="v-form-row__label"
@@ -32,7 +32,13 @@ export default {
       type: String,
       default: ''
     },
+
     required: {
+      type: Boolean,
+      default: false
+    },
+
+    disabled: {
       type: Boolean,
       default: false
     }

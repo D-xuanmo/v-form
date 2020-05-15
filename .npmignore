@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 vue.config.js
+dist
 
 # local env files
 .env.local
