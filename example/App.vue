@@ -46,6 +46,17 @@ export default {
       isValid: false,
       disabled: false,
       model: {
+        numberKeyboard: {
+          value: '',
+          rules: {
+            label: '数字键盘',
+            type: 'VNumberKeyboard',
+            placeholder: '点击输入',
+            // theme: 'custom',
+            extraKey: '.',
+            // closeButtonText: '完成'
+          }
+        },
         file: {
           value: [{ path: 'https://www.xuanmo.xin/wp-content/uploads/2019/10/xuanmo_avatar.JPG' }],
           rules: {
@@ -110,6 +121,7 @@ export default {
             label: '单选框',
             type: 'VRadio',
             vRules: 'required',
+            disabled: true,
             placeholder: '请输入单选框',
             errorMsg: '请输入单选框',
             direction: 'horizontal',

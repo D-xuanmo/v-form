@@ -7889,10 +7889,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vant@^2.5.7:
-  version "2.5.7"
-  resolved "https://registry.npm.taobao.org/vant/download/vant-2.5.7.tgz#b8cdbd77366c6e32d149c7bbd67b9ec4ea1b908d"
-  integrity sha1-uM29dzZsbjLRSce71nuexOobkI0=
+vant@2.8.4:
+  version "2.8.4"
+  resolved "https://registry.npm.taobao.org/vant/download/vant-2.8.4.tgz?cache=0&sync_timestamp=1590661523911&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvant%2Fdownload%2Fvant-2.8.4.tgz#9e4513e8f7506562675f6de7d48367ea0e8792bd"
+  integrity sha1-nkUT6PdQZWJnX23n1INn6g6Hkr0=
   dependencies:
     "@babel/runtime" "7.x"
     "@vant/icons" "1.2.1"
@@ -7904,7 +7904,7 @@ vary@~1.1.2:
   resolved "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vee-validate@^3.2.5:
+vee-validate@3.2.5:
   version "3.2.5"
   resolved "https://registry.npm.taobao.org/vee-validate/download/vee-validate-3.2.5.tgz#e3f4e389fbb00917c2cd2f72170e8042aea5fc08"
   integrity sha1-4/TjifuwCRfCzS9yFw6AQq6l/Ag=

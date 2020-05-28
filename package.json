@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.0.58",
+  "version": "1.0.60",
   "private": false,
   "main": "src/index.js",
   "repository": {
@@ -16,7 +16,7 @@
   "dependencies": {
     "@xuanmo/datejs": "^1.0.3",
     "core-js": "^3.6.4",
-    "vant": "2.5.7",
+    "vant": "2.8.4",
     "vee-validate": "3.2.5",
     "vue": "^2.6.11"
   },
