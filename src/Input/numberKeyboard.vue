@@ -4,7 +4,8 @@
       :value="value"
       :placeholder="formModel.rules.placeholder"
       readonly
-      @touchstart.native.stop="isShow = true"
+      :disabled="disabled"
+      @touchstart.native.stop="() => !disabled && (isShow = true)"
     ></Field>
     <NumberKeyboard
       v-model="_value"
