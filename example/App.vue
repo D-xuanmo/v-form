@@ -10,13 +10,14 @@
       :model="model"
       :disabled="disabled"
       label-width="100px"
+      :validator="validator"
       @change="_change"
       @event="_event"
     >
-      <template #text1-label>
+      <template #text4-label>
         自定义label
       </template>
-      <template #text1-extra>
+      <template #text4-extra>
         <!-- <van-field v-model="data.value"></van-field> -->
         extra
       </template>
@@ -38,8 +39,17 @@ export default {
   },
   data () {
     return {
+      validator: {
+        custom: {
+          message: '文字不正确2',
+          params: ['target1', 'target2'],
+          validate: (value, { target1, target2 }) => {
+            return value === target1 && value === target2
+          }
+        }
+      },
       formValue: {
-        text: 1
+        // text1: '1'
       },
       formData: {},
       formError: [],
@@ -81,21 +91,42 @@ export default {
             type: 'VSwitch'
           }
         },
-        text: {
+        text1: {
           value: '',
           rules: {
-            label: '文字',
+            label: '文字1',
             type: 'VInput',
-            vRules: 'required|max:2',
+            vRules: 'required|custom:@text2,@text3',
             placeholder: '请输入文字',
             errorMsg: '请输入文字',
             extra: 'extra'
           }
         },
-        text1: {
+        text2: {
+          value: '',
+          rules: {
+            label: '文字2',
+            type: 'VInput',
+            vRules: 'required|@custom',
+            placeholder: '请输入文字',
+            errorMsg: '请输入文字',
+            extra: 'extra'
+          }
+        },
+        text3: {
+          value: '',
+          rules: {
+            label: '文字3',
+            type: 'VInput',
+            vRules: 'required|@custom',
+            placeholder: '请输入文字',
+            errorMsg: '请输入文字'
+          }
+        },
+        text4: {
           value: '文字内容',
           rules: {
-            label: '文字1',
+            label: '文字4',
             type: 'VText'
           }
         },

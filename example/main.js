@@ -7,12 +7,19 @@ import VForm from '@'
 
 Vue.use(VForm, {
   validator: {
-    customer: {
+    custom: {
       message: '长度不能大于{length}',
+      params: ['length'],
       validate: (value, { length }) => {
         return value.length <= length
-      },
-      params: ['length']
+      }
+    },
+    target: {
+      message: 'password不正确',
+      params: ['target'],
+      validate: (value, { target }) => {
+        return value === target
+      }
     }
   }
 })
