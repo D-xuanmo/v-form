@@ -88,10 +88,77 @@ export default {
       this.$emit('error', this.formModel.name, this.errorMessage)
     },
 
+    _validateObserver (val, rule) {
+      const rules = rule.split(':')
+
+      // 是否为关联校验
+      const isCrossField = /^@/.test(rules[1])
+
+      // 是否为关联校验的接收字段
+      const isTarget = /^@/.test(rule)
+
+      const _VFrom = this.VFormRoot
+
+      let currValidate = {}
+
+      let crossFields = {}
+
+      const _validate = (params, target) => {
+        const result = {}
+        target.forEach((item, i) => (result[params[i]] = _VFrom.model[item].value))
+        return result
+      }
+
+      /* TODO 代码待优化
+       * 如果是关联校验重写校验
+       * 否则采取veeValidate插件校验
+       */
+      if (isCrossField) {
+        const _crossRule = rules[0]
+
+        currValidate = _VFrom.validator[_crossRule] || this.$VForm.validator[_crossRule]
+
+        crossFields = _VFrom.crossFields[_crossRule]
+
+        return Promise.resolve({
+          valid: currValidate.validate(val, _validate(currValidate.params, crossFields.target)),
+          failedRules: {
+            required: null
+          },
+          errors: [currValidate.message]
+        })
+      } else if (isTarget) {
+        const _targetRule = rule.replace('@', '')
+
+        currValidate = _VFrom.validator[_targetRule] || this.$VForm.validator[_targetRule]
+
+        crossFields = _VFrom.crossFields[_targetRule]
+
+        const valid = currValidate.validate(
+          _VFrom.model[crossFields.local].value,
+          _validate(currValidate.params, crossFields.target)
+        )
+        if (valid && isCrossField) {
+          _VFrom.formErrors[crossFields.local] = {}
+        } else {
+          _VFrom.$refs[crossFields.local][0].__validator(_VFrom.model[crossFields.local].value)
+        }
+        return Promise.resolve({
+          valid: true,
+          failedRules: {
+            required: null
+          },
+          errors: [currValidate.message]
+        })
+      } else {
+        return this.$validate(val, rule)
+      }
+    },
+
     // 执行校验
     async __validator (val) {
       for (let i = 0; i < this.rulesList.length; i++) {
-        let { valid, failedRules, errors } = await this.$validate(val, this.rulesList[i])
+        let { valid, failedRules, errors } = await this._validateObserver(val, this.rulesList[i])
         if (!valid) {
           this.$set(this, 'errorMessage', {
             name: this.formModel.name,

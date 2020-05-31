@@ -1,7 +1,7 @@
 <script>
 import Vue from 'vue'
 import components from './components'
-import validate from '../validator'
+import validate, { extend } from '../validator'
 
 const formUnitBase = Vue.extend({
   name: 'VFormUnit',
@@ -22,6 +22,12 @@ const formUnitBase = Vue.extend({
     },
 
     value: {
+      type: Object,
+      default: () => ({})
+    },
+
+    // 局部校验规则
+    validator: {
       type: Object,
       default: () => ({})
     },
@@ -55,7 +61,8 @@ const formUnitBase = Vue.extend({
   data () {
     return {
       formValues: {},
-      formErrors: {}
+      formErrors: {},
+      crossFields: {}
     }
   },
 
@@ -67,6 +74,16 @@ const formUnitBase = Vue.extend({
         for (let [key, { value, rules }] of Object.entries(v)) {
           // 排除展示类组件
           (rules.type !== 'VCell') && (rules.type !== 'VText') && this.$set(this.formValues, key, value)
+
+          // 生成跨域校验字段
+          const _crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
+          _crossFields.forEach(_ => {
+            const [_name, _cross] = _.split(':')
+            this.crossFields[_name] = {
+              local: key,
+              target: _cross.split(',').map(_ => _.replace('@', ''))
+            }
+          })
         }
       }
     },
@@ -83,6 +100,9 @@ const formUnitBase = Vue.extend({
   },
 
   created () {
+    // 注册局部校验规则
+    extend(this.validator)
+
     this._watchValueAndError()
   },
 
@@ -97,7 +117,7 @@ const formUnitBase = Vue.extend({
       }, ({ value, errorMsg }) => {
         this._change(
           value,
-          Object.values(errorMsg).sort((a, b) => a['index'] - b['index']).filter(v => Object.values(v).length !== 0)
+          Object.values(errorMsg).filter(v => Object.values(v).length !== 0).sort((a, b) => a['index'] - b['index'])
         )
       }, {
         deep: true,

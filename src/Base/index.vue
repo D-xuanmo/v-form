@@ -14,6 +14,7 @@
           <slot :name="key" :data="v">
             <component
               :is="_splitComponentType(v.rules.type)[0]"
+              :ref="key"
               :customer-type="_splitComponentType(v.rules.type)[1]"
               :value="v.value"
               :form-model="{

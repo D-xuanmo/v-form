@@ -4,6 +4,12 @@
 * 校验规则已经集成VeeValidate插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
 * [在线演示](https://codesandbox.io/s/v-formshili-3hs2c)
 
+## 语法约定
+* 组件内部方法使用`_`作为前缀
+* mixin公用方法使用`__`作为前缀
+* 事件传递使用`e__`作为前缀
+* `@`为组件校验规则保留关键字
+
 ## 安装
 ```bash
 yarn add @xuanmo/v-form
@@ -25,12 +31,22 @@ Vue.use(VForm)
  */
 Vue.use(VForm, {
   validator: {
-    customer: {
+    custom: {
       message: '长度不能大于{length}',
+      // 此处定义的值可以在`validate`函数的第二个参数接收
+      params: ['length'],
       validate: (value, { length }) => {
         return value.length <= length
-      },
-      params: ['length']
+      }
+    },
+
+    // 关联校验，可将多个表单项的值做比对
+    target: {
+      message: '关联校验失败',
+      params: ['target1', 'target2'],
+      validate: (value, { target1, target2 }) => {
+        return value === target1 && value === target2
+      }
     }
   }
 })
@@ -61,6 +77,7 @@ module.exports = {
 |label-position|label对齐方式，可选：left/right|string|left|
 |label-color|label文字颜色|string|-|
 |show-label|是否显示label|boolean|true|
+|validator|局部校验规则|object|{}|
 
 ## events
 
@@ -78,6 +95,11 @@ module.exports = {
     <van-field v-model="data.value"></van-field>
   </template>
 
+  <!-- 行label自定义slot，格式{key}-label -->
+  <template #text-label>
+    自定义label
+  </template>
+
   <!-- 行扩展字段slot，格式{key}-extra -->
   <template #text-extra>
     extra
@@ -90,16 +112,42 @@ module.exports = {
 
 ```js
 const model = {
-  text: {
+  // 以下三个文字输入示例为关联校验
+  // 关联校验采取{rule}:@{field},@{field}格式
+  // 接收字段采取@{rule}格式
+  text1: {
     value: '',
     rules: {
-      label: '文字',
+      label: '文字1',
       type: 'VInput',
-      vRules: 'required',
+      vRules: 'required|custom:@text2,@text3',
       placeholder: '请输入文字',
       errMsg: '请输入文字'
     }
   },
+
+  text2: {
+    value: '',
+    rules: {
+      label: '文字2',
+      type: 'VInput',
+      vRules: 'required|@custom',
+      placeholder: '请输入文字',
+      errMsg: '请输入文字'
+    }
+  },
+
+  text3: {
+    value: '',
+    rules: {
+      label: '文字3',
+      type: 'VInput',
+      vRules: 'required|@custom',
+      placeholder: '请输入文字',
+      errMsg: '请输入文字'
+    }
+  },
+
   // 时间选择器
   date: {
     value: Date.now(),
@@ -111,6 +159,7 @@ const model = {
       valueFormat: 'yyyy-MM-dd'
     }
   },
+
   // 图片上传
   file: {
     // 用于显示列表
