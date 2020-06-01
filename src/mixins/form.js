@@ -99,26 +99,20 @@ export default {
 
       const _VFrom = this.VFormRoot
 
-      let currValidate = {}
-
-      let crossFields = {}
-
       const _validate = (params, target) => {
         const result = {}
         target.forEach((item, i) => (result[params[i]] = _VFrom.model[item].value))
         return result
       }
 
-      /* TODO 代码待优化
-       * 如果是关联校验重写校验
-       * 否则采取veeValidate插件校验
-       */
+      // TODO 代码待优化
+      // 关联校验
       if (isCrossField) {
         const _crossRule = rules[0]
 
-        currValidate = _VFrom.validator[_crossRule] || this.$VForm.validator[_crossRule]
+        let currValidate = _VFrom.validator[_crossRule] || this.$VForm.validator[_crossRule]
 
-        crossFields = _VFrom.crossFields[_crossRule]
+        let crossFields = _VFrom.crossFields[_crossRule]
 
         return Promise.resolve({
           valid: currValidate.validate(val, _validate(currValidate.params, crossFields.target)),
@@ -127,12 +121,15 @@ export default {
           },
           errors: [currValidate.message]
         })
-      } else if (isTarget) {
+      }
+
+      // 关联校验被绑定字段
+      if (isTarget) {
         const _targetRule = rule.replace('@', '')
 
-        currValidate = _VFrom.validator[_targetRule] || this.$VForm.validator[_targetRule]
+        let currValidate = _VFrom.validator[_targetRule] || this.$VForm.validator[_targetRule]
 
-        crossFields = _VFrom.crossFields[_targetRule]
+        let crossFields = _VFrom.crossFields[_targetRule]
 
         const valid = currValidate.validate(
           _VFrom.model[crossFields.local].value,
@@ -150,9 +147,10 @@ export default {
           },
           errors: [currValidate.message]
         })
-      } else {
-        return this.$validate(val, rule)
       }
+
+      // veeValidate插件校验
+      return this.$validate(val, rule)
     },
 
     // 执行校验
