@@ -69,7 +69,7 @@ const validator = {
   }
 }
 
-function customExtend (opt) {
+function customExtend (opt = {}) {
   if (!isObject(opt)) {
     throw new Error('自定义校验规则格式错误')
   }
