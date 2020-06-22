@@ -88,7 +88,9 @@ export default {
 
   computed: {
     innerValue () {
-      return `${this.startInnerValue} ${this.formModel.rules.rangeSeparator || '-'} ${this.endInnerValue}`
+      return (this.startInnerValue && this.endInnerValue)
+        ? `${this.startInnerValue} ${this.formModel.rules.rangeSeparator || '-'} ${this.endInnerValue}`
+        : ''
     }
   },
 
@@ -97,10 +99,10 @@ export default {
       immediate: true,
       deep: true,
       handler ([start, end]) {
-        this.startValue = start
-        this.endValue = end
-        this.startInnerValue = this._innerValueFormat(new Date(start))
-        this.endInnerValue = this._innerValueFormat(new Date(end))
+        this.startValue = start || Date.now()
+        this.endValue = end || Date.now()
+        this.startInnerValue = start ? this._innerValueFormat(new Date(start)) : ''
+        this.endInnerValue = end ? this._innerValueFormat(new Date(end)) : ''
       }
     }
   },
