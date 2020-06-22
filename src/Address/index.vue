@@ -61,12 +61,13 @@ export default {
   methods: {
     _confirm (val) {
       this.format = this._findValue(this.addressData, val)
+      const _value = this.format.map(({ value }) => value).join(',')
       this.isShow = false
       this.innerValue = this.format.map(({ label }) => label).join('/')
-      this.e__input(this.format.map(({ value }) => value).join(','))
+      this.e__input(_value)
       this.__eventHandler('address-change', {
         label: this.innerValue,
-        value: this.value
+        value: _value
       })
     },
 
