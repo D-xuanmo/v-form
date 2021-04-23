@@ -16,7 +16,7 @@
 
 ## Events
 |事件|描述|回调参数|
-|--|--|--|
+|---|---|---|
 |file-exceed|大于文件上传的最大个数|(value:当前组件的值)|
 |file-change|选择完文件触发|(file:选择的文件)|
 |file-before-upload|上传文件之前执行|(file:当前选择的文件)|
