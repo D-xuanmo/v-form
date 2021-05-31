@@ -62,6 +62,10 @@ export default {
   },
 
   methods: {
+    findModelByKey (key) {
+      return this.VFormRoot.model.find(item => item.key === key)
+    },
+
     // 创建校验规则
     __generationRules ({ vRules }) {
       vRules && (this.rulesList = vRules.split('|'))
@@ -76,7 +80,7 @@ export default {
 
     // 向父级提交当前组件的值
     e__input (val) {
-      this.$emit('input', this.formModel.name, val)
+      this.$emit('input', this.formModel.index, val)
       this.__eventHandler('input', {
         ...this.formModel,
         value: val
@@ -101,7 +105,9 @@ export default {
 
       const _validate = (params, target) => {
         const result = {}
-        target.forEach((item, i) => (result[params[i]] = _VFrom.model[item].value))
+        target.forEach((item, i) => {
+          result[params[i]] = this.findModelByKey(item).value
+        })
         return result
       }
 
@@ -132,13 +138,13 @@ export default {
         let crossFields = _VFrom.crossFields[_targetRule]
 
         const valid = currValidate.validate(
-          _VFrom.model[crossFields.local].value,
+          this.findModelByKey(crossFields.local).value,
           _validate(currValidate.params, crossFields.target)
         )
         if (valid && isCrossField) {
           _VFrom.formErrors[crossFields.local] = {}
         } else {
-          _VFrom.$refs[crossFields.local][0].__validator(_VFrom.model[crossFields.local].value)
+          _VFrom.$refs[crossFields.local][0].__validator(this.findModelByKey(crossFields.local).value)
         }
         return Promise.resolve({
           valid: true,

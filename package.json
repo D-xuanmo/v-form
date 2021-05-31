@@ -1,11 +1,12 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "private": false,
   "main": "src/index.js",
+  "author": "xuanmo <me@xuanmo.xin>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xuanmos/v-form"
+    "url": "https://github.com/D-xuanmo/v-form"
   },
   "scripts": {
     "serve": "vue-cli-service serve",

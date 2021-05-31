@@ -16,9 +16,9 @@ const formUnitBase = Vue.extend({
 
   props: {
     model: {
-      type: Object,
+      type: Array,
       required: true,
-      default: () => ({})
+      default: () => []
     },
 
     value: {
@@ -70,21 +70,27 @@ const formUnitBase = Vue.extend({
     model: {
       deep: true,
       immediate: true,
-      handler (v) {
-        for (let [key, { value, rules }] of Object.entries(v)) {
+      handler (model) {
+        const formValues = {}
+        model.forEach(item => {
+          const { key, value, rules } = item
+
           // 排除展示类组件
-          (rules.type !== 'VCell') && (rules.type !== 'VText') && this.$set(this.formValues, key, value)
+          if ((rules.type !== 'VCell') && (rules.type !== 'VText')) {
+            formValues[key] = value
+          }
 
           // 生成跨域校验字段
-          const _crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
-          _crossFields.forEach(_ => {
-            const [_name, _cross] = _.split(':')
-            this.crossFields[_name] = {
+          const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
+          crossFields.forEach(_ => {
+            const [name, cross] = _.split(':')
+            this.crossFields[name] = {
               local: key,
-              target: _cross.split(',').map(_ => _.replace('@', ''))
+              target: cross.split(',').map(_ => _.replace('@', ''))
             }
           })
-        }
+        })
+        this.formValues = formValues
       }
     },
 
@@ -93,7 +99,11 @@ const formUnitBase = Vue.extend({
       immediate: true,
       handler (val) {
         for (let [key, value] of Object.entries(val)) {
-          this.$set(this.model[key], 'value', value)
+          this.model.map(item => {
+            if (item.key === key) {
+              item.value = value
+            }
+          })
         }
       }
     }
@@ -103,19 +113,19 @@ const formUnitBase = Vue.extend({
     // 注册局部校验规则
     extend(this.validator)
 
-    this._watchValueAndError()
+    this.watchValueAndError()
   },
 
   methods: {
     // 监听value和errorMsg发生改变，对父组件提供本次改变之后的新数据
-    _watchValueAndError () {
+    watchValueAndError () {
       this.$watch(() => {
         return {
           value: this.formValues,
           errorMsg: this.formErrors
         }
       }, ({ value, errorMsg }) => {
-        this._change(
+        this.change(
           value,
           Object.values(errorMsg).filter(v => Object.values(v).length !== 0).sort((a, b) => a['index'] - b['index'])
         )
@@ -126,12 +136,12 @@ const formUnitBase = Vue.extend({
     },
 
     // 分割组件类型
-    _splitComponentType (type) {
+    splitComponentType (type) {
       let [compType, compParameter = ''] = type.split('|')
       return [compType, compParameter]
     },
 
-    _change (value, errorMsg) {
+    change (value, errorMsg) {
       this.$emit('input', value)
       this.$emit('change', {
         value,
@@ -140,12 +150,12 @@ const formUnitBase = Vue.extend({
       })
     },
 
-    _updateFormValues (key, val) {
-      this.$set(this.model[key], 'value', val)
+    updateFormValues (index, val) {
+      this.$set(this.model[index], 'value', val)
     },
 
     // 获取子级错误信息
-    _getError (name, err) {
+    getChildError (name, err) {
       this.$set(this.formErrors, name, err)
     }
   }

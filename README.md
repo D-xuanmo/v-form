@@ -71,7 +71,7 @@ module.exports = {
 |字段名|说明|类型|默认值
 |---|---|---|---|
 |v-model(value)|获取组件处理完成的数据|object|{}|
-|model|数据模型(具体类型参考后续文档)|object|{}|
+|model|数据模型(具体类型参考后续文档)|array|{}|
 |disabled|是否禁用表单|boolean|false|
 |label-width|label宽度|string|20%|
 |label-position|label对齐方式，可选：left/right|string|left|
@@ -111,11 +111,12 @@ module.exports = {
 > 以下是一个简单的数据格式，生成一个输入框，详细使用见目录example
 
 ```js
-const model = {
+const model = [
   // 以下三个文字输入示例为关联校验
   // 关联校验采取{rule}:@{field},@{field}格式
   // 接收字段采取@{rule}格式
-  text1: {
+  {
+    key: 'text1',
     value: '',
     rules: {
       label: '文字1',
@@ -126,7 +127,8 @@ const model = {
     }
   },
 
-  text2: {
+  {
+    key: 'text2',
     value: '',
     rules: {
       label: '文字2',
@@ -137,7 +139,8 @@ const model = {
     }
   },
 
-  text3: {
+  {
+    key: 'text3',
     value: '',
     rules: {
       label: '文字3',
@@ -149,7 +152,8 @@ const model = {
   },
 
   // 时间选择器
-  date: {
+  {
+    key: 'date',
     value: Date.now(),
     rules: {
       label: '时间',
@@ -161,7 +165,8 @@ const model = {
   },
 
   // 图片上传
-  file: {
+  {
+    key: 'file',
     // 用于显示列表
     value: [{ path: 'https://upyun.xuanmo.xin/test/20200418225229.png' }],
     rules: {
@@ -182,7 +187,7 @@ const model = {
       }
     }
   }
-}
+]
 ```
 
 ## 组件发生change事件返回的数据

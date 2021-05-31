@@ -41,7 +41,7 @@ export default {
     return {
       validator: {
         custom: {
-          message: '文字不正确2',
+          message: '关联文字校验未通过',
           params: ['target1', 'target2'],
           validate: (value, { target1, target2 }) => {
             return value === target1 && value === target2
@@ -55,8 +55,9 @@ export default {
       formError: [],
       isValid: false,
       disabled: false,
-      model: {
-        numberKeyboard: {
+      model: [
+        {
+          key: 'numberKeyboard',
           value: '',
           rules: {
             label: '数字键盘',
@@ -67,7 +68,8 @@ export default {
             // closeButtonText: '完成'
           }
         },
-        file: {
+        {
+          key: 'file',
           value: [{ path: 'https://www.xuanmo.xin/wp-content/uploads/2019/10/xuanmo_avatar.JPG' }],
           rules: {
             label: '文件上传',
@@ -84,53 +86,59 @@ export default {
             }
           }
         },
-        switch: {
+        {
+          key: 'switch',
           value: true,
           rules: {
             label: '是否启用编辑',
             type: 'VSwitch'
           }
         },
-        text1: {
+        {
+          key: 'text1',
           value: '',
           rules: {
-            label: '文字1',
+            label: '关联文字1',
             type: 'VInput',
             vRules: 'required|custom:@text2,@text3',
-            placeholder: '请输入文字',
-            errorMsg: '请输入文字',
+            placeholder: '请输入关联文字1',
+            errorMsg: '请输入关联文字1',
             extra: 'extra'
           }
         },
-        text2: {
+        {
+          key: 'text2',
           value: '',
           rules: {
-            label: '文字2',
+            label: '关联文字2',
             type: 'VInput',
             vRules: 'required|@custom',
-            placeholder: '请输入文字',
-            errorMsg: '请输入文字',
+            placeholder: '请输入关联文字2',
+            errorMsg: '请输入关联文字2',
             extra: 'extra'
           }
         },
-        text3: {
+        {
+          key: 'text3',
           value: '',
           rules: {
-            label: '文字3',
+            label: '关联文字3',
             type: 'VInput',
             vRules: 'required|@custom',
-            placeholder: '请输入文字',
-            errorMsg: '请输入文字'
+            placeholder: '请输入关联文字3',
+            errorMsg: '请输入关联文字3'
           }
         },
-        text4: {
+        {
+          key: 'text4',
           value: '文字内容',
           rules: {
             label: '文字4',
             type: 'VText'
           }
         },
-        checkbox: {
+        {
+          key: 'checkbox',
           value: ['a'],
           rules: {
             label: '复选框',
@@ -146,7 +154,8 @@ export default {
             ]
           }
         },
-        radio: {
+        {
+          key: 'radio',
           value: 'b',
           rules: {
             label: '单选框',
@@ -163,7 +172,8 @@ export default {
             ]
           }
         },
-        date: {
+        {
+          key: 'date',
           value: Date.now(),
           rules: {
             label: '时间',
@@ -171,7 +181,8 @@ export default {
             valueFormat: 'timestamp'
           }
         },
-        dateRange: {
+        {
+          key: 'dateRange',
           value: [Date.now(), Date.now()],
           rules: {
             label: '时间',
@@ -180,7 +191,8 @@ export default {
             rangeSeparator: '至'
           }
         },
-        number: {
+        {
+          key: 'number',
           value: '',
           rules: {
             label: '数字',
@@ -190,7 +202,8 @@ export default {
             errorMsg: '请输入数字'
           }
         },
-        address: {
+        {
+          key: 'address',
           value: '110000,110100,110114',
           rules: {
             label: '地址选择',
@@ -200,7 +213,8 @@ export default {
             errorMsg: '请输入地址'
           }
         },
-        textarea: {
+        {
+          key: 'textarea',
           value: '',
           rules: {
             label: '文本域',
@@ -210,7 +224,8 @@ export default {
             errorMsg: '文本域'
           }
         },
-        select: {
+        {
+          key: 'select',
           value: '4',
           rules: {
             label: '选择器',
@@ -227,7 +242,8 @@ export default {
             ]
           }
         },
-        selectMultiple: {
+        {
+          key: 'selectMultiple',
           value: '4,2',
           rules: {
             label: '多列选择器',
@@ -252,8 +268,11 @@ export default {
             ]
           }
         }
-      }
+      ]
     }
+  },
+  created() {
+    console.log(this)
   },
   methods: {
     _change ({ value, errorMsg, isValid }) {

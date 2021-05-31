@@ -1,29 +1,29 @@
 <template>
   <div class="v-form-conatiner">
-    <template v-for="(v, key, index) in model">
-      <v-cell v-if="v.rules.type === 'VCell'" :key="key" :form-model="v"></v-cell>
+    <template v-for="(item, index) in model">
+      <v-cell v-if="item.rules.type === 'VCell'" :key="item.key" :form-model="item"></v-cell>
       <template v-else>
         <row-2-col
-          :key="key"
-          :label="v.rules.label"
-          :required="(v.rules.vRules || '').indexOf('required') !== -1"
-          :disabled="v.rules.disabled"
+          :key="item.key"
+          :label="item.rules.label"
+          :required="(item.rules.vRules || '').indexOf('required') !== -1"
+          :disabled="item.rules.disabled"
         >
-          <slot slot="label" :name="`${key}-label`"></slot>
-          <slot slot="extra" :name="`${key}-extra`"></slot>
-          <slot :name="key" :data="v">
+          <slot slot="label" :name="`${item.key}-label`"></slot>
+          <slot slot="extra" :name="`${item.key}-extra`"></slot>
+          <slot :name="item.key" :data="item">
             <component
-              :is="_splitComponentType(v.rules.type)[0]"
-              :ref="key"
-              :customer-type="_splitComponentType(v.rules.type)[1]"
-              :value="v.value"
+              :is="splitComponentType(item.rules.type)[0]"
+              :ref="item.key"
+              :customer-type="splitComponentType(item.rules.type)[1]"
+              :value="item.value"
               :form-model="{
-                ...v,
-                name: key,
+                ...item,
+                name: item.key,
                 index
               }"
-              @input="_updateFormValues"
-              @error="_getError"
+              @input="updateFormValues"
+              @error="getChildError"
               @event="$emit('event', $event)"
             ></component>
           </slot>
@@ -40,5 +40,5 @@ export default formUnitBase.extend()
 </script>
 
 <style lang="less" scoped>
-@import "../style/index";
+@import "../style/index.less";
 </style>
