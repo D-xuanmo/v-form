@@ -18,8 +18,12 @@ yarn add @xuanmo/v-form
 
 - js
 ```js
-// 引入组件
+// 引入组件，推荐使用这种方式
 import VForm from '@xuanmo/v-form'
+
+// 不需要编译方式引入
+// import VForm from "@xuanmo/v-form/dist/v-form.umd.js"
+// import "@xuanmo/v-form/dist/v-form.css"
 
 // 注册组件
 Vue.use(VForm)
@@ -56,7 +60,7 @@ Vue.use(VForm, {
 <v-form :model="model"></v-form>
 ```
 
-- `vue.config.js`配置组件编译(注：如果组件引入采取的后编译需要配置这一项)
+- `vue.config.js` 配置组件编译(注：如果组件引入采取的后编译需要配置这一项)
 ```js
 module.exports = {
   transpileDependencies: [
