@@ -1,14 +1,13 @@
 # 基于vant-ui表单封装的表单组件
-* 目前已经集成的组件（Address/Checkbox/DatePicker/Input/Radio/Select/Text/Switch/Upload），其他组件还在完善中...
-* 组件的调用方式采取json配置的形式，具体参数见model数据说明
-* 校验规则已经集成VeeValidate插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
+* 目前已经集成的组件（Address/Checkbox/DatePicker/Input/Radio/Select/Text/Switch/Upload）
+* 组件的调用方式采取 `JSON` 配置的形式，具体参数见model数据说明
+* 校验规则已经集成 `VeeValidate` 插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
 * [在线演示](https://codesandbox.io/s/v-formshili-3hs2c)
 
 ## 语法约定
-* 组件内部方法使用`_`作为前缀
-* mixin公用方法使用`__`作为前缀
-* 事件传递使用`e__`作为前缀
-* `@`为组件校验规则保留关键字
+* mixin公用方法使用 `__` 作为前缀
+* 事件传递使用 `e__` 作为前缀
+* `@` 为组件校验规则保留关键字
 
 ## 安装
 ```bash
