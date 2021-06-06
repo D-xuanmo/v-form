@@ -24,13 +24,17 @@
 
   .v-form-row__content {
     flex: 1;
-    display: flex;
-    align-items: center;
     padding: 10px;
     word-break: break-all;
 
     /deep/ .van-cell {
       padding: 0;
+    }
+
+    .v-form-row__error {
+      align-self: flex-start;
+      font-size: 12px;
+      color: @warning;
     }
   }
 

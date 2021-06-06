@@ -35,9 +35,9 @@ Vue.use(VForm)
 Vue.use(VForm, {
   validator: {
     custom: {
-      message: '长度不能大于{length}',
       // 此处定义的值可以在`validate`函数的第二个参数接收
       params: ['length'],
+      message: '长度不能大于{length}',
       validate: (value, { length }) => {
         return value.length <= length
       }
@@ -45,8 +45,8 @@ Vue.use(VForm, {
 
     // 关联校验，可将多个表单项的值做比对
     target: {
-      message: '关联校验失败',
       params: ['target1', 'target2'],
+      message: '关联校验失败',
       validate: (value, { target1, target2 }) => {
         return value === target1 && value === target2
       }
@@ -162,7 +162,7 @@ const model = [
       label: '时间',
       // 共4种类型：datetime、year-month、date、time
       type: 'VDatePicker|datetime',
-      // 数据格式处理：timestamp时间戳，其他用法参考：https://github.com/xuanmos/datejs
+      // 数据格式处理：timestamp时间戳，其他用法参考：https://github.com/D-xuanmo/datejs
       valueFormat: 'yyyy-MM-dd'
     }
   },

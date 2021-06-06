@@ -8,6 +8,7 @@
           :label="item.rules.label"
           :required="(item.rules.vRules || '').indexOf('required') !== -1"
           :disabled="item.rules.disabled"
+          :error="formErrors[item.key]"
         >
           <slot slot="label" :name="`${item.key}-label`"></slot>
           <slot slot="extra" :name="`${item.key}-extra`"></slot>
