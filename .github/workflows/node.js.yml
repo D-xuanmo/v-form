@@ -1,16 +1,13 @@
 name: Node.js CI
 
 on:
-  # 监听代码的 push 操作
   push:
-    # 触发的分支
     branches:
-      # 可以为数组或者字符串，这里监听 master 分支的提交
       - master
+    paths:
+     - 'package.json'
 
-# 任务队列
 jobs:
-  # 任务名，自定义
   publish-npm:
 
     runs-on: ubuntu-latest
@@ -20,16 +17,13 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
       with:
-        # 选择的 Nodejs 版本
         node-version: 14
         registry-url: https://registry.npmjs.org/
 
-    # 需要执行的命令，可以写多条，顺序执行
     - run: npm install
     - run: npm run build:lib
     - run: npm publish --access public
 
-      # 本次执行的环境变量
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
