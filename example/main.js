@@ -8,15 +8,15 @@ import VForm from '@'
 Vue.use(VForm, {
   validator: {
     custom: {
-      message: '长度不能大于{length}',
       params: ['length'],
+      message: '长度不能大于{length}',
       validate: (value, { length }) => {
         return value.length <= length
       }
     },
     target: {
-      message: 'password不正确',
       params: ['target'],
+      message: 'password不正确',
       validate: (value, { target }) => {
         return value === target
       }

@@ -28,6 +28,7 @@ module.exports = {
     'vue/html-closing-bracket-spacing': 'off',
     'vue/html-self-closing': 'off',
     'vue/multiline-html-element-content-newline': 'off',
-    'vue/mustache-interpolation-spacing': 'off'
+    'vue/mustache-interpolation-spacing': 'off',
+    'vue/no-lone-template': 'off'
   }
 };

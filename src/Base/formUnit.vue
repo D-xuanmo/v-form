@@ -127,7 +127,7 @@ const formUnitBase = Vue.extend({
       }, ({ value, errorMsg }) => {
         this.change(
           value,
-          Object.values(errorMsg).filter(v => Object.values(v).length !== 0).sort((a, b) => a['index'] - b['index'])
+          Object.values(errorMsg).filter(v => Object.values(v).length !== 0).sort((a, b) => a.index - b.index)
         )
       }, {
         deep: true,
