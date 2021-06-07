@@ -63,13 +63,26 @@ const formUnitBase = Vue.extend({
       // 内部数据模型
       formModel: [],
 
+      // 处理后的 value
       formValues: {},
 
+      // 所有的错误信息
       formErrors: {},
+      showErrorMessage: false,
 
       crossFields: {},
 
       debounceChange: null
+    }
+  },
+
+  computed: {
+    formErrorList () {
+      return Object.values(this.formErrors).filter(v => Object.values(v).length !== 0).sort((a, b) => a.index - b.index)
+    },
+
+    isValid () {
+      return this.formErrorList.length === 0
     }
   },
 
@@ -92,12 +105,11 @@ const formUnitBase = Vue.extend({
   created () {
     // 统一传递数据
     this.debounceChange = debounce((value) => {
-      const errorMsg = Object.values(this.formErrors).filter(v => Object.values(v).length !== 0).sort((a, b) => a.index - b.index)
       this.$emit('input', value)
       this.$emit('change', {
         value,
-        errorMsg,
-        isValid: errorMsg.length === 0
+        errorMsg: this.formErrorList,
+        isValid: this.isValid
       })
     }, this.$VForm.debounceTime)
 
@@ -109,6 +121,11 @@ const formUnitBase = Vue.extend({
   },
 
   methods: {
+    validate (callback) {
+      this.showErrorMessage = true
+      typeof callback === 'function' && callback(this.isValid)
+    },
+
     createModel () {
       const formModel = this.$VForm.primaryData ? this.modelFormatter(this.model) : this.model
       this.formModel = formModel

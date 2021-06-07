@@ -28,6 +28,11 @@ import VForm from '@xuanmo/v-form'
 
 // 注册组件
 Vue.use(VForm)
+
+// 设置防抖时间，默认200ms
+Vue.use(VForm, {
+  debounceTime: 200
+})
 ```
 
 ### 修改打包配置（注：如果组件引入采取的后编译需要配置这一项）
@@ -125,7 +130,6 @@ Vue.use(VForm, {
 |VUpload|文件上传|
 
 ## Attributes
-
 |字段名|说明|类型|默认值
 |---|---|---|---|
 |v-model(value)|获取组件处理完成的数据|object|{}|
@@ -137,8 +141,11 @@ Vue.use(VForm, {
 |show-label|是否显示label|boolean|true|
 |validator|局部校验规则|object|{}|
 
+## Form Methods
+|方法|说明|参数
+|---|---|---|
+|validate|对整个表单执行校验|Function(callback:Function(boolean))|
 ## Events
-
 |事件名|说明|回调参数
 |---|---|---|
 |change|数据更改时触发|object{value,errorMsg,isValid}|

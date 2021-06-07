@@ -16,7 +16,7 @@
     </div>
     <div class="v-form-row__content">
       <slot></slot>
-      <div v-show="error.errorMsg" class="v-form-row__error">{{ error.errorMsg }}</div>
+      <div v-show="showErrorMsg && error.errorMsg" class="v-form-row__error">{{ error.errorMsg }}</div>
     </div>
     <div v-if="$slots.extra" class="v-form-row__extra">
       <slot name="extra"></slot>
@@ -49,6 +49,12 @@ export default {
     error: {
       type: Object,
       default: () => ({})
+    }
+  },
+
+  computed: {
+    showErrorMsg () {
+      return this.VFormRoot.showErrorMessage
     }
   }
 }

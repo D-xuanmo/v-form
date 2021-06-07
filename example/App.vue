@@ -271,8 +271,8 @@ export default {
       ]
     }
   },
-  created() {
-    console.log(this)
+  mounted() {
+    console.log(this.$refs.vform)
   },
   methods: {
     _change ({ value, errorMsg, isValid }) {
@@ -284,11 +284,10 @@ export default {
       console.log(type, value)
     },
     _submit () {
-      if (!this.isValid) {
-        this.$toast(this.formError[0].errorMsg)
-        return
-      }
-      this.$toast('提交成功')
+      this.$refs.vform.validate(isValid => {
+        if (!isValid) return this.$toast(this.formError[0].errorMsg)
+        this.$toast('提交成功')
+      })
     }
   }
 }
