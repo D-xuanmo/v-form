@@ -45,7 +45,7 @@ export default {
       immediate: true,
       deep: true,
       handler (v) {
-        this.__generationRules(v.rules, v)
+        this.__createRules(v.rules, v)
       }
     },
 
@@ -67,7 +67,7 @@ export default {
     },
 
     // 创建校验规则
-    __generationRules ({ vRules }) {
+    __createRules ({ vRules }) {
       vRules && (this.rulesList = vRules.split('|'))
     },
 

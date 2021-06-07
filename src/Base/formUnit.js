@@ -1,10 +1,8 @@
-<script>
 import Vue from 'vue'
 import components from './components'
 import validate, { extend } from '../validator'
 
 const formUnitBase = Vue.extend({
-  name: 'VFormUnit',
   components,
 
   provide () {
@@ -73,43 +71,12 @@ const formUnitBase = Vue.extend({
   },
 
   watch: {
-    model: {
-      deep: true,
-      immediate: true,
-      handler (model) {
-        const formModel = this.$VForm.primaryData ? this.modelFormatter(model) : model
-        this.formModel = formModel
-
-        const formValues = {}
-
-        formModel.forEach(item => {
-          const { key, value, rules } = item
-
-          // 排除展示类组件
-          if (!(['VCell', 'VText'].includes(rules.type))) {
-            formValues[key] = value
-          }
-
-          // 生成跨域校验字段
-          const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
-          crossFields.forEach(_ => {
-            const [name, cross] = _.split(':')
-            this.crossFields[name] = {
-              local: key,
-              target: cross.split(',').map(_ => _.replace('@', ''))
-            }
-          })
-        })
-        this.formValues = formValues
-      }
-    },
-
     value: {
       deep: true,
-      immediate: true,
       handler (value) {
+        this.formValues = value
         for (let [_key, _value] of Object.entries(value)) {
-          this.model.map(item => {
+          this.model.forEach(item => {
             if (item.key === _key) {
               item.value = _value
             }
@@ -120,6 +87,9 @@ const formUnitBase = Vue.extend({
   },
 
   created () {
+    // 创建数据模型
+    this.createModel()
+
     // 注册局部校验规则
     extend(this.validator)
 
@@ -127,6 +97,33 @@ const formUnitBase = Vue.extend({
   },
 
   methods: {
+    createModel () {
+      const formModel = this.$VForm.primaryData ? this.modelFormatter(this.model) : this.model
+      this.formModel = formModel
+
+      const formValues = {}
+
+      formModel.forEach(item => {
+        const { key, value, rules } = item
+
+        // 排除展示类组件
+        if (!(['VCell', 'VText'].includes(rules.type))) {
+          formValues[key] = value
+        }
+
+        // 生成跨域校验字段
+        const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
+        crossFields.forEach(_ => {
+          const [name, cross] = _.split(':')
+          this.crossFields[name] = {
+            local: key,
+            target: cross.split(',').map(_ => _.replace('@', ''))
+          }
+        })
+      })
+      this.formValues = formValues
+    },
+
     // 监听 value 和 errorMsg 发生改变，对父组件提供本次改变之后的新数据
     watchValueAndError () {
       const entry = () => ({
@@ -147,7 +144,7 @@ const formUnitBase = Vue.extend({
 
     // 处理数据模型
     // 当所有的属性不存在 rules 字段的情况下调用
-    modelFormatter(model) {
+    modelFormatter (model) {
       const fixedKeys = ['key', 'value']
       const result = []
       model.forEach(item => {
@@ -193,4 +190,3 @@ const formUnitBase = Vue.extend({
 })
 
 export default formUnitBase
-</script>
