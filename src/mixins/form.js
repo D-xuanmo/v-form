@@ -1,7 +1,7 @@
 /**
  * 基础表单公用
  */
-
+import { debounce } from '../utils'
 export default {
   inject: ['VFormRoot', '$validate'],
 
@@ -30,7 +30,8 @@ export default {
   data () {
     return {
       rulesList: [],
-      errorMessage: {}
+      errorMessage: {},
+      debounce: null
     }
   },
 
@@ -58,7 +59,13 @@ export default {
   },
 
   created () {
-    !this.disabled && this.__validator(this.value)
+    this.debounce = debounce((type, value) => {
+      this.$emit('event', {
+        type,
+        value
+      })
+    }, this.$VForm.debounceTime)
+    !this.disabled && this.e__input(this.value)
   },
 
   methods: {
@@ -72,14 +79,12 @@ export default {
     },
 
     __eventHandler (type, value) {
-      this.$nextTick(() => this.$emit('event', {
-        type,
-        value
-      }))
+      this.debounce(type, value)
     },
 
     // 向父级提交当前组件的值
-    e__input (val) {
+    async e__input (val) {
+      await this.__validator(val)
       this.$emit('input', this.formModel.index, val)
       this.__eventHandler('input', {
         ...this.formModel,

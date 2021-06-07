@@ -9,10 +9,14 @@ const VForm = {
    * @param {object} opt 扩展参数
    * @param {boolean} opt.primaryData 组件配置项是否在 rules 字段下
    * @param {object} opt.validator 需要全局注册的自定义校验规则
+   * @param {number} opt.debounceTime 防抖时间，单位：ms
    */
   install (vue, opt = {}) {
     Vue.component('VForm', Base)
-    Vue.prototype.$VForm = opt
+    Vue.prototype.$VForm = {
+      ...opt,
+      debounceTime: opt.debounceTime || 200
+    }
 
     // 注册自定义校验规则
     extend(opt.validator)

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import components from './components'
 import validate, { extend } from '../validator'
+import { debounce } from '../utils'
 
 const formUnitBase = Vue.extend({
   components,
@@ -66,7 +67,9 @@ const formUnitBase = Vue.extend({
 
       formErrors: {},
 
-      crossFields: {}
+      crossFields: {},
+
+      debounceChange: null
     }
   },
 
@@ -87,13 +90,22 @@ const formUnitBase = Vue.extend({
   },
 
   created () {
+    // 统一传递数据
+    this.debounceChange = debounce((value) => {
+      const errorMsg = Object.values(this.formErrors).filter(v => Object.values(v).length !== 0).sort((a, b) => a.index - b.index)
+      this.$emit('input', value)
+      this.$emit('change', {
+        value,
+        errorMsg,
+        isValid: errorMsg.length === 0
+      })
+    }, this.$VForm.debounceTime)
+
     // 创建数据模型
     this.createModel()
 
     // 注册局部校验规则
     extend(this.validator)
-
-    this.watchValueAndError()
   },
 
   methods: {
@@ -122,24 +134,7 @@ const formUnitBase = Vue.extend({
         })
       })
       this.formValues = formValues
-    },
-
-    // 监听 value 和 errorMsg 发生改变，对父组件提供本次改变之后的新数据
-    watchValueAndError () {
-      const entry = () => ({
-        value: this.formValues,
-        errorMsg: this.formErrors
-      })
-      const callback = ({ value, errorMsg }) => {
-        this.change(
-          value,
-          Object.values(errorMsg).filter(v => Object.values(v).length !== 0).sort((a, b) => a.index - b.index)
-        )
-      }
-      this.$watch(entry, callback, {
-        deep: true,
-        immediate: true
-      })
+      this.debounceChange(formValues)
     },
 
     // 处理数据模型
@@ -169,22 +164,17 @@ const formUnitBase = Vue.extend({
       return [compType, compParameter]
     },
 
-    change (value, errorMsg) {
-      this.$emit('input', value)
-      this.$emit('change', {
-        value,
-        isValid: errorMsg.length === 0,
-        errorMsg
-      })
-    },
-
-    updateFormValues (index, val) {
-      this.$set(this.model[index], 'value', val)
+    // 数据上报
+    updateFormValues (index, value) {
+      this.$set(this.formValues, this.formModel[index].key, value)
+      this.formModel[index].value = value
+      this.debounceChange(this.formValues)
     },
 
     // 获取子级错误信息
     getChildError (name, err) {
       this.$set(this.formErrors, name, err)
+      this.debounceChange(this.value)
     }
   }
 })
