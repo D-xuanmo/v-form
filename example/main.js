@@ -6,6 +6,7 @@ Vue.config.productionTip = false
 import VForm from '@'
 
 Vue.use(VForm, {
+  // primaryData: true,
   validator: {
     custom: {
       params: ['length'],

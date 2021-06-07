@@ -11,6 +11,7 @@
 
 ## 安装
 ```bash
+# 推荐使用 yarn 安装
 yarn add @xuanmo/v-form
 ```
 
@@ -37,6 +38,41 @@ module.exports = {
     '@xuanmo/v-form'
   ]
 }
+```
+
+### 修改数据模型配置
+```js
+Vue.use(VForm, {
+  primaryData: true
+})
+
+// 默认的数据模型
+const model1 = [
+  {
+    key: 'text1',
+    value: '',
+    rules: {
+      label: '文字1',
+      type: 'VInput',
+      vRules: 'required|custom:@text2,@text3',
+      placeholder: '请输入文字',
+      errMsg: '请输入文字'
+    }
+  }
+]
+
+// 增加 primaryData 属性后的数据模型
+const model2 = [
+  {
+    key: 'text1',
+    value: '',
+    label: '文字1',
+    type: 'VInput',
+    vRules: 'required|custom:@text2,@text3',
+    placeholder: '请输入文字',
+    errMsg: '请输入文字'
+  }
+]
 ```
 
 ### 注册全局自定义校验规则
@@ -70,7 +106,7 @@ Vue.use(VForm, {
 
 ### html
 ```html
-<v-form :model="model"></v-form>
+<v-form v-model="value" :model="model"></v-form>
 ```
 
 ## 可用组件（所有的组件的属性都继承自Vant-UI属性，不包含上传文件组件）

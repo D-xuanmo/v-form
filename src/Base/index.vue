@@ -1,6 +1,6 @@
 <template>
   <div class="v-form-conatiner">
-    <template v-for="(item, index) in model">
+    <template v-for="(item, index) in formModel">
       <v-cell v-if="item.rules.type === 'VCell'" :key="item.key" :form-model="item"></v-cell>
       <template v-else>
         <row-2-col
@@ -37,7 +37,9 @@
 <script>
 import 'vant/lib/index.less'
 import formUnitBase from './formUnit'
-export default formUnitBase.extend()
+export default formUnitBase.extend({
+  name: 'VForm'
+})
 </script>
 
 <style lang="less" scoped>

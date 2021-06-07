@@ -3,6 +3,13 @@ import Base from './Base/index.vue'
 import { extend } from './validator'
 
 const VForm = {
+  /**
+   * 注册组件函数
+   * @param {object} vue Vue
+   * @param {object} opt 扩展参数
+   * @param {boolean} opt.primaryData 组件配置项是否在 rules 字段下
+   * @param {object} opt.validator 需要全局注册的自定义校验规则
+   */
   install (vue, opt = {}) {
     Vue.component('VForm', Base)
     Vue.prototype.$VForm = opt

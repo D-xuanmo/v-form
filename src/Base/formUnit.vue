@@ -15,6 +15,7 @@ const formUnitBase = Vue.extend({
   },
 
   props: {
+    // 数据模型
     model: {
       type: Array,
       required: true,
@@ -60,8 +61,13 @@ const formUnitBase = Vue.extend({
 
   data () {
     return {
+      // 内部数据模型
+      formModel: [],
+
       formValues: {},
+
       formErrors: {},
+
       crossFields: {}
     }
   },
@@ -71,12 +77,16 @@ const formUnitBase = Vue.extend({
       deep: true,
       immediate: true,
       handler (model) {
+        const formModel = this.$VForm.primaryData ? this.modelFormatter(model) : model
+        this.formModel = formModel
+
         const formValues = {}
-        model.forEach(item => {
+
+        formModel.forEach(item => {
           const { key, value, rules } = item
 
           // 排除展示类组件
-          if ((rules.type !== 'VCell') && (rules.type !== 'VText')) {
+          if (!(['VCell', 'VText'].includes(rules.type))) {
             formValues[key] = value
           }
 
@@ -97,11 +107,11 @@ const formUnitBase = Vue.extend({
     value: {
       deep: true,
       immediate: true,
-      handler (val) {
-        for (let [key, value] of Object.entries(val)) {
+      handler (value) {
+        for (let [_key, _value] of Object.entries(value)) {
           this.model.map(item => {
-            if (item.key === key) {
-              item.value = value
+            if (item.key === _key) {
+              item.value = _value
             }
           })
         }
@@ -117,22 +127,43 @@ const formUnitBase = Vue.extend({
   },
 
   methods: {
-    // 监听value和errorMsg发生改变，对父组件提供本次改变之后的新数据
+    // 监听 value 和 errorMsg 发生改变，对父组件提供本次改变之后的新数据
     watchValueAndError () {
-      this.$watch(() => {
-        return {
-          value: this.formValues,
-          errorMsg: this.formErrors
-        }
-      }, ({ value, errorMsg }) => {
+      const entry = () => ({
+        value: this.formValues,
+        errorMsg: this.formErrors
+      })
+      const callback = ({ value, errorMsg }) => {
         this.change(
           value,
           Object.values(errorMsg).filter(v => Object.values(v).length !== 0).sort((a, b) => a.index - b.index)
         )
-      }, {
+      }
+      this.$watch(entry, callback, {
         deep: true,
         immediate: true
       })
+    },
+
+    // 处理数据模型
+    // 当所有的属性不存在 rules 字段的情况下调用
+    modelFormatter(model) {
+      const fixedKeys = ['key', 'value']
+      const result = []
+      model.forEach(item => {
+        const resultItem = {
+          rules: {}
+        }
+        for (const [key, value] of Object.entries(item)) {
+          if (fixedKeys.includes(key)) {
+            resultItem[key] = value
+            continue
+          }
+          resultItem.rules[key] = value
+        }
+        result.push(resultItem)
+      })
+      return result
     },
 
     // 分割组件类型

@@ -1,15 +1,24 @@
 /**
  * 深拷贝
- * @param {array | object} obj
+ * @param {array | object} data
  * @returns {array | object}
  */
-export const deepCopy = obj => {
-  let result = Array.isArray(obj) ? [] : {}
-  for (let [key, value] of Object.entries(obj)) {
-    result[key] = typeof value === 'object' ? deepCopy(value) : value
+export function deepCopy (data) {
+  if ([null, undefined].includes(data)) return data
+
+  if (typeof data === 'object') {
+    const result = Array.isArray(data) ? [] : {}
+
+    for (let i in data) {
+      result[i] = deepCopy(data[i])
+    }
+
+    return result
   }
-  return result
+
+  return data
 }
+
 
 /**
  * 判断是否为对象

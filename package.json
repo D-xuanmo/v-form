@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "private": false,
   "main": "src/index.js",
   "author": "xuanmo <me@xuanmo.xin>",
