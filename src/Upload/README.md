@@ -12,7 +12,7 @@
 |headers|上传文件附加的请求头参数|object|{}|
 |data|上传文件时附加的数据|object|{}|
 |props|用于自定义字段，具体参数看后续文档|object|{}|
-|onSuccess|上传上传成功之后渲染组件之前执行的函数，回调的第一个参数是本次请求的`response`，需要返回用于渲染组件的参数|function|-|
+|onSuccess|上传成功之后渲染组件之前执行的函数，回调的第一个参数是本次请求的`response`，需要返回用于渲染组件的参数|function|-|
 
 ## Events
 |事件|描述|回调参数|

@@ -5,7 +5,7 @@
 * [在线演示](https://codesandbox.io/s/v-formshili-3hs2c)
 
 ## 语法约定
-* mixin公用方法使用 `__` 作为前缀
+* `mixin` 公用方法使用 `__` 作为前缀
 * 事件传递使用 `e__` 作为前缀
 * `@` 为组件校验规则保留关键字
 
@@ -16,7 +16,7 @@ yarn add @xuanmo/v-form
 
 ## 使用
 
-- js
+### 引入注册组件
 ```js
 // 引入组件，推荐使用这种方式
 import VForm from '@xuanmo/v-form'
@@ -27,7 +27,20 @@ import VForm from '@xuanmo/v-form'
 
 // 注册组件
 Vue.use(VForm)
+```
 
+### 修改打包配置（注：如果组件引入采取的后编译需要配置这一项）
+```js
+// vue.config.js
+module.exports = {
+  transpileDependencies: [
+    '@xuanmo/v-form'
+  ]
+}
+```
+
+### 注册全局自定义校验规则
+```js
 /**
  * 自定义校验规则示例，规则遵循VeeValidate规则扩展
  * 更多资料查看：https://logaretm.github.io/vee-validate/guide/basics.html#validation-provider
@@ -55,21 +68,27 @@ Vue.use(VForm, {
 })
 ```
 
-- html
+### html
 ```html
 <v-form :model="model"></v-form>
 ```
 
-- `vue.config.js` 配置组件编译(注：如果组件引入采取的后编译需要配置这一项)
-```js
-module.exports = {
-  transpileDependencies: [
-    '@xuanmo/v-form'
-  ]
-}
-```
+## 可用组件（所有的组件的属性都继承自Vant-UI属性，不包含上传文件组件）
+|组件名|描述|
+|---|---|
+|VAddress|地址选择器|
+|VCheckbox|复选框|
+|VRadio|单选框|
+|VInput|输入框|
+|VNumberKeyboard|数字输入框|
+|VDatePicker|时间选择器|
+|VDatePickerRange|时间区间选择器|
+|VSelect|下拉选择框|
+|VSwitch|开关按钮|
+|VText|纯文字展示|
+|VUpload|文件上传|
 
-## props
+## Attributes
 
 |字段名|说明|类型|默认值
 |---|---|---|---|
@@ -82,14 +101,14 @@ module.exports = {
 |show-label|是否显示label|boolean|true|
 |validator|局部校验规则|object|{}|
 
-## events
+## Events
 
 |事件名|说明|回调参数
 |---|---|---|
 |change|数据更改时触发|object{value,errorMsg,isValid}|
 |event|数据发生改变所发送的事件|object{event,formModel}|
 
-## slots
+## Slots
 > 组件可接受多个slot，用于替换当前行的表单组件，会为该slot传入该组件的原始数据，每个slot的name为当前行的key，注：该slot不继承所有校验规则
 ```html
 <!-- 示例如下 -->
@@ -193,7 +212,7 @@ const model = [
 ]
 ```
 
-## 组件发生change事件返回的数据
+## 组件 change 事件返回的数据
 ```json
 {
   "value": {}, // 所有的数据经过处理后会以一个对象存放在这个字段
