@@ -101,7 +101,8 @@ Vue.use(VForm, {
     target: {
       params: ['target1', 'target2'],
       message: '关联校验失败',
-      validate: (value, { target1, target2 }) => {
+      // validate 第三个参数为正在执行校验相关联的组件实例
+      validate: (value, { target1, target2 }, ctx) => {
         return value === target1 && value === target2
       }
     }

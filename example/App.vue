@@ -34,8 +34,8 @@ export default {
   name: 'App',
   components: {
     // 'van-field': Field,
-    'van-switch': Switch,
-    'van-button': Button
+    [Switch.name]: Switch,
+    [Button.name]: Button
   },
   data () {
     return {
@@ -43,7 +43,8 @@ export default {
         custom: {
           message: '关联文字校验未通过',
           params: ['target1', 'target2'],
-          validate: (value, { target1, target2 }) => {
+          validate: (value, { target1, target2 }, ctx) => {
+            console.log(ctx)
             return value === target1 && value === target2
           }
         }

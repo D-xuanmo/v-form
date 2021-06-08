@@ -104,29 +104,39 @@ export default {
       const isCrossField = /^@/.test(rules[1])
 
       // 是否为关联校验的接收字段
-      const isTarget = /^@/.test(rule)
+      const isCrossTarget = /^@/.test(rule)
 
-      const _VFrom = this.VFormRoot
+      const formRoot = this.VFormRoot
 
-      const _validate = (params, target) => {
-        const result = {}
+      // 生成关联校验的相关数据
+      const createCrossParams = (params, target) => {
+        const crossParams = {}
+        const context = {}
         target.forEach((item, i) => {
-          result[params[i]] = this.findModelByKey(item).value
+          crossParams[params[i]] = this.findModelByKey(item).value
+
+          // 当前关联组件实例
+          context[item] = formRoot.$refs[item][0]
         })
-        return result
+        return {
+          crossParams,
+          context
+        }
       }
 
       // TODO 代码待优化
       // 关联校验
       if (isCrossField) {
-        const _crossRule = rules[0]
+        const crossRule = rules[0]
 
-        let currValidate = _VFrom.validator[_crossRule] || this.$VForm.validator[_crossRule]
+        let currValidate = formRoot.validator[crossRule] || this.$VForm.validator[crossRule]
 
-        let crossFields = _VFrom.crossFields[_crossRule]
+        let crossFields = formRoot.crossFields[crossRule]
+
+        const { crossParams, context } = createCrossParams(currValidate.params, crossFields.target)
 
         return Promise.resolve({
-          valid: currValidate.validate(val, _validate(currValidate.params, crossFields.target)),
+          valid: currValidate.validate(val, crossParams, context),
           failedRules: {
             required: null
           },
@@ -135,21 +145,24 @@ export default {
       }
 
       // 关联校验被绑定字段
-      if (isTarget) {
-        const _targetRule = rule.replace('@', '')
+      if (isCrossTarget) {
+        const targetRule = rule.replace('@', '')
 
-        let currValidate = _VFrom.validator[_targetRule] || this.$VForm.validator[_targetRule]
+        let currValidate = formRoot.validator[targetRule] || this.$VForm.validator[targetRule]
 
-        let crossFields = _VFrom.crossFields[_targetRule]
+        let crossFields = formRoot.crossFields[targetRule]
+
+        const { crossParams, context } = createCrossParams(currValidate.params, crossFields.target)
 
         const valid = currValidate.validate(
           this.findModelByKey(crossFields.local).value,
-          _validate(currValidate.params, crossFields.target)
+          crossParams,
+          context
         )
         if (valid && isCrossField) {
-          _VFrom.formErrors[crossFields.local] = {}
+          formRoot.formErrors[crossFields.local] = {}
         } else {
-          _VFrom.$refs[crossFields.local][0].__validator(this.findModelByKey(crossFields.local).value)
+          formRoot.$refs[crossFields.local][0].__validator(this.findModelByKey(crossFields.local).value)
         }
         return Promise.resolve({
           valid: true,
