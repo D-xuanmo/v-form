@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import components from './components'
 import validate, { extend } from '../validator'
-import { debounce } from '../utils'
+import { debounce, isRegExp } from '../utils'
 
 const formUnitBase = Vue.extend({
   components,
@@ -141,14 +141,16 @@ const formUnitBase = Vue.extend({
         }
 
         // 生成跨域校验字段
-        const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
-        crossFields.forEach(_ => {
-          const [name, cross] = _.split(':')
-          this.crossFields[name] = {
-            local: key,
-            target: cross.split(',').map(_ => _.replace('@', ''))
-          }
-        })
+        if (!isRegExp(rules.vRules)) {
+          const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
+          crossFields.forEach(_ => {
+            const [name, cross] = _.split(':')
+            this.crossFields[name] = {
+              local: key,
+              target: cross.split(',').map(_ => _.replace('@', ''))
+            }
+          })
+        }
       })
       this.formValues = formValues
       this.debounceChange(formValues)

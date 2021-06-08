@@ -1,31 +1,16 @@
 /**
- * 深拷贝
- * @param {array | object} data
- * @returns {array | object}
- */
-export function deepCopy (data) {
-  if ([null, undefined].includes(data)) return data
-
-  if (typeof data === 'object') {
-    const result = Array.isArray(data) ? [] : {}
-
-    for (let i in data) {
-      result[i] = deepCopy(data[i])
-    }
-
-    return result
-  }
-
-  return data
-}
-
-
-/**
  * 判断是否为对象
  * @param {*} obj 数据源
  * @returns {boolean}
  */
 export const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
+
+/**
+ * 判断是否为正则
+ * @param {*} regexp 数据
+ * @returns {boolean}
+ */
+export const isRegExp = regexp => Object.prototype.toString.call(regexp) === '[object RegExp]'
 
 /**
  * 判断url是否为图片
@@ -53,4 +38,25 @@ export function debounce (fn, wait = 0, immediate = false) {
       immediate ? (_immediate = true) : fn.apply(this, arguments)
     }, wait)
   }
+}
+
+/**
+ * 深拷贝
+ * @param {array | object} data
+ * @returns {array | object}
+ */
+export function deepCopy (data) {
+  if ([null, undefined].includes(data)) return data
+
+  if (typeof data === 'object') {
+    const result = Array.isArray(data) ? [] : {}
+
+    for (let i in data) {
+      result[i] = deepCopy(data[i])
+    }
+
+    return result
+  }
+
+  return data
 }

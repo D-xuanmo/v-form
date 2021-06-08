@@ -6,7 +6,7 @@
         <row-2-col
           :key="item.key"
           :label="item.rules.label"
-          :required="(item.rules.vRules || '').indexOf('required') !== -1"
+          :required="(item.rules.vRules || '').toString().indexOf('required') !== -1"
           :disabled="item.rules.disabled"
           :error="formErrors[item.key]"
         >

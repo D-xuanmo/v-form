@@ -70,6 +70,17 @@ export default {
           }
         },
         {
+          key: 'regexp',
+          value: '',
+          rules: {
+            label: '正则校验',
+            type: 'VInput',
+            vRules: /\d+/,
+            placeholder: '请输入',
+            errorMsg: '只能输入数字'
+          }
+        },
+        {
           key: 'file',
           value: [{ path: 'https://www.xuanmo.xin/wp-content/uploads/2019/10/xuanmo_avatar.JPG' }],
           rules: {

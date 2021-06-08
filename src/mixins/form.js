@@ -1,7 +1,5 @@
-/**
- * 基础表单公用
- */
-import { debounce } from '../utils'
+// 基础表单公用
+import { debounce, isRegExp } from '../utils'
 export default {
   inject: ['VFormRoot', '$validate'],
 
@@ -38,6 +36,10 @@ export default {
   computed: {
     disabled () {
       return this.formModel.rules.disabled || this.VFormRoot.disabled
+    },
+
+    isRegExp () {
+      return isRegExp(this.formModel.rules.vRules)
     }
   },
 
@@ -75,7 +77,9 @@ export default {
 
     // 创建校验规则
     __createRules ({ vRules }) {
-      vRules && (this.rulesList = vRules.split('|'))
+      if (vRules && !this.isRegExp) {
+        this.rulesList = vRules.split('|')
+      }
     },
 
     __eventHandler (type, value) {
@@ -98,6 +102,8 @@ export default {
     },
 
     _validateObserver (val, rule) {
+      const formRoot = this.VFormRoot
+
       const rules = rule.split(':')
 
       // 是否为关联校验
@@ -105,8 +111,6 @@ export default {
 
       // 是否为关联校验的接收字段
       const isCrossTarget = /^@/.test(rule)
-
-      const formRoot = this.VFormRoot
 
       // 生成关联校验的相关数据
       const createCrossParams = (params, target) => {
@@ -124,7 +128,6 @@ export default {
         }
       }
 
-      // TODO 代码待优化
       // 关联校验
       if (isCrossField) {
         const crossRule = rules[0]
@@ -179,6 +182,22 @@ export default {
 
     // 执行校验
     async __validator (val) {
+      // 校验字段是正则的情况单独处理
+      if (this.isRegExp) {
+        if (!val || this.formModel.rules.vRules.test(val)) {
+          this.$set(this, 'errorMessage', {})
+        } else {
+          this.$set(this, 'errorMessage', {
+            name: this.formModel.name,
+            value: val,
+            index: this.formModel.index,
+            errorMsg: this.formModel.rules.errorMsg
+          })
+        }
+        this.e__error()
+        return
+      }
+
       for (let i = 0; i < this.rulesList.length; i++) {
         let { valid, failedRules, errors } = await this._validateObserver(val, this.rulesList[i])
         if (!valid) {
