@@ -8,6 +8,7 @@
       :placeholder="formModel.rules.placeholder"
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShowPicker = true"
+      @change="e__change"
       @click-right-icon="!VFormRoot.disabled && (isShowPicker = true)"
     ></van-field>
     <v-popup v-model="isShowPicker">

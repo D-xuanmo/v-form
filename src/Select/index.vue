@@ -9,6 +9,7 @@
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShow = true"
       @click-right-icon="!VFormRoot.disabled && (isShow = true)"
+      @change="e__change"
       @click="__eventHandler('click', formModel)"
     ></van-field>
     <v-popup v-model="isShow" position="bottom">

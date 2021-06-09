@@ -5,6 +5,7 @@
     :max="formModel.rules.max || 0"
     :disabled="disabled"
     @input="e__input"
+    @change="e__change"
   >
     <van-checkbox
       v-for="item in formModel.rules.options"

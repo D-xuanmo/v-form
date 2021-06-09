@@ -96,6 +96,13 @@ export default {
       })
     },
 
+    e__change (val) {
+      this.$emit('change', {
+        ...this.formModel,
+        value: val
+      })
+    },
+
     // 向父级传递校验结果
     e__error () {
       this.$emit('error', this.formModel.name, this.errorMessage)

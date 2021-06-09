@@ -4,6 +4,7 @@
     :direction="formModel.rules.direction"
     :disabled="disabled"
     @input="e__input"
+    @change="e__change"
   >
     <van-radio
       v-for="item in formModel.rules.options"

@@ -209,6 +209,10 @@ const formUnitBase = Vue.extend({
       this.debounceChange(this.formValues)
     },
 
+    onChangeForm () {
+      this.showErrorMessage = true
+    },
+
     // 获取子级错误信息
     getChildError (name, err) {
       this.$set(this.formErrors, name, err)
