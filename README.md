@@ -22,6 +22,12 @@ yarn add @xuanmo/v-form
 // 引入组件，推荐使用这种方式
 import VForm from '@xuanmo/v-form'
 
+// 引入css
+import '@xuanmo/v-form/style/index.less'
+
+// 覆盖变量引入此文件替换变量即可，可参考 example/App.vue
+import '@xuanmo/v-form/style/var.less'
+
 // 不需要编译方式引入
 // import VForm from "@xuanmo/v-form/dist/v-form.umd.js"
 // import "@xuanmo/v-form/dist/v-form.css"

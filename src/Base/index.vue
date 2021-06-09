@@ -35,13 +35,8 @@
 </template>
 
 <script>
-import 'vant/lib/index.less'
 import formUnitBase from './formUnit'
 export default formUnitBase.extend({
   name: 'VForm'
 })
 </script>
-
-<style lang="less" scoped>
-@import "../style/index.less";
-</style>

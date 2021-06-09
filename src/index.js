@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Base from './Base/index.vue'
-import { extend } from './validator'
+import {extend} from './validator'
 
 const VForm = {
   /**
@@ -25,5 +25,8 @@ const VForm = {
 
 // 对外暴露自定义校验规则方法
 export { extend }
+
+// 将内部工具函数对外暴露
+export * as utils from './utils'
 
 export default VForm

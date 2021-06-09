@@ -27,7 +27,3 @@ export default {
   mixins: [formBase]
 }
 </script>
-
-<style lang="less" scoped>
-@import "../style/radio";
-</style>

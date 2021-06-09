@@ -50,7 +50,7 @@ export default {
         }
       },
       formValue: {
-        // text1: '1'
+        text1: '123'
       },
       formData: {},
       formError: [],
@@ -124,7 +124,7 @@ export default {
           rules: {
             label: '关联文字2',
             type: 'VInput',
-            vRules: 'required|@custom',
+            vRules: 'required',
             placeholder: '请输入关联文字2',
             errorMsg: '请输入关联文字2',
             extra: 'extra'
@@ -305,8 +305,6 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-size: 14px;
-}
+<style lang="less">
+@import "./assets/style/index";
 </style>

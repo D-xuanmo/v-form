@@ -1,5 +1,13 @@
+@import "~vant/lib/index";
 @import "./var";
 .v-form-conatiner {
+  @import "./row";
+  @import "./cell";
+  @import "./checkbox";
+  @import "./date-picker";
+  @import "./radio";
+  @import "./upload";
+
   font-size: inherit;
   line-height: 24px;
 
@@ -11,13 +19,13 @@
   }
 
   ::-webkit-input-placeholder,
-  /deep/ .placeholder {
+  .placeholder {
     color: @placeholder-color;
   }
-}
 
-/deep/ .van-cell {
-  &:after {
-    display: none !important;
+  .van-cell {
+    &:after {
+      display: none !important;
+    }
   }
 }
