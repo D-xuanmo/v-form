@@ -1,16 +1,23 @@
 /**
  * 判断是否为对象
- * @param {*} obj 数据源
+ * @param {*} obj
  * @returns {boolean}
  */
 export const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
 
 /**
  * 判断是否为正则
- * @param {*} regexp 数据
+ * @param {*} regexp
  * @returns {boolean}
  */
 export const isRegExp = regexp => Object.prototype.toString.call(regexp) === '[object RegExp]'
+
+/**
+ * 是否为函数
+ * @param {*} fn
+ * @returns {boolean}
+ */
+export const isFunction = fn => typeof fn === 'function'
 
 /**
  * 判断url是否为图片

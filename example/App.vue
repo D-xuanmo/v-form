@@ -284,7 +284,12 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs.vform)
+    // setTimeout(() => {
+    //   this.$refs.vform.setModelItemOptions('select', [
+    //     { text: '杭州', value: 1 },
+    //     { text: '宁波', value: 2 }
+    //   ])
+    // }, 5000)
   },
   methods: {
     _change ({ value, errorMsg, isValid }) {

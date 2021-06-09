@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Base from './Base/index.vue'
-import {extend} from './validator'
+import { extend } from './validator'
 
 const VForm = {
   /**

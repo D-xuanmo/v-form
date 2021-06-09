@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import components from './components'
 import validate, { extend } from '../validator'
-import { debounce, isRegExp } from '../utils'
+import { debounce, isRegExp, isFunction } from '../utils'
 
 const formUnitBase = Vue.extend({
   components,
@@ -122,9 +122,27 @@ const formUnitBase = Vue.extend({
   },
 
   methods: {
+    // 执行伪校验
     validate (callback) {
       this.showErrorMessage = true
-      typeof callback === 'function' && callback(this.isValid)
+      isFunction(callback) && callback(this.isValid)
+    },
+
+    async setModelItemOptions (key, callback) {
+      try {
+        const data = isFunction(callback) ? await callback() : callback
+        this.$set(this.formModel[this.findModelItemIndexByKey(key)].rules, 'options', data)
+      } catch (err) {
+        console.error(err)
+      }
+    },
+
+    findModelItemByKey (key) {
+      return this.formModel.find(item => item.key === key) || {}
+    },
+
+    findModelItemIndexByKey (key) {
+      return this.formModel.findIndex(item => item.key === key)
     },
 
     createModel () {

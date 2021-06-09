@@ -26,7 +26,7 @@ import VForm from '@xuanmo/v-form'
 import '@xuanmo/v-form/style/index.less'
 
 // 覆盖变量引入此文件替换变量即可，可参考 example/App.vue
-import '@xuanmo/v-form/style/var.less'
+// import '@xuanmo/v-form/style/var.less'
 
 // 不需要编译方式引入
 // import VForm from "@xuanmo/v-form/dist/v-form.umd.js"
@@ -152,6 +152,7 @@ Vue.use(VForm, {
 |方法|说明|参数
 |---|---|---|
 |validate|对整个表单执行校验|Function(callback:Function(boolean))|
+|setModelItemOptions|设置表单options|(key, data)接受两个参数，1. 数据key，2. data为一个数组或者 `() => []`|
 ## Events
 |事件名|说明|回调参数
 |---|---|---|
