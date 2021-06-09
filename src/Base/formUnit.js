@@ -89,6 +89,7 @@ const formUnitBase = Vue.extend({
   watch: {
     value: {
       deep: true,
+      immediate: true,
       handler (value) {
         this.formValues = value
         for (let [_key, _value] of Object.entries(value)) {
