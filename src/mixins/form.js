@@ -129,10 +129,6 @@ export default {
         const targetRule = rule.replace('@', '')
         const targetValidate = formRoot.validator[targetRule] || this.$VForm.validator[targetRule]
 
-        if (!mainValidate || !targetValidate) {
-          return Promise.reject(`[VForm]: '${crossRule}' 关联校验规则未注册！`)
-        }
-
         // 生成关联校验的相关数据
         const createCrossParams = (params, target) => {
           const crossParams = {}
@@ -151,6 +147,8 @@ export default {
 
         // 关联校验
         if (isCrossField) {
+          if (!mainValidate) return Promise.reject(`[VForm]: '${crossRule}' 关联校验规则未注册！`)
+
           let crossFields = formRoot.crossFields[crossRule]
 
           const { crossParams, context } = createCrossParams(mainValidate.params, crossFields.target)
@@ -166,6 +164,8 @@ export default {
 
         // 关联校验被绑定字段
         if (isCrossTarget) {
+          if (!targetValidate) return Promise.reject(`[VForm]: '@${targetRule}' 关联校验规则未注册！`)
+
           let crossFields = formRoot.crossFields[targetRule]
 
           const { crossParams, context } = createCrossParams(targetValidate.params, crossFields.target)
