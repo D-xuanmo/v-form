@@ -44,7 +44,7 @@ export default {
           message: '关联文字校验未通过',
           params: ['target1', 'target2'],
           validate: (value, { target1, target2 }, ctx) => {
-            console.log(ctx)
+            console.log('关联校验context：', ctx)
             return value === target1 && value === target2
           }
         }
@@ -75,7 +75,8 @@ export default {
           rules: {
             label: '正则校验',
             type: 'VInput',
-            vRules: /\d+/,
+            vRules: 'required',
+            pattern: /^\d+$/,
             placeholder: '请输入',
             errorMsg: '只能输入数字'
           }
@@ -124,7 +125,7 @@ export default {
           rules: {
             label: '关联文字2',
             type: 'VInput',
-            vRules: 'required',
+            vRules: 'required|@custom1',
             placeholder: '请输入关联文字2',
             errorMsg: '请输入关联文字2',
             extra: 'extra'

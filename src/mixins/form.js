@@ -36,10 +36,6 @@ export default {
   computed: {
     disabled () {
       return this.formModel.rules.disabled || this.VFormRoot.disabled
-    },
-
-    isRegExp () {
-      return isRegExp(this.formModel.rules.vRules)
     }
   },
 
@@ -67,6 +63,7 @@ export default {
         value
       })
     }, this.$VForm.debounceTime)
+
     !this.disabled && this.e__input(this.value)
   },
 
@@ -76,9 +73,19 @@ export default {
     },
 
     // 创建校验规则
-    __createRules ({ vRules }) {
-      if (vRules && !this.isRegExp) {
-        this.rulesList = vRules.split('|')
+    // 校验顺序：required => pattern => vRules 剩余规则
+    __createRules ({ vRules, pattern }) {
+      if (vRules) {
+        const rules = vRules.split('|')
+        if (isRegExp(pattern)) {
+          rules[0] === 'required' ? rules.splice(1, 0, pattern) : rules.unshift(pattern)
+        }
+        this.rulesList = rules
+        return
+      }
+      if (isRegExp(pattern)) {
+        this.rulesList = [pattern]
+        return
       }
     },
 
@@ -108,8 +115,19 @@ export default {
       this.$emit('error', this.formModel.name, this.errorMessage)
     },
 
-    _validateObserver (val, rule) {
+    _handlerValidate (val, rule) {
       const formRoot = this.VFormRoot
+
+      // 正则规则校验
+      if (isRegExp(rule)) {
+        const valid = rule.test(val)
+        return Promise.resolve({
+          valid,
+          failedRules: {
+            required: !valid
+          }
+        })
+      }
 
       const rules = rule.split(':')
 
@@ -196,25 +214,11 @@ export default {
 
     // 执行校验
     async __validator (val) {
-      // 校验字段是正则的情况单独处理
-      if (this.isRegExp) {
-        if (!val || this.formModel.rules.vRules.test(val)) {
-          this.$set(this, 'errorMessage', {})
-        } else {
-          this.$set(this, 'errorMessage', {
-            name: this.formModel.name,
-            value: val,
-            index: this.formModel.index,
-            errorMsg: this.formModel.rules.errorMsg
-          })
-        }
-        this.e__error()
-        return
-      }
-
-      for (let i = 0; i < this.rulesList.length; i++) {
+      const rules = this.rulesList
+      for (let i = 0; i < rules.length; i++) {
         try {
-          let { valid, failedRules, errors } = await this._validateObserver(val, this.rulesList[i])
+          const rule = rules[i]
+          let { valid, failedRules, errors } = await this._handlerValidate(val, rule)
           if (!valid) {
             this.$set(this, 'errorMessage', {
               name: this.formModel.name,
