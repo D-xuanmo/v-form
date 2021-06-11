@@ -119,68 +119,75 @@ export default {
       // 是否为关联校验的接收字段
       const isCrossTarget = /^@/.test(rule)
 
-      // 生成关联校验的相关数据
-      const createCrossParams = (params, target) => {
-        const crossParams = {}
-        const context = {}
-        target.forEach((item, i) => {
-          crossParams[params[i]] = this.findModelByKey(item).value
-
-          // 当前关联组件实例
-          context[item] = formRoot.$refs[item][0]
-        })
-        return {
-          crossParams,
-          context
-        }
-      }
-
       // 关联校验
-      if (isCrossField) {
+      if (isCrossField || isCrossTarget) {
+        // 关联校验主字段
         const crossRule = rules[0]
+        const mainValidate = formRoot.validator[crossRule] || this.$VForm.validator[crossRule]
 
-        let currValidate = formRoot.validator[crossRule] || this.$VForm.validator[crossRule]
-
-        let crossFields = formRoot.crossFields[crossRule]
-
-        const { crossParams, context } = createCrossParams(currValidate.params, crossFields.target)
-
-        return Promise.resolve({
-          valid: currValidate.validate(val, crossParams, context),
-          failedRules: {
-            required: null
-          },
-          errors: [currValidate.message]
-        })
-      }
-
-      // 关联校验被绑定字段
-      if (isCrossTarget) {
+        // 关联校验接收字段
         const targetRule = rule.replace('@', '')
+        const targetValidate = formRoot.validator[targetRule] || this.$VForm.validator[targetRule]
 
-        let currValidate = formRoot.validator[targetRule] || this.$VForm.validator[targetRule]
-
-        let crossFields = formRoot.crossFields[targetRule]
-
-        const { crossParams, context } = createCrossParams(currValidate.params, crossFields.target)
-
-        const valid = currValidate.validate(
-          this.findModelByKey(crossFields.local).value,
-          crossParams,
-          context
-        )
-        if (valid && isCrossField) {
-          formRoot.formErrors[crossFields.local] = {}
-        } else {
-          formRoot.$refs[crossFields.local][0].__validator(this.findModelByKey(crossFields.local).value)
+        if (!mainValidate || !targetValidate) {
+          return Promise.reject(`[VForm]: '${crossRule}' 关联校验规则未注册！`)
         }
-        return Promise.resolve({
-          valid: true,
-          failedRules: {
-            required: null
-          },
-          errors: [currValidate.message]
-        })
+
+        // 生成关联校验的相关数据
+        const createCrossParams = (params, target) => {
+          const crossParams = {}
+          const context = {}
+          target.forEach((item, i) => {
+            crossParams[params[i]] = this.findModelByKey(item).value
+
+            // 当前关联组件实例
+            context[item] = formRoot.$refs[item][0]
+          })
+          return {
+            crossParams,
+            context
+          }
+        }
+
+        // 关联校验
+        if (isCrossField) {
+          let crossFields = formRoot.crossFields[crossRule]
+
+          const { crossParams, context } = createCrossParams(mainValidate.params, crossFields.target)
+
+          return Promise.resolve({
+            valid: mainValidate.validate(val, crossParams, context),
+            failedRules: {
+              required: null
+            },
+            errors: [mainValidate.message]
+          })
+        }
+
+        // 关联校验被绑定字段
+        if (isCrossTarget) {
+          let crossFields = formRoot.crossFields[targetRule]
+
+          const { crossParams, context } = createCrossParams(targetValidate.params, crossFields.target)
+
+          const valid = targetValidate.validate(
+            this.findModelByKey(crossFields.local).value,
+            crossParams,
+            context
+          )
+          if (valid && isCrossField) {
+            formRoot.formErrors[crossFields.local] = {}
+          } else {
+            formRoot.$refs[crossFields.local][0].__validator(this.findModelByKey(crossFields.local).value)
+          }
+          return Promise.resolve({
+            valid: true,
+            failedRules: {
+              required: null
+            },
+            errors: [targetValidate.message]
+          })
+        }
       }
 
       // veeValidate插件校验
@@ -206,19 +213,23 @@ export default {
       }
 
       for (let i = 0; i < this.rulesList.length; i++) {
-        let { valid, failedRules, errors } = await this._validateObserver(val, this.rulesList[i])
-        if (!valid) {
-          this.$set(this, 'errorMessage', {
-            name: this.formModel.name,
-            value: val,
-            index: this.formModel.index,
-            errorMsg: failedRules.required
-              ? this.formModel.rules.errorMsg
-              : errors[0].replace('{field}', this.formModel.rules.label)
-          })
-          break
-        } else {
-          this.$set(this, 'errorMessage', {})
+        try {
+          let { valid, failedRules, errors } = await this._validateObserver(val, this.rulesList[i])
+          if (!valid) {
+            this.$set(this, 'errorMessage', {
+              name: this.formModel.name,
+              value: val,
+              index: this.formModel.index,
+              errorMsg: failedRules.required
+                ? this.formModel.rules.errorMsg
+                : errors[0].replace('{field}', this.formModel.rules.label)
+            })
+            break
+          } else {
+            this.$set(this, 'errorMessage', {})
+          }
+        } catch (err) {
+          throw new Error(err)
         }
       }
       this.e__error()
