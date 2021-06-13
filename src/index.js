@@ -30,4 +30,7 @@ export { extend }
 // 将内部工具函数对外暴露
 export * as utils from './utils'
 
+// 导出 form item 公用 mixin
+export { default as formItemBaseMixin } from './mixins/form.js'
+
 export default VForm

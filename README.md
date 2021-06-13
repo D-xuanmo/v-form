@@ -115,7 +115,7 @@ Vue.use(VForm, {
 })
 ```
 
-### html
+### HTML
 ```html
 <v-form v-model="value" :model="model"></v-form>
 ```
@@ -134,6 +134,58 @@ Vue.use(VForm, {
 |VSwitch|开关按钮|
 |VText|纯文字展示|
 |VUpload|文件上传|
+
+### 关于自定义组件的使用（目前仅支持将该组件注册为全局组件使用）
+> 在组件不能满足当前业务的需求时，可以使用 slot 或者自定义组件实现，slot 使用参考后续介绍
+
+#### 制作组件，具体实现可参考 example/components/FormItemTest.vue
+```js
+// 导入公用组件的 Mixin
+import { formItemBaseMixin } from '@xuanmo/v-form'
+export default {
+  name: 'FormItemTest',
+
+  // 使用 Mixin
+  mixins: [formItemBaseMixin],
+
+  methods: {
+    input(value) {
+      // 此方法必须调用，否则组件将不能接收数据
+      // 每次数据发生改变需要使用 e__input 方法对组件的数据进行上报
+      this.e__input(value)
+
+      // 如果需要发送自定义事件，可使用下边方法
+      this.__eventHandler('input', value)
+    }
+  }
+}
+```
+
+#### 全局注册组件
+```js
+import Vue from 'vue'
+import FormItemTest from 'path'
+Vue.component(FormItemTest.name, FormItemTest)
+```
+
+#### 使用组件
+```js
+const model = [
+  {
+    key: 'test',
+    value: '',
+    rules: {
+      label: '自定义组件',
+      // 传入组件名即可
+      type: 'FormItemTest',
+      placeholder: '点击输入',
+      vRules: 'required',
+      pattern: /^\d+$/,
+      errorMsg: '自定义组件错误信息'
+    }
+  }
+]
+```
 
 ## Attributes
 |字段名|说明|类型|默认值

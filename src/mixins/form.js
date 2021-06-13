@@ -91,6 +91,11 @@ export default {
       }
     },
 
+    /**
+     * 自定义事件传递
+     * @param {string} type 事件名
+     * @param {*} value 任意数据
+     */
     __eventHandler(type, value) {
       this.debounce(type, value)
     },

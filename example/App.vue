@@ -58,6 +58,18 @@ export default {
       disabled: false,
       model: [
         {
+          key: 'formItemTest',
+          value: '',
+          rules: {
+            label: '自定义组件',
+            type: 'FormItemTest',
+            placeholder: '点击输入',
+            vRules: 'required',
+            pattern: /^\d+$/,
+            errorMsg: '自定义组件错误信息'
+          }
+        },
+        {
           key: 'numberKeyboard',
           value: '',
           rules: {

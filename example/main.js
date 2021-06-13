@@ -3,6 +3,9 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
+import FormItemTest from './components/FormItemTest'
+Vue.component(FormItemTest.name, FormItemTest)
+
 import VForm from '@'
 
 Vue.use(VForm, {
