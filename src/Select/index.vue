@@ -32,12 +32,12 @@ import { isObject } from '../utils'
 export default {
   name: 'VSelect',
   components: {
-    'van-field': Field,
-    'van-picker': Picker,
-    'v-popup': VPopup
+    [Field.name]: Field,
+    [Picker.name]: Picker,
+    [VPopup.name]: VPopup
   },
   mixins: [formBase],
-  data () {
+  data() {
     return {
       isShow: false,
       innerValue: '',
@@ -50,7 +50,7 @@ export default {
     'formModel.rules.options': {
       immediate: true,
       deep: true,
-      handler (val) {
+      handler(val) {
         let result = []
         if (val.length) {
           if (isObject(val[0])) {
@@ -58,7 +58,7 @@ export default {
               values: val
             })
           } else if (Array.isArray(val[0])) {
-            val.forEach(item => {
+            val.forEach((item) => {
               result.push({
                 values: item
               })
@@ -68,39 +68,40 @@ export default {
         this.options = result
       }
     },
-    value (v) {
+    value(v) {
       this.__validator(v)
       v ? this._valueToIndex() : this._reset()
     },
-    isShow (v) {
-      v && this.$nextTick(() => {
-        this.$refs.picker.setValues(this.format.map(({ text }) => text))
-      })
+    isShow(v) {
+      v &&
+        this.$nextTick(() => {
+          this.$refs.picker.setValues(this.format.map(({ text }) => text))
+        })
     }
   },
-  created () {
+  created() {
     this._valueToIndex()
   },
   methods: {
-    _confirm (val) {
+    _confirm(val) {
       this.format = val
       this.isShow = false
       this.innerValue = val.map(({ text }) => text).join('/')
       this.e__input(val.map(({ value }) => value).join(','))
     },
 
-    _valueToIndex () {
+    _valueToIndex() {
       if (!this.value) return
       const indexs = this.value.toString().split(',')
       let format = []
       this.options.forEach((_, index) => {
-        format.push(_.values.find(v => v.value.toString() === indexs[index].toString()))
+        format.push(_.values.find((v) => v.value.toString() === indexs[index].toString()))
       })
       this.$set(this, 'format', format)
       this.innerValue = format.map(({ text }) => text).join('/')
     },
 
-    _reset () {
+    _reset() {
       this.format = []
       this.innerValue = ''
     }

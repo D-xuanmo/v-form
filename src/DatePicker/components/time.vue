@@ -20,30 +20,32 @@ export default {
   name: 'VTimePicker',
 
   components: {
-    'van-datetime-picker': DatetimePicker,
+    [DatetimePicker.name]: DatetimePicker
   },
 
   mixins: [mixin],
 
   computed: {
-    _value () {
+    _value() {
       return this.datejs(new Date(this.value)).format('HH:mm')
     }
   },
 
   methods: {
-    _format (value) {
+    _format(value) {
       const date = new Date()
       const year = date.getFullYear()
       const month = date.getMonth()
       const day = date.getDate()
-      const currentFormat = this.datejs(new Date(`${year}/${month}/${day} ${value}`))
+      const currentFormat = this.datejs(
+        new Date(`${year}/${month}/${day} ${value}`)
+      )
       return {
         innerValue: value,
         value: this.formModel.rules.valueFormat
-          ? (this.formModel.rules.valueFormat === 'timestamp'
+          ? this.formModel.rules.valueFormat === 'timestamp'
             ? new Date(`${year}/${month}/${day} ${value}`).getTime()
-            : currentFormat.format(this.formModel.rules.valueFormat))
+            : currentFormat.format(this.formModel.rules.valueFormat)
           : value
       }
     }

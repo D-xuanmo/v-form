@@ -19,7 +19,7 @@ import formBase from '../mixins/form'
 export default {
   name: 'VSwitch',
   components: {
-    'van-switch': Switch
+    [Switch.name]: Switch
   },
   mixins: [formBase]
 }

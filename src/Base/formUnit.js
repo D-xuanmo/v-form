@@ -6,7 +6,7 @@ import { debounce, isRegExp, isFunction } from '../utils'
 const formUnitBase = Vue.extend({
   components,
 
-  provide () {
+  provide() {
     return {
       VFormRoot: this,
       $validate: validate
@@ -58,7 +58,7 @@ const formUnitBase = Vue.extend({
     }
   },
 
-  data () {
+  data() {
     return {
       // 内部数据模型
       formModel: [],
@@ -77,11 +77,13 @@ const formUnitBase = Vue.extend({
   },
 
   computed: {
-    formErrorList () {
-      return Object.values(this.formErrors).filter(v => Object.values(v).length !== 0).sort((a, b) => a.index - b.index)
+    formErrorList() {
+      return Object.values(this.formErrors)
+        .filter((v) => Object.values(v).length !== 0)
+        .sort((a, b) => a.index - b.index)
     },
 
-    isValid () {
+    isValid() {
       return this.formErrorList.length === 0
     }
   },
@@ -90,10 +92,10 @@ const formUnitBase = Vue.extend({
     value: {
       deep: true,
       immediate: true,
-      handler (value) {
+      handler(value) {
         this.formValues = value
         for (let [_key, _value] of Object.entries(value)) {
-          this.model.forEach(item => {
+          this.model.forEach((item) => {
             if (item.key === _key) {
               item.value = _value
             }
@@ -103,7 +105,7 @@ const formUnitBase = Vue.extend({
     }
   },
 
-  created () {
+  created() {
     // 统一传递数据
     this.debounceChange = debounce((value) => {
       this.$emit('input', value)
@@ -123,12 +125,12 @@ const formUnitBase = Vue.extend({
 
   methods: {
     // 执行伪校验
-    validate (callback) {
+    validate(callback) {
       this.showErrorMessage = true
       isFunction(callback) && callback(this.isValid)
     },
 
-    async setModelItemOptions (key, callback) {
+    async setModelItemOptions(key, callback) {
       try {
         const data = isFunction(callback) ? await callback() : callback
         this.$set(this.formModel[this.findModelItemIndexByKey(key)].rules, 'options', data)
@@ -137,36 +139,38 @@ const formUnitBase = Vue.extend({
       }
     },
 
-    findModelItemByKey (key) {
-      return this.formModel.find(item => item.key === key) || {}
+    findModelItemByKey(key) {
+      return this.formModel.find((item) => item.key === key) || {}
     },
 
-    findModelItemIndexByKey (key) {
-      return this.formModel.findIndex(item => item.key === key)
+    findModelItemIndexByKey(key) {
+      return this.formModel.findIndex((item) => item.key === key)
     },
 
-    createModel () {
-      const formModel = this.$VForm.primaryData ? this.modelFormatter(this.model) : this.model
+    createModel() {
+      const formModel = this.$VForm.primaryData
+        ? this.modelFormatter(this.model)
+        : this.model
       this.formModel = formModel
 
       const formValues = {}
 
-      formModel.forEach(item => {
+      formModel.forEach((item) => {
         const { key, value, rules } = item
 
         // 排除展示类组件
-        if (!(['VCell', 'VText'].includes(rules.type))) {
+        if (!['VCell', 'VText'].includes(rules.type)) {
           formValues[key] = value
         }
 
         // 生成跨域校验字段
         if (!isRegExp(rules.vRules)) {
           const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
-          crossFields.forEach(_ => {
+          crossFields.forEach((_) => {
             const [name, cross] = _.split(':')
             this.crossFields[name] = {
               local: key,
-              target: cross.split(',').map(_ => _.replace('@', ''))
+              target: cross.split(',').map((_) => _.replace('@', ''))
             }
           })
         }
@@ -177,10 +181,10 @@ const formUnitBase = Vue.extend({
 
     // 处理数据模型
     // 当所有的属性不存在 rules 字段的情况下调用
-    modelFormatter (model) {
+    modelFormatter(model) {
       const fixedKeys = ['key', 'value']
       const result = []
-      model.forEach(item => {
+      model.forEach((item) => {
         const resultItem = {
           rules: {}
         }
@@ -197,24 +201,24 @@ const formUnitBase = Vue.extend({
     },
 
     // 分割组件类型
-    splitComponentType (type) {
+    splitComponentType(type) {
       let [compType, compParameter = ''] = type.split('|')
       return [compType, compParameter]
     },
 
     // 数据上报
-    updateFormValues (index, value) {
+    updateFormValues(index, value) {
       this.$set(this.formValues, this.formModel[index].key, value)
       this.formModel[index].value = value
       this.debounceChange(this.formValues)
     },
 
-    onChangeForm () {
+    onChangeForm() {
       this.showErrorMessage = true
     },
 
     // 获取子级错误信息
-    getChildError (name, err) {
+    getChildError(name, err) {
       this.$set(this.formErrors, name, err)
       this.debounceChange(this.value)
     }

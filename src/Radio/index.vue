@@ -22,8 +22,8 @@ import formBase from '../mixins/form'
 export default {
   name: 'VRadio',
   components: {
-    'van-radio': Radio,
-    'van-radio-group': RadioGroup
+    [Radio.name]: Radio,
+    [RadioGroup.name]: RadioGroup
   },
   mixins: [formBase]
 }

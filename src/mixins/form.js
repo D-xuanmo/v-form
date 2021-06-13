@@ -25,7 +25,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       rulesList: [],
       errorMessage: {},
@@ -34,7 +34,7 @@ export default {
   },
 
   computed: {
-    disabled () {
+    disabled() {
       return this.formModel.rules.disabled || this.VFormRoot.disabled
     }
   },
@@ -43,20 +43,20 @@ export default {
     formModel: {
       immediate: true,
       deep: true,
-      handler (v) {
+      handler(v) {
         this.__createRules(v.rules, v)
       }
     },
 
     value: {
       deep: true,
-      handler (val) {
+      handler(val) {
         !this.disabled && this.__validator(val)
       }
     }
   },
 
-  created () {
+  created() {
     this.debounce = debounce((type, value) => {
       this.$emit('event', {
         type,
@@ -68,17 +68,19 @@ export default {
   },
 
   methods: {
-    findModelByKey (key) {
-      return this.VFormRoot.model.find(item => item.key === key)
+    findModelByKey(key) {
+      return this.VFormRoot.model.find((item) => item.key === key)
     },
 
     // 创建校验规则
     // 校验顺序：required => pattern => vRules 剩余规则
-    __createRules ({ vRules, pattern }) {
+    __createRules({ vRules, pattern }) {
       if (vRules) {
         const rules = vRules.split('|')
         if (isRegExp(pattern)) {
-          rules[0] === 'required' ? rules.splice(1, 0, pattern) : rules.unshift(pattern)
+          rules[0] === 'required'
+            ? rules.splice(1, 0, pattern)
+            : rules.unshift(pattern)
         }
         this.rulesList = rules
         return
@@ -89,12 +91,12 @@ export default {
       }
     },
 
-    __eventHandler (type, value) {
+    __eventHandler(type, value) {
       this.debounce(type, value)
     },
 
     // 向父级提交当前组件的值
-    async e__input (val) {
+    async e__input(val) {
       await this.__validator(val)
       this.$emit('input', this.formModel.index, val)
       this.__eventHandler('input', {
@@ -103,7 +105,7 @@ export default {
       })
     },
 
-    e__change (val) {
+    e__change(val) {
       this.$emit('change', {
         ...this.formModel,
         value: val
@@ -111,11 +113,11 @@ export default {
     },
 
     // 向父级传递校验结果
-    e__error () {
+    e__error() {
       this.$emit('error', this.formModel.name, this.errorMessage)
     },
 
-    _handlerValidate (val, rule) {
+    _handlerValidate(val, rule) {
       const formRoot = this.VFormRoot
 
       // 正则规则校验
@@ -169,7 +171,10 @@ export default {
 
           let crossFields = formRoot.crossFields[crossRule]
 
-          const { crossParams, context } = createCrossParams(mainValidate.params, crossFields.target)
+          const { crossParams, context } = createCrossParams(
+            mainValidate.params,
+            crossFields.target
+          )
 
           return Promise.resolve({
             valid: mainValidate.validate(val, crossParams, context),
@@ -186,7 +191,10 @@ export default {
 
           let crossFields = formRoot.crossFields[targetRule]
 
-          const { crossParams, context } = createCrossParams(targetValidate.params, crossFields.target)
+          const { crossParams, context } = createCrossParams(
+            targetValidate.params,
+            crossFields.target
+          )
 
           const valid = targetValidate.validate(
             this.findModelByKey(crossFields.local).value,
@@ -196,7 +204,9 @@ export default {
           if (valid && isCrossField) {
             formRoot.formErrors[crossFields.local] = {}
           } else {
-            formRoot.$refs[crossFields.local][0].__validator(this.findModelByKey(crossFields.local).value)
+            formRoot.$refs[crossFields.local][0].__validator(
+              this.findModelByKey(crossFields.local).value
+            )
           }
           return Promise.resolve({
             valid: true,
@@ -213,7 +223,7 @@ export default {
     },
 
     // 执行校验
-    async __validator (val) {
+    async __validator(val) {
       const rules = this.rulesList
       for (let i = 0; i < rules.length; i++) {
         try {

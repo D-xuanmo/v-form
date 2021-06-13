@@ -14,7 +14,7 @@ import { Popup } from 'vant'
 export default {
   name: 'VPopup',
   components: {
-    'van-popup': Popup
+    [Popup.name]: Popup
   },
   props: {
     value: {
@@ -23,7 +23,7 @@ export default {
     }
   },
   methods: {
-    _close () {
+    _close() {
       this.$emit('input', false)
       this.$emit('close')
     }

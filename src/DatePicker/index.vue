@@ -33,14 +33,14 @@ export default {
   name: 'VDatePicker',
 
   components: {
-    'van-field': Field,
-    'v-popup': VPopup,
+    [Field.name]: Field,
+    [VPopup.name]: VPopup,
     DatePicker
   },
 
   mixins: [formBase],
 
-  data () {
+  data() {
     return {
       isShowPicker: false,
       innerValue: '',
@@ -49,17 +49,17 @@ export default {
   },
 
   watch: {
-    value (v) {
+    value(v) {
       this.innerValue = this._innerValueFormat(v)
     }
   },
 
-  created () {
+  created() {
     this.innerValue = this._innerValueFormat(this.value)
   },
 
   methods: {
-    _innerValueFormat (v) {
+    _innerValueFormat(v) {
       if (!v) return ''
       const currentFormat = datejs(new Date(v))
       let result = ''
@@ -81,7 +81,7 @@ export default {
       return result
     },
 
-    _confirm ({ innerValue, value }) {
+    _confirm({ innerValue, value }) {
       this.isShowPicker = false
       this.innerValue = innerValue
       this.e__input(value)

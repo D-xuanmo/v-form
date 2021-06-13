@@ -34,17 +34,17 @@ export default {
     NumberKeyboard
   },
   mixins: [formBase],
-  data () {
+  data() {
     return {
       isShow: false
     }
   },
   computed: {
     _value: {
-      get () {
+      get() {
         return this.value
       },
-      set (val) {
+      set(val) {
         this.innerValue = val
         this.e__input(val)
       }

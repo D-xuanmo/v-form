@@ -24,15 +24,15 @@ export default {
 
   methods: {
     datejs,
-    __confirm (v) {
+    __confirm(v) {
       this.$emit('confirm', this._format(v))
     },
 
-    __cancel () {
+    __cancel() {
       this.$emit('cancel')
     },
 
-    __change (Picker) {
+    __change(Picker) {
       this.$emit('change', Picker.confirm())
     }
   }

@@ -12,19 +12,27 @@
     ></van-field>
     <v-popup v-model="isShowPicker" @close="_cancel">
       <div class="van-hairline--top-bottom van-picker__toolbar">
-        <button type="button" class="van-picker__cancel" @click="_cancel">取消</button>
-        <button type="button" class="van-picker__confirm" @click="_confirm">确认</button>
+        <button type="button" class="van-picker__cancel" @click="_cancel">
+          取消
+        </button>
+        <button type="button" class="van-picker__confirm" @click="_confirm">
+          确认
+        </button>
       </div>
       <row2col
         :label="formModel.rules.startPlaceholder || '开始时间'"
         :class="current === 'start' && 'is-active'"
         @click.native="_toggleDate('start')"
-      >{{ startInnerValue }}</row2col>
+      >
+        {{ startInnerValue }}
+      </row2col>
       <row2col
         :label="formModel.rules.endPlaceholder || '结束时间'"
         :class="current === 'end' && 'is-active'"
         @click.native="_toggleDate('end')"
-      >{{ endInnerValue }}</row2col>
+      >
+        {{ endInnerValue }}
+      </row2col>
       <template>
         <date-picker
           v-if="current === 'start'"
@@ -60,8 +68,8 @@ export default {
   name: 'VDatePickerRange',
 
   components: {
-    'van-field': Field,
-    'v-popup': VPopup,
+    [Field.name]: Field,
+    [VPopup.name]: VPopup,
     row2col,
     DatePicker
   },
@@ -71,11 +79,11 @@ export default {
   props: {
     value: {
       type: Array,
-      default: () => ([])
+      default: () => []
     }
   },
 
-  data () {
+  data() {
     return {
       isShowPicker: false,
       startInnerValue: '',
@@ -87,9 +95,10 @@ export default {
   },
 
   computed: {
-    innerValue () {
-      return (this.startInnerValue && this.endInnerValue)
-        ? `${this.startInnerValue} ${this.formModel.rules.rangeSeparator || '-'} ${this.endInnerValue}`
+    innerValue() {
+      return this.startInnerValue && this.endInnerValue
+        ? `${this.startInnerValue} ${this.formModel.rules.rangeSeparator ||
+            '-'} ${this.endInnerValue}`
         : ''
     }
   },
@@ -98,17 +107,19 @@ export default {
     value: {
       immediate: true,
       deep: true,
-      handler ([start, end]) {
+      handler([start, end]) {
         this.startValue = start || Date.now()
         this.endValue = end || Date.now()
-        this.startInnerValue = start ? this._innerValueFormat(new Date(start)) : ''
+        this.startInnerValue = start
+          ? this._innerValueFormat(new Date(start))
+          : ''
         this.endInnerValue = end ? this._innerValueFormat(new Date(end)) : ''
       }
     }
   },
 
   methods: {
-    _innerValueFormat (date) {
+    _innerValueFormat(date) {
       const currentFormat = datejs(date)
       let result = ''
       /* eslint-disable */
@@ -129,26 +140,26 @@ export default {
       return result
     },
 
-    _toggleDate (type) {
+    _toggleDate(type) {
       this.current = type
     },
 
-    _startConfirm ({ value, innerValue }) {
+    _startConfirm({ value, innerValue }) {
       this.startInnerValue = innerValue
       this.startValue = value
     },
 
-    _endConfirm ({ value, innerValue }) {
+    _endConfirm({ value, innerValue }) {
       this.endInnerValue = innerValue
       this.endValue = value
     },
 
-    _confirm () {
+    _confirm() {
       this.e__input([this.startValue, this.endValue])
       this._cancel()
     },
 
-    _cancel () {
+    _cancel() {
       this.current = 'start'
       this.isShowPicker = false
     }

@@ -13,7 +13,9 @@
       :name="item.value"
       :shape="formModel.rules.shape"
       :checked-color="formModel.rules.checkColor"
-    >{{ item.label }}</van-checkbox>
+    >
+      {{ item.label }}
+    </van-checkbox>
   </van-checkbox-group>
 </template>
 
@@ -23,8 +25,8 @@ import formBase from '../mixins/form'
 export default {
   name: 'VCheckbox',
   components: {
-    'van-checkbox': Checkbox,
-    'van-checkbox-group': CheckboxGroup
+    [Checkbox.name]: Checkbox,
+    [CheckboxGroup.name]: CheckboxGroup,
   },
   mixins: [formBase]
 }

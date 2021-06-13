@@ -32,12 +32,12 @@ import addressData from './data'
 export default {
   name: 'VAddress',
   components: {
-    'van-field': Field,
-    'van-picker': Picker,
-    'v-popup': VPopup
+    [Field.name]: Field,
+    [Picker.name]: Picker,
+    [VPopup.name]: VPopup
   },
   mixins: [formBase],
-  data () {
+  data() {
     return {
       isShow: false,
       innerValue: '',
@@ -46,20 +46,21 @@ export default {
     }
   },
   watch: {
-    value (v) {
+    value(v) {
       v ? this._valueToIndex() : this._reset()
     },
-    isShow (v) {
-      v && this.$nextTick(() => {
-        this.$refs.picker.setValues(this.format.map(({ label }) => label))
-      })
+    isShow(v) {
+      v &&
+        this.$nextTick(() => {
+          this.$refs.picker.setValues(this.format.map(({ label }) => label))
+        })
     }
   },
-  created () {
+  created() {
     this._valueToIndex()
   },
   methods: {
-    _confirm (val) {
+    _confirm(val) {
       this.format = this._findValue(this.addressData, val)
       const _value = this.format.map(({ value }) => value).join(',')
       this.isShow = false
@@ -71,12 +72,12 @@ export default {
       })
     },
 
-    _findValue (arr, queryList, key = 'label') {
+    _findValue(arr, queryList, key = 'label') {
       let result = []
       let i = 0
       const find = (arr, q) => {
         try {
-          let r = arr.find(v => v[key] === q)
+          let r = arr.find((v) => v[key] === q)
           result.push({
             label: r.label,
             value: r.value
@@ -93,14 +94,18 @@ export default {
       return result
     },
 
-    _valueToIndex () {
+    _valueToIndex() {
       if (!this.value) return
       const query = this.value.toString().split(',')
-      this.$set(this, 'format', this._findValue(this.addressData, query, 'value'))
+      this.$set(
+        this,
+        'format',
+        this._findValue(this.addressData, query, 'value')
+      )
       this.innerValue = this.format.map(({ label }) => label).join('/')
     },
 
-    _reset () {
+    _reset() {
       this.format = []
       this.innerValue = ''
     }

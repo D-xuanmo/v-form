@@ -1,12 +1,13 @@
-@import "~vant/lib/index";
-@import "./var";
+@import '~vant/lib/index.less';
+@import './var.less';
+
 .v-form-conatiner {
-  @import "./row";
-  @import "./cell";
-  @import "./checkbox";
-  @import "./date-picker";
-  @import "./radio";
-  @import "./upload";
+  @import './row.less';
+  @import './cell.less';
+  @import './checkbox.less';
+  @import './date-picker.less';
+  @import './radio.less';
+  @import './upload.less';
 
   font-size: inherit;
   line-height: 24px;
@@ -27,5 +28,9 @@
     &:after {
       display: none !important;
     }
+  }
+
+  .van-picker__confirm {
+    color: @theme-color;
   }
 }

@@ -18,14 +18,16 @@ export default {
   name: 'VDatetimePicker',
 
   components: {
-    'van-datetime-picker': DatetimePicker,
+    [DatetimePicker.name]: DatetimePicker
   },
 
   mixins: [mixin],
 
   methods: {
-    _format (value) {
-      const currentFormat = Array.isArray(value) ? this.datejs(new Date(...value)) : this.datejs(new Date(value))
+    _format(value) {
+      const currentFormat = Array.isArray(value)
+        ? this.datejs(new Date(...value))
+        : this.datejs(new Date(value))
       let innerValue = ''
       if (this.type === 'year-month') {
         innerValue = currentFormat.format('yyyy-MM')
@@ -37,9 +39,9 @@ export default {
       return {
         innerValue,
         value: this.formModel.rules.valueFormat
-          ? (this.formModel.rules.valueFormat === 'timestamp'
+          ? this.formModel.rules.valueFormat === 'timestamp'
             ? new Date(value).getTime()
-            : currentFormat.format(this.formModel.rules.valueFormat))
+            : currentFormat.format(this.formModel.rules.valueFormat)
           : value
       }
     }

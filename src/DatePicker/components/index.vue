@@ -30,8 +30,8 @@ export default {
   name: 'DatePicker',
 
   components: {
-    'v-datetime-picker': DatetimePicker,
-    'v-time-picker': TimePicker
+    [DatetimePicker.name]: DatetimePicker,
+    [TimePicker.name]: TimePicker
   },
 
   props: {
