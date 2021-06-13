@@ -21,8 +21,6 @@ yarn add @xuanmo/v-form
 ```js
 // 引入组件，推荐使用这种方式
 import VForm from '@xuanmo/v-form'
-
-// 引入css
 import '@xuanmo/v-form/style/index.less'
 
 // 覆盖变量引入此文件替换变量即可，可参考 example/App.vue
@@ -33,6 +31,7 @@ import '@xuanmo/v-form/style/index.less'
 // import "@xuanmo/v-form/dist/v-form.css"
 
 // 注册组件
+// 更多参数参考：https://github.com/D-xuanmo/v-form/blob/master/src/index.js#L7
 Vue.use(VForm)
 
 // 设置防抖时间，默认200ms
@@ -152,7 +151,7 @@ Vue.use(VForm, {
 |方法|说明|参数
 |---|---|---|
 |validate|对整个表单执行校验|Function(callback:Function(boolean))|
-|setModelItemOptions|设置表单options|(key, data)接受两个参数，1. 数据key，2. data为一个数组或者 `() => []`|
+|setModelItemOptions|设置表单options，目前支持的组件：VAddress、VCheckbox、VRadio、VSelect|(key, data)接受两个参数，1. 数据key，2. data为一个数组或者 `() => []`|
 ## Events
 |事件名|说明|回调参数
 |---|---|---|

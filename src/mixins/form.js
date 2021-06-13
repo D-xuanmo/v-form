@@ -56,7 +56,7 @@ export default {
     }
   },
 
-  created() {
+  created () {
     this.debounce = debounce((type, value) => {
       this.$emit('event', {
         type,

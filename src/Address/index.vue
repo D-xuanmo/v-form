@@ -28,27 +28,38 @@
 import { Field, Picker } from 'vant'
 import VPopup from '../components/popup'
 import formBase from '../mixins/form'
-import addressData from './data'
+import addressData from './data.json'
+
 export default {
   name: 'VAddress',
+
   components: {
     [Field.name]: Field,
     [Picker.name]: Picker,
     [VPopup.name]: VPopup
   },
+
   mixins: [formBase],
+
   data() {
     return {
       isShow: false,
       innerValue: '',
-      format: [],
-      addressData
+      format: []
     }
   },
+
+  computed: {
+    addressData() {
+      return this.formModel.rules.options || this.$VForm.addressData || addressData
+    }
+  },
+
   watch: {
     value(v) {
       v ? this._valueToIndex() : this._reset()
     },
+
     isShow(v) {
       v &&
         this.$nextTick(() => {
@@ -56,9 +67,11 @@ export default {
         })
     }
   },
+
   created() {
     this._valueToIndex()
   },
+
   methods: {
     _confirm(val) {
       this.format = this._findValue(this.addressData, val)
@@ -97,11 +110,7 @@ export default {
     _valueToIndex() {
       if (!this.value) return
       const query = this.value.toString().split(',')
-      this.$set(
-        this,
-        'format',
-        this._findValue(this.addressData, query, 'value')
-      )
+      this.$set(this, 'format', this._findValue(this.addressData, query, 'value'))
       this.innerValue = this.format.map(({ label }) => label).join('/')
     },
 
