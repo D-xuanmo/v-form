@@ -31,6 +31,6 @@ export { extend }
 export * as utils from './utils'
 
 // 导出 form item 公用 mixin
-export { default as formItemBaseMixin } from './mixins/form.js'
+export { default as vFormItemBaseMixin } from './mixins/form.js'
 
 export default VForm

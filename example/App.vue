@@ -137,7 +137,7 @@ export default {
           rules: {
             label: '关联文字2',
             type: 'VInput',
-            vRules: 'required|@custom1',
+            vRules: 'required|@custom',
             placeholder: '请输入关联文字2',
             errorMsg: '请输入关联文字2',
             extra: 'extra'

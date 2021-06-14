@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import { formItemBaseMixin } from '@'
+import { vFormItemBaseMixin } from '@'
 export default {
   name: 'FormItemTest',
 
-  mixins: [formItemBaseMixin]
+  mixins: [vFormItemBaseMixin]
 }
 </script>
