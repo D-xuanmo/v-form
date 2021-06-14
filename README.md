@@ -1,17 +1,18 @@
 # 基于vant-ui表单封装的表单组件
 * 目前已经集成的组件（Address/Checkbox/DatePicker/Input/Radio/Select/Text/Switch/Upload）
+* 组件不满足的情况可自定义开发组件或者使用 `slot` 的形式
 * 组件的调用方式采取 `JSON` 配置的形式，具体参数见model数据说明
 * 校验规则已经集成 `VeeValidate` 插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
 * [在线演示](https://codesandbox.io/s/v-formshili-3hs2c)
 
 ## 语法约定
-* `mixin` 公用方法使用 `__` 作为前缀
+* `Mixin` 公用方法使用 `__` 作为前缀
 * 事件传递使用 `e__` 作为前缀
 * `@` 为组件校验规则保留关键字
 
 ## 安装
 ```bash
-# 推荐使用 yarn 安装
+# 推荐使用 yarn 安装，使用 npm 可能会存在依赖补全的情况
 yarn add @xuanmo/v-form
 ```
 
@@ -19,19 +20,15 @@ yarn add @xuanmo/v-form
 
 ### 引入注册组件
 ```js
-// 引入组件，推荐使用这种方式
+// 引入组件
 import VForm from '@xuanmo/v-form'
 import '@xuanmo/v-form/style/index.less'
 
 // 覆盖变量引入此文件替换变量即可，可参考 example/App.vue
 // import '@xuanmo/v-form/style/var.less'
 
-// 不需要编译方式引入
-// import VForm from "@xuanmo/v-form/dist/v-form.umd.js"
-// import "@xuanmo/v-form/dist/v-form.css"
-
 // 注册组件
-// 更多参数参考：https://github.com/D-xuanmo/v-form/blob/master/src/index.js#L7
+// 更多参数说明：https://github.com/D-xuanmo/v-form/blob/master/src/index.js#L6-L14
 Vue.use(VForm)
 
 // 设置防抖时间，默认200ms
@@ -199,7 +196,7 @@ const model = [
 |show-label|是否显示label|boolean|true|
 |validator|局部校验规则|object|{}|
 
-## Form Methods
+## Methods
 |方法|说明|参数
 |---|---|---|
 |validate|对整个表单执行校验|Function(callback:Function(boolean))|
