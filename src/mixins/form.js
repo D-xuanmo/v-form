@@ -36,6 +36,13 @@ export default {
   computed: {
     disabled() {
       return this.formModel.rules.disabled || this.VFormRoot.disabled
+    },
+
+    pattern() {
+      let pattern = this.formModel.rules.pattern
+      if (typeof pattern === 'string') return new RegExp(pattern)
+      if (isRegExp(pattern)) return pattern
+      return pattern
     }
   },
 
@@ -74,19 +81,19 @@ export default {
 
     // 创建校验规则
     // 校验顺序：required => pattern => vRules 剩余规则
-    __createRules({ vRules, pattern }) {
+    __createRules({ vRules }) {
       if (vRules) {
         const rules = vRules.split('|')
-        if (isRegExp(pattern)) {
+        if (this.pattern) {
           rules[0] === 'required'
-            ? rules.splice(1, 0, pattern)
-            : rules.unshift(pattern)
+            ? rules.splice(1, 0, this.pattern)
+            : rules.unshift(this.pattern)
         }
         this.rulesList = rules
         return
       }
-      if (isRegExp(pattern)) {
-        this.rulesList = [pattern]
+      if (this.pattern) {
+        this.rulesList = [this.pattern]
         return
       }
     },

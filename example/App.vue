@@ -88,7 +88,8 @@ export default {
             label: '正则校验',
             type: 'VInput',
             vRules: 'required',
-            pattern: /^\d+$/,
+            pattern: '^\\d+$',
+            // pattern: /^\d+$/,
             placeholder: '请输入',
             errorMsg: '只能输入数字'
           }
