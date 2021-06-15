@@ -21,7 +21,7 @@ jobs:
         registry-url: https://registry.npmjs.org/
 
     - run: npm install
-    - run: npm run build:lib
+    - run: npm run build:lib && npm run build:less
     - run: npm publish --access public
 
       env:

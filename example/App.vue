@@ -187,7 +187,6 @@ export default {
             label: '单选框',
             type: 'VRadio',
             vRules: 'required',
-            disabled: true,
             placeholder: '请输入单选框',
             errorMsg: '请输入单选框',
             direction: 'horizontal',

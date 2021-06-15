@@ -22,3 +22,7 @@ yarn-error.log*
 *.sw?
 
 .es*
+
+.github
+babel.config.js
+.prettierrc
