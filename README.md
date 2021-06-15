@@ -12,7 +12,7 @@
 
 ## 安装
 ```bash
-# 推荐使用 yarn 安装，使用 npm 可能会存在依赖补全的情况
+# 推荐使用 yarn 安装，使用 npm 可能会存在依赖不全的情况
 yarn add @xuanmo/v-form
 ```
 
@@ -68,7 +68,7 @@ const model1 = [
   }
 ]
 
-// 增加 primaryData 属性后的数据模型
+// primaryData 为 true 时的数据模型
 const model2 = [
   {
     key: 'text1',
@@ -188,7 +188,7 @@ const model = [
 |字段名|说明|类型|默认值
 |---|---|---|---|
 |v-model(value)|获取组件处理完成的数据|object|{}|
-|model|数据模型(具体类型参考后续文档)|array|{}|
+|model|数据模型(具体类型参考后续文档)|array|[]|
 |disabled|是否禁用表单|boolean|false|
 |label-width|label宽度|string|20%|
 |label-position|label对齐方式，可选：left/right|string|left|
