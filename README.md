@@ -142,12 +142,12 @@ Vue.use(VForm, {
 #### 制作组件，具体实现可参考 example/components/FormItemTest.vue
 ```js
 // 导入公用组件的 Mixin
-import { formItemBaseMixin } from '@xuanmo/v-form'
+import { vFormItemBaseMixin } from '@xuanmo/v-form'
 export default {
   name: 'FormItemTest',
 
   // 使用 Mixin
-  mixins: [formItemBaseMixin],
+  mixins: [vFormItemBaseMixin],
 
   methods: {
     input(value) {
