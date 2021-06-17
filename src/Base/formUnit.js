@@ -135,6 +135,7 @@ const formUnitBase = Vue.extend({
         const data = isFunction(callback) ? await callback() : callback
         this.$set(this.formModel[this.findModelItemIndexByKey(key)].rules, 'options', data)
       } catch (err) {
+        // eslint-disable-next-line
         console.error(err)
       }
     },

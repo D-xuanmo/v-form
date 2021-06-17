@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "private": false,
   "main": "src/index.js",
   "author": "xuanmo <me@xuanmo.xin>",
@@ -9,8 +9,9 @@
     "url": "https://github.com/D-xuanmo/v-form"
   },
   "scripts": {
+    "dev": "npm run serve",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "npm run build:lib && npm run build:less",
     "build:lib": "vue-cli-service build --target lib --name v-form src/index.js",
     "build:less": "lessc style/index.less dist/index.css --npm-import=\"prefix=~\" --clean-css=\"--s1 --advanced --compatibility=*\"",
     "lint": "vue-cli-service lint"
