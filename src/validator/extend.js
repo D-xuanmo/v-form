@@ -1,7 +1,7 @@
 import { extend, localize } from 'vee-validate'
 import * as veeRules from 'vee-validate/dist/rules'
 import zh_CN from 'vee-validate/dist/locale/zh_CN'
-import { isObject } from '../utils'
+import { isObject } from '@xuanmo/javascript-utils'
 
 localize('zh_CN', zh_CN)
 

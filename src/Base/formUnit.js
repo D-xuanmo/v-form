@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import components from './components'
-import validate, { extend } from '../validator'
-import { debounce, isRegExp, isFunction } from '../utils'
+import validate, {extend} from '../validator'
+import { isRegexp, isFunction, debounce } from '@xuanmo/javascript-utils'
 
 const formUnitBase = Vue.extend({
   components,
@@ -165,7 +165,7 @@ const formUnitBase = Vue.extend({
         }
 
         // 生成跨域校验字段
-        if (!isRegExp(rules.vRules)) {
+        if (!isRegexp(rules.vRules)) {
           const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
           crossFields.forEach((_) => {
             const [name, cross] = _.split(':')

@@ -1,5 +1,5 @@
 // 基础表单公用
-import { debounce, isRegExp } from '../utils'
+import { debounce, isRegexp } from '@xuanmo/javascript-utils'
 export default {
   inject: ['VFormRoot', '$validate'],
 
@@ -41,7 +41,7 @@ export default {
     pattern() {
       let pattern = this.formModel.rules.pattern
       if (typeof pattern === 'string') return new RegExp(pattern)
-      if (isRegExp(pattern)) return pattern
+      if (isRegexp(pattern)) return pattern
       return pattern
     }
   },
@@ -133,7 +133,7 @@ export default {
       const formRoot = this.VFormRoot
 
       // 正则规则校验
-      if (isRegExp(rule)) {
+      if (isRegexp(rule)) {
         const valid = rule.test(val)
         return Promise.resolve({
           valid,
