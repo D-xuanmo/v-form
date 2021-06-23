@@ -314,8 +314,8 @@ export default {
       console.log(type, value)
     },
     _submit () {
-      this.$refs.vform.validate(isValid => {
-        if (!isValid) return this.$toast(this.formError[0].errorMsg)
+      this.$refs.vform.validate((isValid, formError) => {
+        if (!isValid) return this.$toast(formError[0].errorMsg)
         this.$toast('提交成功')
       })
     }

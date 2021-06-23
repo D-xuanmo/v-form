@@ -16,7 +16,7 @@ const VForm = {
     Vue.component('VForm', Base)
     Vue.prototype.$VForm = {
       ...opt,
-      debounceTime: opt.debounceTime || 200
+      debounceTime: opt.debounceTime === undefined ? 200 : opt.debounceTime
     }
 
     // 注册自定义校验规则
