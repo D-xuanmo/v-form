@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "private": false,
   "main": "src/index.js",
   "author": "xuanmo <me@xuanmo.xin>",
@@ -18,10 +18,10 @@
   },
   "dependencies": {
     "@xuanmo/datejs": "^1.0.3",
-    "@xuanmo/javascript-utils": "^0.0.2",
+    "@xuanmo/javascript-utils": "^0.0.5",
     "core-js": "^3.14.0",
     "vant": "^2.12.21",
-    "vee-validate": "3.2.5",
+    "vee-validate": "^3.4.10",
     "vue": "^2.6.13"
   },
   "devDependencies": {

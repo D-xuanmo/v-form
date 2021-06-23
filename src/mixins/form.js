@@ -57,8 +57,8 @@ export default {
 
     value: {
       deep: true,
-      handler(val) {
-        !this.disabled && this.__validator(val)
+      handler(value) {
+        !this.disabled && this.__validator(value, true)
       }
     }
   },
@@ -71,7 +71,10 @@ export default {
       })
     }, this.$VForm.debounceTime)
 
-    !this.disabled && this.e__input(this.value)
+    if (!this.disabled) {
+      this.e__input(this.value)
+      this.__validator(this.value)
+    }
   },
 
   methods: {
@@ -108,19 +111,18 @@ export default {
     },
 
     // 向父级提交当前组件的值
-    async e__input(val) {
-      await this.__validator(val)
-      this.$emit('input', this.formModel.index, val)
+    e__input(value) {
+      this.$emit('input', this.formModel.index, value)
       this.__eventHandler('input', {
         ...this.formModel,
-        value: val
+        value
       })
     },
 
-    e__change(val) {
+    e__change(value) {
       this.$emit('change', {
         ...this.formModel,
-        value: val
+        value
       })
     },
 
@@ -129,12 +131,12 @@ export default {
       this.$emit('error', this.formModel.name, this.errorMessage)
     },
 
-    _handlerValidate(val, rule) {
+    _handlerValidate(value, rule) {
       const formRoot = this.VFormRoot
 
       // 正则规则校验
       if (isRegexp(rule)) {
-        const valid = rule.test(val)
+        const valid = rule.test(value)
         return Promise.resolve({
           valid,
           failedRules: {
@@ -153,15 +155,10 @@ export default {
 
       // 关联校验
       if (isCrossField || isCrossTarget) {
-        // 关联校验主字段
-        const crossRule = rules[0]
-        const mainValidate = formRoot.validator[crossRule] || this.$VForm.validator[crossRule]
-
-        // 关联校验接收字段
-        const targetRule = rule.replace('@', '')
-        const targetValidate = formRoot.validator[targetRule] || this.$VForm.validator[targetRule]
+        const corssRuleName = (rules[0] || rule).replace('@', '')
 
         // 生成关联校验的相关数据
+        // eslint-disable-next-line no-unused-vars
         const createCrossParams = (params, target) => {
           const crossParams = {}
           const context = {}
@@ -177,74 +174,67 @@ export default {
           }
         }
 
-        // 关联校验
-        if (isCrossField) {
-          if (!mainValidate) return Promise.reject(`[VForm]: '${crossRule}' 关联校验规则未注册！`)
+        const handlerCorssValidate = () => {
+          // 跨域校验规则
+          const validator = formRoot.validator[corssRuleName] || this.$VForm.validator[corssRuleName]
 
-          let crossFields = formRoot.crossFields[crossRule]
+          if (!validator) return Promise.reject(`[VForm]: '${corssRuleName}' 关联校验规则未注册！`)
 
-          const { crossParams, context } = createCrossParams(
-            mainValidate.params,
-            crossFields.target
-          )
+          let crossFields = formRoot.crossFields[corssRuleName]
 
-          return Promise.resolve({
-            valid: mainValidate.validate(val, crossParams, context),
-            failedRules: {
-              required: null
-            },
-            errors: [mainValidate.message]
+          const { crossParams, context } = createCrossParams(validator.params, crossFields.target)
+
+          let valid = validator.validate(value, crossParams, context)
+
+          ;[crossFields.local, ...crossFields.target].forEach(key => {
+            if (key !== this.formModel.key) {
+              const self = formRoot.$refs[key][0]
+              if (valid) {
+                self.$set(self, 'errorMessage', {})
+              } else {
+                self.$set(self, 'errorMessage', {
+                  name: self.formModel.name,
+                  value,
+                  visible: true,
+                  index: self.formModel.index,
+                  errorMsg: validator.message
+                })
+              }
+              self.e__error(key)
+            }
           })
-        }
-
-        // 关联校验被绑定字段
-        if (isCrossTarget) {
-          if (!targetValidate) return Promise.reject(`[VForm]: '@${targetRule}' 关联校验规则未注册！`)
-
-          let crossFields = formRoot.crossFields[targetRule]
-
-          const { crossParams, context } = createCrossParams(
-            targetValidate.params,
-            crossFields.target
-          )
-
-          const valid = targetValidate.validate(
-            this.findModelByKey(crossFields.local).value,
-            crossParams,
-            context
-          )
-          if (valid && isCrossField) {
-            formRoot.formErrors[crossFields.local] = {}
-          } else {
-            formRoot.$refs[crossFields.local][0].__validator(
-              this.findModelByKey(crossFields.local).value
-            )
+          return {
+            valid,
+            message: validator.message
           }
-          return Promise.resolve({
-            valid: true,
-            failedRules: {
-              required: null
-            },
-            errors: [targetValidate.message]
-          })
         }
+
+        const { valid, message } = handlerCorssValidate()
+        return Promise.resolve({
+          valid,
+          failedRules: {
+            required: null
+          },
+          errors: [message]
+        })
       }
 
       // veeValidate插件校验
-      return this.$validate(val, rule)
+      return this.$validate(value, rule)
     },
 
     // 执行校验
-    async __validator(val) {
+    async __validator(value = this.value, visible = false) {
       const rules = this.rulesList
       for (let i = 0; i < rules.length; i++) {
         try {
           const rule = rules[i]
-          let { valid, failedRules, errors } = await this._handlerValidate(val, rule)
+          let { valid, failedRules, errors } = await this._handlerValidate(value, rule)
           if (!valid) {
             this.$set(this, 'errorMessage', {
               name: this.formModel.name,
-              value: val,
+              value,
+              visible,
               index: this.formModel.index,
               errorMsg: failedRules.required
                 ? this.formModel.rules.errorMsg
@@ -255,7 +245,7 @@ export default {
             this.$set(this, 'errorMessage', {})
           }
         } catch (err) {
-          throw new Error(err)
+          console.error(err)
         }
       }
       this.e__error()

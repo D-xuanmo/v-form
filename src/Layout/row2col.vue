@@ -16,7 +16,7 @@
     </div>
     <div class="v-form-row__content">
       <slot></slot>
-      <div v-show="showErrorMsg && error.errorMsg" class="v-form-row__error">
+      <div v-show="showErrorMsg" class="v-form-row__error">
         {{ error.errorMsg }}
       </div>
     </div>
@@ -56,7 +56,7 @@ export default {
 
   computed: {
     showErrorMsg() {
-      return this.VFormRoot.showErrorMessage
+      return this.VFormRoot.showErrorMessage || this.error.visible
     }
   }
 }

@@ -124,10 +124,15 @@ const formUnitBase = Vue.extend({
   },
 
   methods: {
-    // 执行伪校验
-    validate(callback) {
+    // 执行校验
+    async validate(callback) {
       this.showErrorMessage = true
-      isFunction(callback) && callback(this.isValid)
+      // TODO: 此处校验性能待优化
+      // const refs = Object.values(this.$refs)
+      // for (let i = 0; i < refs.length; i++) {
+      //   await refs[i][0].__validator()
+      // }
+      isFunction(callback) && callback(this.isValid, this.formErrorList)
     },
 
     async setModelItemOptions(key, callback) {
@@ -215,7 +220,7 @@ const formUnitBase = Vue.extend({
     },
 
     onChangeForm() {
-      this.showErrorMessage = true
+      // this.showErrorMessage = true
     },
 
     // 获取子级错误信息
