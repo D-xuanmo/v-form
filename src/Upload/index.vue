@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import formBase from '../mixins/form'
+import formBase from '../mixins/formItemBase'
 import request from '../utils/request'
 import { isObject, isImageUrl } from '@xuanmo/javascript-utils'
 export default {

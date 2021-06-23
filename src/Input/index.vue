@@ -18,7 +18,7 @@
 
 <script>
 import { Field } from 'vant'
-import formBase from '../mixins/form'
+import formBase from '../mixins/formItemBase'
 export default {
   name: 'VInput',
   components: {

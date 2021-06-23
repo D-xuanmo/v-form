@@ -28,6 +28,6 @@ const VForm = {
 export { extend }
 
 // 导出 form item 公用 mixin
-export { default as vFormItemBaseMixin } from './mixins/form.js'
+export { default as vFormItemBaseMixin } from './mixins/formItemBase'
 
 export default VForm

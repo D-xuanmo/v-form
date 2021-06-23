@@ -27,7 +27,7 @@
 
 <script>
 import { Field, NumberKeyboard } from 'vant'
-import formBase from '../mixins/form'
+import formBase from '../mixins/formItemBase'
 export default {
   name: 'VNumberKeyboard',
   components: {

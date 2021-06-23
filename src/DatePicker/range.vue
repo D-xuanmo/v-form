@@ -60,7 +60,7 @@
 <script>
 import { Field } from 'vant'
 import VPopup from '../components/popup'
-import formBase from '../mixins/form'
+import formBase from '../mixins/formItemBase'
 import datejs from '@xuanmo/datejs'
 import row2col from '../Layout/row2col'
 import DatePicker from './components/index'

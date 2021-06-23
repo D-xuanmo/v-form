@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import formBase from '../mixins/form'
+import formBase from '../mixins/formItemBase'
 export default {
   name: 'VText',
   mixins: [formBase]

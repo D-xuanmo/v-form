@@ -121,6 +121,8 @@ const formUnitBase = Vue.extend({
 
     // 注册局部校验规则
     extend(this.validator)
+
+    this.$emit('input', this.formValues)
   },
 
   methods: {
@@ -217,10 +219,6 @@ const formUnitBase = Vue.extend({
       this.$set(this.formValues, this.formModel[index].key, value)
       this.formModel[index].value = value
       this.debounceChange(this.formValues)
-    },
-
-    onChangeForm() {
-      // this.showErrorMessage = true
     },
 
     // 获取子级错误信息

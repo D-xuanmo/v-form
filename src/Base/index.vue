@@ -24,7 +24,6 @@
                 index
               }"
               @input="updateFormValues"
-              @change="onChangeForm"
               @error="getChildError"
               @event="$emit('event', $event)"
             ></component>

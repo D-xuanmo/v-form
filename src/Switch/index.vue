@@ -15,7 +15,7 @@
 
 <script>
 import { Switch } from 'vant'
-import formBase from '../mixins/form'
+import formBase from '../mixins/formItemBase'
 export default {
   name: 'VSwitch',
   components: {

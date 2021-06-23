@@ -158,7 +158,6 @@ export default {
         const corssRuleName = (rules[0] || rule).replace('@', '')
 
         // 生成关联校验的相关数据
-        // eslint-disable-next-line no-unused-vars
         const createCrossParams = (params, target) => {
           const crossParams = {}
           const context = {}

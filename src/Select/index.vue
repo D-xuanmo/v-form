@@ -27,7 +27,7 @@
 <script>
 import { Field, Picker } from 'vant'
 import VPopup from '../components/popup'
-import formBase from '../mixins/form'
+import formBase from '../mixins/formItemBase'
 import { isObject } from '@xuanmo/javascript-utils'
 export default {
   name: 'VSelect',

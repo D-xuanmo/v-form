@@ -27,7 +27,7 @@
 import { Field } from 'vant'
 import VPopup from '../components/popup'
 import DatePicker from './components/index'
-import formBase from '../mixins/form'
+import formBase from '../mixins/formItemBase'
 import datejs from '@xuanmo/datejs'
 export default {
   name: 'VDatePicker',
