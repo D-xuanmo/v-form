@@ -1,5 +1,5 @@
 <template>
-  <Field
+  <van-field
     :value="value"
     :type="customerType"
     :placeholder="formModel.rules.placeholder"
@@ -13,7 +13,7 @@
     @input="e__input"
     @change="e__change"
     @click="__eventHandler('click', formModel)"
-  ></Field>
+  ></van-field>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ import formBase from '../mixins/form'
 export default {
   name: 'VInput',
   components: {
-    Field
+    [Field.name]: Field
   },
   mixins: [formBase],
   props: {

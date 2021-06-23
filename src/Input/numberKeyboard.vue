@@ -20,6 +20,7 @@
       :close-button-loading="formModel.rules.closeButtonLoading"
       :show-delete-key="formModel.rules.showDeleteKey"
       @blur="isShow = false"
+      @hide="e__change"
     />
   </div>
 </template>
