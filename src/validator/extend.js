@@ -73,10 +73,10 @@ function customExtend (opt = {}) {
   if (!isObject(opt)) {
     throw new Error('自定义校验规则格式错误')
   }
-  for (const [key, val] of Object.entries(opt)) {
+  for (const [key, value] of Object.entries(opt)) {
     extend(key, {
       validate: () => true,
-      ...val
+      ...value
     })
   }
 }
