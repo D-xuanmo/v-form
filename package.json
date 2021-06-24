@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "private": false,
   "main": "src/index.js",
   "author": "xuanmo <me@xuanmo.xin>",
@@ -13,8 +13,9 @@
     "serve": "vue-cli-service serve",
     "build": "npm run build:lib && npm run build:less",
     "build:lib": "vue-cli-service build --target lib --name v-form src/index.js",
-    "build:less": "lessc style/index.less dist/index.css --npm-import=\"prefix=~\" --clean-css=\"--s1 --advanced --compatibility=*\"",
-    "lint": "vue-cli-service lint"
+    "build:less": "lessc packages/style/index.less dist/index.css --npm-import=\"prefix=~\" --clean-css=\"--s1 --advanced --compatibility=*\"",
+    "lint": "vue-cli-service lint",
+    "push": "git push && git push gitee master"
   },
   "dependencies": {
     "@xuanmo/datejs": "^1.0.3",
