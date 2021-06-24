@@ -12,7 +12,7 @@
     "dev": "npm run serve",
     "serve": "vue-cli-service serve",
     "build": "npm run build:lib && npm run build:less",
-    "build:lib": "vue-cli-service build --target lib --name v-form src/index.js",
+    "build:lib": "vue-cli-service build --target lib --name v-form packages/index.js",
     "build:less": "lessc packages/style/index.less dist/index.css --npm-import=\"prefix=~\" --clean-css=\"--s1 --advanced --compatibility=*\"",
     "lint": "vue-cli-service lint",
     "push": "git push && git push gitee master"
