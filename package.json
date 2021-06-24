@@ -1,8 +1,8 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "private": false,
-  "main": "src/index.js",
+  "main": "packages/index.js",
   "author": "xuanmo <me@xuanmo.xin>",
   "repository": {
     "type": "git",
