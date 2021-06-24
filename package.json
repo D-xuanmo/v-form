@@ -14,8 +14,9 @@
     "build": "npm run build:lib && npm run build:less",
     "build:lib": "vue-cli-service build --target lib --name v-form packages/index.js",
     "build:less": "lessc packages/style/index.less dist/index.css --npm-import=\"prefix=~\" --clean-css=\"--s1 --advanced --compatibility=*\"",
+    "build:example": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "push": "git push && git push gitee master"
+    "push": "git push && git push gitee master && git push gitlab master"
   },
   "dependencies": {
     "@xuanmo/datejs": "^1.0.3",

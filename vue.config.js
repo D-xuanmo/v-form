@@ -2,7 +2,8 @@ const path = require('path')
 
 module.exports = {
   lintOnSave: true,
-  // outputDir: 'doc',
+  outputDir: 'example-dist',
+  publicPath: process.env.NODE_ENV === 'production' ? '/v-form/' : '/',
   devServer: {
     overlay: {
       warnings: true,
