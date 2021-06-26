@@ -6,10 +6,12 @@ Vue.config.productionTip = false
 import FormItemTest from './components/FormItemTest'
 Vue.component(FormItemTest.name, FormItemTest)
 
-import VForm from '@'
+import VForm from '../packages'
+import ADDRESS_JSON from '../packages/Address/data.json'
 
 Vue.use(VForm, {
   // primaryData: true,
+  ADDRESS_JSON,
   validator: {
     custom: {
       params: ['length'],

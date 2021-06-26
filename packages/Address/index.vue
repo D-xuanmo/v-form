@@ -16,7 +16,7 @@
         ref="picker"
         show-toolbar
         value-key="label"
-        :columns="addressData"
+        :columns="addressJSON"
         @confirm="_confirm"
         @cancel="isShow = false"
       />
@@ -28,7 +28,6 @@
 import { Field, Picker } from 'vant'
 import VPopup from '../components/popup'
 import formBase from '../mixins/formItemBase'
-import addressData from './data.json'
 
 export default {
   name: 'VAddress',
@@ -50,8 +49,8 @@ export default {
   },
 
   computed: {
-    addressData() {
-      return this.formModel.rules.options || this.$VForm.addressData || addressData
+    addressJSON() {
+      return this.formModel.rules.options || this.$VForm.ADDRESS_JSON
     }
   },
 
@@ -74,7 +73,7 @@ export default {
 
   methods: {
     _confirm(val) {
-      this.format = this._findValue(this.addressData, val)
+      this.format = this._findValue(this.addressJSON, val)
       const _value = this.format.map(({ value }) => value).join(',')
       this.isShow = false
       this.innerValue = this.format.map(({ label }) => label).join('/')
@@ -110,7 +109,7 @@ export default {
     _valueToIndex() {
       if (!this.value) return
       const query = this.value.toString().split(',')
-      this.$set(this, 'format', this._findValue(this.addressData, query, 'value'))
+      this.$set(this, 'format', this._findValue(this.addressJSON, query, 'value'))
       this.innerValue = this.format.map(({ label }) => label).join('/')
     },
 

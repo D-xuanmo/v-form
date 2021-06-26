@@ -10,7 +10,7 @@ const VForm = {
    * @param {boolean} opt.primaryData 组件配置项是否在 rules 字段下
    * @param {object} opt.validator 需要全局注册的自定义校验规则
    * @param {number} opt.debounceTime 防抖时间，单位：ms
-   * @param {array} opt.addressData 地址选择器数据源，格式参考：https://github.com/D-xuanmo/v-form/blob/master/src/Address/data.json
+   * @param {array} opt.addressJSON 地址选择器数据源，格式参考：https://github.com/D-xuanmo/v-form/blob/master/src/Address/data.json
    */
   install (vue, opt = {}) {
     Vue.component('VForm', Base)

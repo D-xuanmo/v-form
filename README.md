@@ -22,18 +22,22 @@ yarn add @xuanmo/v-form
 ```js
 // 引入组件
 import VForm from '@xuanmo/v-form'
-import '@xuanmo/v-form/style/index.less'
+import '@xuanmo/v-form/packages/style/index.less'
 
 // 不经过编译引入方式，（不推荐）
 // import VForm from '@xuanmo/v-form/dist/v-form.umd.min.js'
 // import '@xuanmo/v-form/dist/index.css'
 
 // 覆盖变量引入此文件替换变量即可，可参考 example/App.vue
-// import '@xuanmo/v-form/style/var.less'
+// import '@xuanmo/v-form/packages/style/var.less'
 
 // 注册组件
 // 更多参数说明：https://github.com/D-xuanmo/v-form/blob/master/src/index.js#L6-L14
-Vue.use(VForm)
+// 设置地址选择器 JSON，不用组件自带的 JSON 只需按此种格式引入即可
+import ADDRESS_JSON from '@xuanmo/v-form/packages/Address/data.json'
+Vue.use(VForm, {
+  ADDRESS_JSON
+})
 
 // 设置防抖时间，默认200ms
 Vue.use(VForm, {
