@@ -11,7 +11,7 @@ import ADDRESS_JSON from '../packages/Address/data.json'
 
 Vue.use(VForm, {
   // primaryData: true,
-  ADDRESS_JSON,
+  addressJSON: ADDRESS_JSON,
   validator: {
     custom: {
       params: ['length'],

@@ -50,7 +50,7 @@ export default {
 
   computed: {
     addressJSON() {
-      return this.formModel.rules.options || this.$VForm.ADDRESS_JSON
+      return this.formModel.rules.options || this.$VForm.addressJSON
     }
   },
 

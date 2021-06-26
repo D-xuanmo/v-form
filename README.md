@@ -36,7 +36,7 @@ import '@xuanmo/v-form/packages/style/index.less'
 // 设置地址选择器 JSON，不用组件自带的 JSON 只需按此种格式引入即可
 import ADDRESS_JSON from '@xuanmo/v-form/packages/Address/data.json'
 Vue.use(VForm, {
-  ADDRESS_JSON
+  addressJSON: ADDRESS_JSON
 })
 
 // 设置防抖时间，默认200ms
