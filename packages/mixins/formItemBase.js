@@ -64,10 +64,11 @@ export default {
   },
 
   created () {
-    this.debounce = debounce((type, value) => {
+    this.debounce = debounce((type, value, model) => {
       this.$emit('event', {
         type,
-        value
+        value,
+        model
       })
     }, this.$VForm.debounceTime)
 
@@ -106,8 +107,8 @@ export default {
      * @param {string} type 事件名
      * @param {*} value 任意数据
      */
-    __eventHandler(type, value) {
-      this.debounce(type, value)
+    __eventHandler(type, value = this.formModel) {
+      this.debounce(type, value, this.VFormRoot.model)
     },
 
     // 向父级提交当前组件的值
@@ -225,12 +226,13 @@ export default {
     // 执行校验
     async __validator(value = this.value, visible = false) {
       const rules = this.rulesList
+      let errorInfo = {}
       for (let i = 0; i < rules.length; i++) {
         try {
           const rule = rules[i]
           let { valid, failedRules, errors } = await this._handlerValidate(value, rule)
           if (!valid) {
-            this.$set(this, 'errorMessage', {
+            errorInfo = {
               name: this.formModel.name,
               value,
               visible,
@@ -238,16 +240,20 @@ export default {
               errorMsg: failedRules.required
                 ? this.formModel.rules.errorMsg
                 : errors[0].replace('{field}', this.formModel.rules.label)
-            })
+            }
+            this.$set(this, 'errorMessage', errorInfo)
             break
           } else {
-            this.$set(this, 'errorMessage', {})
+            errorInfo = {}
+            this.$set(this, 'errorMessage', errorInfo)
           }
         } catch (err) {
           console.error(err)
+          return Promise.reject(err)
         }
       }
       this.e__error()
+      return Promise.resolve(errorInfo)
     }
   }
 }

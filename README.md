@@ -133,6 +133,7 @@ Vue.use(VForm, {
 |VRadio|单选框|
 |VInput|输入框|
 |VNumberKeyboard|数字输入框|
+|VVerificationCode|短信验证码|
 |VDatePicker|时间选择器|
 |VDatePickerRange|时间区间选择器|
 |VSelect|下拉选择框|

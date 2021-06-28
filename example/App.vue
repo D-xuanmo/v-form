@@ -58,6 +58,9 @@ export default {
       disabled: false,
       model: [
         {
+          rules: { type: 'VCell' }
+        },
+        {
           key: 'formItemTest',
           value: '',
           rules: {
@@ -70,6 +73,44 @@ export default {
           }
         },
         {
+          rules: {
+            type: 'VCell'
+          }
+        },
+        {
+          key: 'phone',
+          value: '',
+          rules: {
+            label: '手机号',
+            type: 'VInput|number',
+            placeholder: '请输入手机号',
+            vRules: 'required|phone',
+            errorMsg: '请输入手机号'
+          }
+        },
+        {
+          key: 'verificationCode',
+          value: '',
+          rules: {
+            label: '短信验证码',
+            type: 'VVerificationCode',
+            buttonText: '发送验证码',
+            placeholder: '请输入验证码',
+            vRules: 'required',
+            countDown: 60,
+            // buttonDisabled: true,
+            async onBeforeCountdown(formRoot) {
+              // 做请求前的校验拦截，true 代表通过，false 代表不通过
+              const phoneRef = formRoot.$refs.phone[0]
+              const { errorMsg } = await phoneRef.__validator(phoneRef.value, true)
+              return errorMsg
+            }
+          }
+        },
+        {
+          rules: { type: 'VCell' }
+        },
+        {
           key: 'numberKeyboard',
           value: '',
           rules: {
@@ -79,6 +120,17 @@ export default {
             // theme: 'custom',
             extraKey: '.',
             // closeButtonText: '完成'
+          }
+        },
+        {
+          key: 'number',
+          value: '',
+          rules: {
+            label: '数字',
+            type: 'VInput|digit',
+            vRules: 'required',
+            placeholder: '请输入数字',
+            errorMsg: '请输入数字'
           }
         },
         {
@@ -116,9 +168,12 @@ export default {
           key: 'switch',
           value: true,
           rules: {
-            label: '是否启用编辑',
+            label: '开关',
             type: 'VSwitch'
           }
+        },
+        {
+          rules: { type: 'VCell' }
         },
         {
           key: 'text1',
@@ -154,6 +209,9 @@ export default {
             placeholder: '请输入关联文字3',
             errorMsg: '请输入关联文字3'
           }
+        },
+        {
+          rules: { type: 'VCell' }
         },
         {
           key: 'text4',
@@ -214,17 +272,6 @@ export default {
             type: 'VDatePickerRange|time',
             valueFormat: 'timestamp',
             rangeSeparator: '至'
-          }
-        },
-        {
-          key: 'number',
-          value: '',
-          rules: {
-            label: '数字',
-            type: 'VInput|digit',
-            vRules: 'required',
-            placeholder: '请输入数字',
-            errorMsg: '请输入数字'
           }
         },
         {
@@ -296,22 +343,21 @@ export default {
       ]
     }
   },
-  mounted() {
-    // setTimeout(() => {
-    //   this.$refs.vform.setModelItemOptions('select', [
-    //     { text: '杭州', value: 1 },
-    //     { text: '宁波', value: 2 }
-    //   ])
-    // }, 5000)
-  },
   methods: {
     _change ({ value, errorMsg, isValid }) {
       this.formData = value
       this.formError = errorMsg
       this.isValid = isValid
     },
-    _event ({ type, value }) {
-      console.log(type, value)
+    _event ({ type, value, model }) {
+      // console.log(type, value, model)
+      if (type === 'verification-code-button-click') {
+        // 如果倒计时请求失败，可以执行 value 取消倒计时
+        setTimeout(() => {
+          this.$toast('验证码发送失败')
+          value()
+        }, 3000)
+      }
     },
     _submit () {
       this.$refs.vform.validate((isValid, formError) => {

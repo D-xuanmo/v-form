@@ -3,7 +3,11 @@
     v-bind="$attrs"
     :value="value"
     v-on="$listeners"
-  />
+  >
+    <template #button>
+      <slot />
+    </template>
+  </van-field>
 </template>
 
 <script>

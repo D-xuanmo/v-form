@@ -11,6 +11,7 @@ import VDatePickerRange from '../DatePicker/range.vue'
 import VSwitch from '../Switch/index.vue'
 import VUpload from '../Upload/index.vue'
 import VNumberKeyboard from '../Input/numberKeyboard.vue'
+import VVerificationCode from '../Input/verificationCode.vue'
 
 export default {
   Row2Col,
@@ -25,5 +26,6 @@ export default {
   VDatePickerRange,
   VSwitch,
   VUpload,
-  VNumberKeyboard
+  VNumberKeyboard,
+  VVerificationCode
 }
