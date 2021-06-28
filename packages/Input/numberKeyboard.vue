@@ -1,14 +1,14 @@
 <template>
   <div class="v-form__input-wrapper">
-    <Field
+    <v-base-input
       :value="value"
       :placeholder="formModel.rules.placeholder"
       readonly
       :disabled="disabled"
       @touchstart.native.stop="() => !disabled && (isShow = true)"
-    ></Field>
-    <NumberKeyboard
-      v-model="_value"
+    />
+    <van-number-keyboard
+      v-model="numberKeyboardValue"
       :show="isShow"
       :title="formModel.rules.title"
       :theme="formModel.rules.theme"
@@ -26,22 +26,28 @@
 </template>
 
 <script>
-import { Field, NumberKeyboard } from 'vant'
+import VBaseInput from '../components/VBaseInput.vue'
+import { NumberKeyboard } from 'vant'
 import formBase from '../mixins/formItemBase'
+
 export default {
   name: 'VNumberKeyboard',
+
   components: {
-    Field,
-    NumberKeyboard
+    [VBaseInput.name]: VBaseInput,
+    [NumberKeyboard.name]: NumberKeyboard
   },
+
   mixins: [formBase],
+
   data() {
     return {
       isShow: false
     }
   },
+
   computed: {
-    _value: {
+    numberKeyboardValue: {
       get() {
         return this.value
       },

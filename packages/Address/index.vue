@@ -1,6 +1,6 @@
 <template>
   <div class="v-form__input-wrapper">
-    <van-field
+    <v-base-input
       ref="input"
       :value="innerValue"
       readonly
@@ -10,7 +10,7 @@
       @focus="isShow = true"
       @click-right-icon="!VFormRoot.disabled && (isShow = true)"
       @click="__eventHandler('click', formModel)"
-    ></van-field>
+    />
     <v-popup v-model="isShow">
       <van-picker
         ref="picker"
@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import { Field, Picker } from 'vant'
+import VBaseInput from '../components/VBaseInput.vue'
+import { Picker } from 'vant'
 import VPopup from '../components/VPopup.vue'
 import formBase from '../mixins/formItemBase'
 
@@ -33,7 +34,7 @@ export default {
   name: 'VAddress',
 
   components: {
-    [Field.name]: Field,
+    [VBaseInput.name]: VBaseInput,
     [Picker.name]: Picker,
     [VPopup.name]: VPopup
   },
@@ -56,7 +57,7 @@ export default {
 
   watch: {
     value(v) {
-      v ? this._valueToIndex() : this._reset()
+      v ? this.valueToIndex() : this.reset()
     },
 
     isShow(v) {
@@ -68,12 +69,12 @@ export default {
   },
 
   created() {
-    this._valueToIndex()
+    this.valueToIndex()
   },
 
   methods: {
     _confirm(val) {
-      this.format = this._findValue(this.addressJSON, val)
+      this.format = this.findValue(this.addressJSON, val)
       const _value = this.format.map(({ value }) => value).join(',')
       this.isShow = false
       this.innerValue = this.format.map(({ label }) => label).join('/')
@@ -84,7 +85,7 @@ export default {
       })
     },
 
-    _findValue(arr, queryList, key = 'label') {
+    findValue(arr, queryList, key = 'label') {
       let result = []
       let i = 0
       const find = (arr, q) => {
@@ -106,14 +107,14 @@ export default {
       return result
     },
 
-    _valueToIndex() {
+    valueToIndex() {
       if (!this.value) return
       const query = this.value.toString().split(',')
-      this.$set(this, 'format', this._findValue(this.addressJSON, query, 'value'))
+      this.$set(this, 'format', this.findValue(this.addressJSON, query, 'value'))
       this.innerValue = this.format.map(({ label }) => label).join('/')
     },
 
-    _reset() {
+    reset() {
       this.format = []
       this.innerValue = ''
     }

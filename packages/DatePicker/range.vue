@@ -1,6 +1,6 @@
 <template>
   <div class="v-form__input-wrapper">
-    <van-field
+    <v-base-input
       ref="input"
       :value="innerValue"
       readonly
@@ -9,7 +9,7 @@
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
       @focus="isShowPicker = true"
       @click-right-icon="!VFormRoot.disabled && (isShowPicker = true)"
-    ></van-field>
+    />
     <v-popup v-model="isShowPicker" @close="_cancel">
       <div class="van-hairline--top-bottom van-picker__toolbar">
         <button type="button" class="van-picker__cancel" @click="_cancel">
@@ -58,20 +58,20 @@
 </template>
 
 <script>
-import { Field } from 'vant'
 import VPopup from '../components/VPopup.vue'
 import formBase from '../mixins/formItemBase'
 import datejs from '@xuanmo/datejs'
 import row2col from '../Layout/row2col'
 import DatePicker from './components/index'
+import VBaseInput from '../components/VBaseInput.vue'
 export default {
   name: 'VDatePickerRange',
 
   components: {
-    [Field.name]: Field,
     [VPopup.name]: VPopup,
     row2col,
-    DatePicker
+    DatePicker,
+    VBaseInput
   },
 
   mixins: [formBase],

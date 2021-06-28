@@ -1,6 +1,6 @@
 <template>
   <div class="v-form__input-wrapper">
-    <van-field
+    <v-base-input
       ref="input"
       :value="innerValue"
       readonly
@@ -10,13 +10,13 @@
       @focus="isShowPicker = true"
       @change="e__change"
       @click-right-icon="!VFormRoot.disabled && (isShowPicker = true)"
-    ></van-field>
+    />
     <v-popup v-model="isShowPicker">
       <date-picker
         :value="+new Date(innerValue)"
         :type="customerType"
         :form-model="formModel"
-        @confirm="_confirm"
+        @confirm="confirm"
         @cancel="isShowPicker = false"
       />
     </v-popup>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { Field } from 'vant'
+import VBaseInput from '../components/VBaseInput.vue'
 import VPopup from '../components/VPopup.vue'
 import DatePicker from './components/index'
 import formBase from '../mixins/formItemBase'
@@ -33,8 +33,8 @@ export default {
   name: 'VDatePicker',
 
   components: {
-    [Field.name]: Field,
-    [VPopup.name]: VPopup,
+    VBaseInput,
+    VPopup,
     DatePicker
   },
 
@@ -50,16 +50,16 @@ export default {
 
   watch: {
     value(v) {
-      this.innerValue = this._innerValueFormat(v)
+      this.innerValue = this.innerValueFormat(v)
     }
   },
 
   created() {
-    this.innerValue = this._innerValueFormat(this.value)
+    this.innerValue = this.innerValueFormat(this.value)
   },
 
   methods: {
-    _innerValueFormat(v) {
+    innerValueFormat(v) {
       if (!v) return ''
       const currentFormat = datejs(new Date(v))
       let result = ''
@@ -81,7 +81,7 @@ export default {
       return result
     },
 
-    _confirm({ innerValue, value }) {
+    confirm({ innerValue, value }) {
       this.isShowPicker = false
       this.innerValue = innerValue
       this.e__input(value)

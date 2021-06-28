@@ -1,6 +1,6 @@
 <template>
   <div class="v-form__input-wrapper">
-    <van-field
+    <v-base-input
       ref="input"
       :value="innerValue"
       readonly
@@ -11,13 +11,13 @@
       @click-right-icon="!VFormRoot.disabled && (isShow = true)"
       @change="e__change"
       @click="__eventHandler('click', formModel)"
-    ></van-field>
+    />
     <v-popup v-model="isShow" position="bottom">
       <van-picker
         ref="picker"
         show-toolbar
         :columns="options"
-        @confirm="_confirm"
+        @confirm="confirm"
         @cancel="isShow = false"
       />
     </v-popup>
@@ -25,18 +25,23 @@
 </template>
 
 <script>
-import { Field, Picker } from 'vant'
+import VBaseInput from '../components/VBaseInput.vue'
+import { Picker } from 'vant'
 import VPopup from '../components/VPopup.vue'
 import formBase from '../mixins/formItemBase'
 import { isObject } from '@xuanmo/javascript-utils'
+
 export default {
   name: 'VSelect',
+
   components: {
-    [Field.name]: Field,
+    [VBaseInput.name]: VBaseInput,
     [Picker.name]: Picker,
     [VPopup.name]: VPopup
   },
+
   mixins: [formBase],
+
   data() {
     return {
       isShow: false,
@@ -45,6 +50,7 @@ export default {
       options: []
     }
   },
+
   watch: {
     // 生成vant picker所需要的数据格式
     'formModel.rules.options': {
@@ -68,10 +74,12 @@ export default {
         this.options = result
       }
     },
+
     value(v) {
       this.__validator(v)
-      v ? this._valueToIndex() : this._reset()
+      v ? this.valueToIndex() : this.reset()
     },
+
     isShow(v) {
       v &&
         this.$nextTick(() => {
@@ -79,18 +87,20 @@ export default {
         })
     }
   },
+
   created() {
-    this._valueToIndex()
+    this.valueToIndex()
   },
+
   methods: {
-    _confirm(val) {
+    confirm(val) {
       this.format = val
       this.isShow = false
       this.innerValue = val.map(({ text }) => text).join('/')
       this.e__input(val.map(({ value }) => value).join(','))
     },
 
-    _valueToIndex() {
+    valueToIndex() {
       if (!this.value) return
       const indexs = this.value.toString().split(',')
       let format = []
@@ -101,7 +111,7 @@ export default {
       this.innerValue = format.map(({ text }) => text).join('/')
     },
 
-    _reset() {
+    reset() {
       this.format = []
       this.innerValue = ''
     }

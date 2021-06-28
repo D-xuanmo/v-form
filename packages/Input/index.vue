@@ -1,5 +1,5 @@
 <template>
-  <van-field
+  <v-base-input
     :value="value"
     :type="customerType"
     :placeholder="formModel.rules.placeholder"
@@ -13,18 +13,22 @@
     @input="e__input"
     @change="e__change"
     @click="__eventHandler('click', formModel)"
-  ></van-field>
+  />
 </template>
 
 <script>
-import { Field } from 'vant'
+import VBaseInput from '../components/VBaseInput.vue'
 import formBase from '../mixins/formItemBase'
+
 export default {
   name: 'VInput',
+
   components: {
-    [Field.name]: Field
+    [VBaseInput.name]: VBaseInput
   },
+
   mixins: [formBase],
+
   props: {
     type: {
       type: String,
