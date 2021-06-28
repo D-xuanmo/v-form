@@ -15,12 +15,12 @@
 
 <script>
 import { Switch } from 'vant'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 export default {
   name: 'VSwitch',
   components: {
     [Switch.name]: Switch
   },
-  mixins: [formBase]
+  mixins: [formItemBase]
 }
 </script>

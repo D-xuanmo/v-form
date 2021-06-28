@@ -59,7 +59,7 @@
 
 <script>
 import VPopup from '../components/VPopup.vue'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 import datejs from '@xuanmo/datejs'
 import row2col from '../Layout/row2col'
 import DatePicker from './components/index'
@@ -74,7 +74,7 @@ export default {
     VBaseInput
   },
 
-  mixins: [formBase],
+  mixins: [formItemBase],
 
   props: {
     value: {

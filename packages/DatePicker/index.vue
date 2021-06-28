@@ -27,7 +27,7 @@
 import VBaseInput from '../components/VBaseInput.vue'
 import VPopup from '../components/VPopup.vue'
 import DatePicker from './components/index'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 import datejs from '@xuanmo/datejs'
 export default {
   name: 'VDatePicker',
@@ -38,7 +38,7 @@ export default {
     DatePicker
   },
 
-  mixins: [formBase],
+  mixins: [formItemBase],
 
   data() {
     return {

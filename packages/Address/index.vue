@@ -28,7 +28,7 @@
 import VBaseInput from '../components/VBaseInput.vue'
 import { Picker } from 'vant'
 import VPopup from '../components/VPopup.vue'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 
 export default {
   name: 'VAddress',
@@ -39,7 +39,7 @@ export default {
     [VPopup.name]: VPopup
   },
 
-  mixins: [formBase],
+  mixins: [formItemBase],
 
   data() {
     return {

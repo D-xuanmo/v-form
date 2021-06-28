@@ -18,7 +18,7 @@
 
 <script>
 import VBaseInput from '../components/VBaseInput.vue'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 
 export default {
   name: 'VInput',
@@ -27,7 +27,7 @@ export default {
     [VBaseInput.name]: VBaseInput
   },
 
-  mixins: [formBase],
+  mixins: [formItemBase],
 
   props: {
     type: {

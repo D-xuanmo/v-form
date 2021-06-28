@@ -55,13 +55,13 @@
 </template>
 
 <script>
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 import request from '../utils/request'
 import { isObject, isImageUrl } from '@xuanmo/javascript-utils'
 export default {
   name: 'VUpload',
 
-  mixins: [formBase],
+  mixins: [formItemBase],
 
   data() {
     return {

@@ -21,13 +21,13 @@
 
 <script>
 import { Checkbox, CheckboxGroup } from 'vant'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 export default {
   name: 'VCheckbox',
   components: {
     [Checkbox.name]: Checkbox,
     [CheckboxGroup.name]: CheckboxGroup,
   },
-  mixins: [formBase]
+  mixins: [formItemBase]
 }
 </script>

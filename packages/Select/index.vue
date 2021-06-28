@@ -28,7 +28,7 @@
 import VBaseInput from '../components/VBaseInput.vue'
 import { Picker } from 'vant'
 import VPopup from '../components/VPopup.vue'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 import { isObject } from '@xuanmo/javascript-utils'
 
 export default {
@@ -40,7 +40,7 @@ export default {
     [VPopup.name]: VPopup
   },
 
-  mixins: [formBase],
+  mixins: [formItemBase],
 
   data() {
     return {

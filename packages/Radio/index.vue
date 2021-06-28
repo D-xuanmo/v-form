@@ -18,13 +18,13 @@
 
 <script>
 import { RadioGroup, Radio } from 'vant'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 export default {
   name: 'VRadio',
   components: {
     [Radio.name]: Radio,
     [RadioGroup.name]: RadioGroup
   },
-  mixins: [formBase]
+  mixins: [formItemBase]
 }
 </script>

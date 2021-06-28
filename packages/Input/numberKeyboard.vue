@@ -28,7 +28,7 @@
 <script>
 import VBaseInput from '../components/VBaseInput.vue'
 import { NumberKeyboard } from 'vant'
-import formBase from '../mixins/formItemBase'
+import formItemBase from '../mixins/formItemBase'
 
 export default {
   name: 'VNumberKeyboard',
@@ -38,7 +38,7 @@ export default {
     [NumberKeyboard.name]: NumberKeyboard
   },
 
-  mixins: [formBase],
+  mixins: [formItemBase],
 
   data() {
     return {
