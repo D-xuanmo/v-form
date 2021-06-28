@@ -103,7 +103,8 @@ export default {
               // 做请求前的校验拦截，true 代表通过，false 代表不通过
               const phoneRef = formRoot.$refs.phone[0]
               const { errorMsg } = await phoneRef.__validator(phoneRef.value, true)
-              return errorMsg
+              if (errorMsg) return false
+              return true
             }
           }
         },
