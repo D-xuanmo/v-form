@@ -25,7 +25,7 @@
 
 <script>
 import { Field } from 'vant'
-import VPopup from '../components/popup'
+import VPopup from '../components/VPopup.vue'
 import DatePicker from './components/index'
 import formBase from '../mixins/formItemBase'
 import datejs from '@xuanmo/datejs'

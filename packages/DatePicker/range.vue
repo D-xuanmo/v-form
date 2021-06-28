@@ -59,7 +59,7 @@
 
 <script>
 import { Field } from 'vant'
-import VPopup from '../components/popup'
+import VPopup from '../components/VPopup.vue'
 import formBase from '../mixins/formItemBase'
 import datejs from '@xuanmo/datejs'
 import row2col from '../Layout/row2col'

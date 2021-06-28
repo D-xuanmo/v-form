@@ -3,7 +3,7 @@
     :value="value"
     position="bottom"
     safe-area-inset-bottom
-    @click-overlay="_close"
+    @click-overlay="close"
   >
     <slot></slot>
   </van-popup>
@@ -13,17 +13,20 @@
 import { Popup } from 'vant'
 export default {
   name: 'VPopup',
+
   components: {
     [Popup.name]: Popup
   },
+
   props: {
     value: {
       type: Boolean,
       default: false
     }
   },
+
   methods: {
-    _close() {
+    close() {
       this.$emit('input', false)
       this.$emit('close')
     }
