@@ -1,5 +1,11 @@
 <template>
-  <div :class="['v-form-row', disabled && 'is-disabled']">
+  <div
+    class="v-form-row"
+    :class="{
+      'is-disabled': disabled,
+      'cell--center': formModel.rules.type === 'VVerificationCode'
+    }"
+  >
     <div
       v-if="VFormRoot.showLabel"
       class="v-form-row__label"
@@ -49,6 +55,11 @@ export default {
     },
 
     error: {
+      type: Object,
+      default: () => ({})
+    },
+
+    formModel: {
       type: Object,
       default: () => ({})
     }

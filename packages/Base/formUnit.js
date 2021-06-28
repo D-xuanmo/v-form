@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import components from './components'
-import validate, {extend} from '../validator'
+import validate, { extend } from '../validator'
 import { isRegexp, isFunction, debounce } from '@xuanmo/javascript-utils'
 
 const formUnitBase = Vue.extend({

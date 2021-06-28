@@ -2,7 +2,6 @@
 
 .v-form-row {
   display: flex;
-  align-items: center;
   padding: 0 @padding;
   border-bottom: 1px solid @border-color;
   background: #fff;
@@ -13,11 +12,15 @@
     }
   }
 
+  &.cell--center {
+    align-items: center;
+  }
+
   .v-form-row__label {
-    align-self: flex-start;
     width: 23%;
     padding: 10px 0;
     font-size: inherit;
+    line-height: 24px;
   }
 
   .v-form-row__required-mark {
