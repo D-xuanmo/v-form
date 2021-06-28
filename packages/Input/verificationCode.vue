@@ -50,7 +50,7 @@ export default {
     },
 
     buttonDisabled() {
-      return this.formModel.rules.buttonDisabled || this.loading
+      return this.disabled || this.formModel.rules.buttonDisabled || this.loading
     }
   },
 
