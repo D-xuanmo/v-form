@@ -3,7 +3,7 @@
     class="v-form-row"
     :class="{
       'is-disabled': disabled,
-      'cell--center': formModel.rules.type === 'VVerificationCode'
+      'cell--center': isCellCenter
     }"
   >
     <div
@@ -68,6 +68,10 @@ export default {
   computed: {
     showErrorMsg() {
       return this.VFormRoot.showErrorMessage || this.error.visible
+    },
+
+    isCellCenter() {
+      return this.formModel.rules.cellCenter || ['VVerificationCode'].includes(this.formModel.rules.type)
     }
   }
 }
