@@ -97,15 +97,9 @@ export default {
             buttonText: '发送验证码',
             placeholder: '请输入验证码',
             vRules: 'required',
-            countDown: 60,
+            countdown: 60,
+            crossVerificationFields: ['phone']
             // buttonDisabled: true,
-            async onBeforeCountdown(formRoot) {
-              // 做请求前的校验拦截，true 代表通过，false 代表不通过
-              const phoneRef = formRoot.$refs.phone[0]
-              const { errorMsg } = await phoneRef.__validator(phoneRef.value, true)
-              if (errorMsg) return false
-              return true
-            }
           }
         },
         {
@@ -353,9 +347,14 @@ export default {
     _event ({ type, value, model }) {
       // console.log(type, value, model)
       if (type === 'verification-code-button-click') {
-        // 如果倒计时请求失败，可以执行 value 取消倒计时
+        value(async (formRoot) => {
+          // 返回 true 代表通过，开始倒计时；false 则不执行
+        })
+      }
+      // 可以在这里写异步回调函数，比如验证码请求失败需要恢复点击状态，执行 value() 即可
+      if (type === 'verification-code-countdown-timer') {
         setTimeout(() => {
-          this.$toast('验证码发送失败')
+          this.$toast('验证码发送失败了')
           value()
         }, 3000)
       }

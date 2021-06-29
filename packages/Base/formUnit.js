@@ -60,6 +60,8 @@ const formUnitBase = Vue.extend({
 
   data() {
     return {
+      formItemRefs: {},
+
       // 内部数据模型
       formModel: [],
 
@@ -123,6 +125,13 @@ const formUnitBase = Vue.extend({
     extend(this.validator)
 
     this.$emit('input', this.formValues)
+  },
+
+  mounted() {
+    const refs = this.$refs
+    for (const key in refs) {
+      this.formItemRefs[key] = refs[key][0]
+    }
   },
 
   methods: {

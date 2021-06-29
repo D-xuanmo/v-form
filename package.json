@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "private": false,
   "main": "packages/index.js",
   "author": "xuanmo <me@xuanmo.xin>",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@xuanmo/datejs": "^1.0.3",
-    "@xuanmo/javascript-utils": "^0.0.5",
+    "@xuanmo/javascript-utils": "^0.0.8",
     "core-js": "^3.14.0",
     "vant": "^2.12.21",
     "vee-validate": "^3.4.10",
@@ -44,5 +44,8 @@
     "> 1%",
     "last 2 versions"
   ],
-  "keywords": ["v-form", "vue-form"]
+  "keywords": [
+    "v-form",
+    "vue-form"
+  ]
 }

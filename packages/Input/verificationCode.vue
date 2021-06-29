@@ -23,7 +23,7 @@
 import VBaseInput from '../components/VBaseInput.vue'
 import { Button } from 'vant'
 import formItemBase from '../mixins/formItemBase'
-import { countDown, isFunction } from '@xuanmo/javascript-utils'
+import { isEmpty, isFunction, countdown } from '@xuanmo/javascript-utils'
 
 export default {
   name: 'VVerificationCode',
@@ -40,13 +40,13 @@ export default {
     return {
       defaultCountDown,
       loading: false,
-      countDown: this.formModel.rules.countDown || defaultCountDown
+      countdown: this.formModel.rules.countdown || defaultCountDown
     }
   },
 
   computed: {
     buttonText() {
-      return this.loading ? `${this.countDown}s` : (this.formModel.rules.buttonText || '发送验证码')
+      return this.loading ? `${this.countdown}s` : (this.formModel.rules.buttonText || '发送验证码')
     },
 
     buttonDisabled() {
@@ -56,26 +56,42 @@ export default {
 
   methods: {
     async handlerButtonClick() {
-      // 拦截请求
-      const beforeCountdown = this.formModel.rules.onBeforeCountdown
-      if (isFunction(beforeCountdown)) {
-        const allow = await beforeCountdown(this.VFormRoot)
-        if (!allow) return
-      }
+      let valid = null
+      this.__eventHandler('verification-code-button-click', async (callback) => {
+        // 倒计时前执行需要关联校验的字段
+        const crossVerificationFields = this.formModel.rules.crossVerificationFields
+        if (Array.isArray(crossVerificationFields)) {
+          for (let i = 0; i < crossVerificationFields.length; i++) {
+            const field = crossVerificationFields[i]
+            const { errorMsg } = await this.VFormRoot.formItemRefs[field].__validator(this.VFormRoot.formValues[field], true)
+            if (!isEmpty(errorMsg)) return
+          }
+        }
 
-      this.loading = true
-      const timer = countDown(this.countDown, `VForm-timer-${Date.now()}`, () => {
-        this.loading = false
-        this.__eventHandler('verification-code-countdown-over')
-      }, () => {
-        this.countDown--
-      })
+        // 执行自定义校验回调
+        if (isFunction(callback)) valid = await callback(this.VFormRoot)
+        if (valid === false) return
 
-      // 按钮点击时传回一个可关闭定时器的函数，用于取消倒计时
-      this.__eventHandler('verification-code-button-click', () => {
-        clearTimeout(timer)
-        this.loading = false
+        // 开始执行倒计时
+        this.loading = true
+        let flag = false
+        const cancel = countdown(this.formModel.rules.countdown, `VForm-timer-${Date.now()}`, () => {
+          this.__eventHandler('verification-code-countdown-over')
+          this.reset()
+        }, () => {
+          this.countdown--
+          !flag && this.__eventHandler('verification-code-countdown-timer', () => {
+            cancel()
+            this.reset()
+          })
+          flag = true
+        })
       })
+    },
+
+    reset() {
+      this.loading = false
+      this.countdown = this.formModel.rules.countdown
     }
   }
 }
