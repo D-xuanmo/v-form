@@ -1675,10 +1675,10 @@
   dependencies:
     ms "^2.0.0"
 
-"@xuanmo/javascript-utils@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@xuanmo/javascript-utils/-/javascript-utils-0.0.8.tgz#28a9dca250fa0a83e41b8ef39e0fdc3b8d4d29de"
-  integrity sha512-Bj7qtphzFTeHRL6ANwV/Vy8KoZ/cra127pSE8nr/gI67sha7FG4y0fEhZi+KtfHA0lhX2RMdQAjVeuvLUXr5cw==
+"@xuanmo/javascript-utils@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@xuanmo/javascript-utils/-/javascript-utils-0.0.9.tgz#5f12e9dbc0cf74a36046814bb104f7d77631c195"
+  integrity sha512-4Vp0L+gj+ng60MKt0Mv98GvaVC9SxS7NfJwaFTvNy1j6tsI2NOFU6I0qqvAtG24sI01/YFJPwr08wR8EPpwesw==
   dependencies:
     "@typescript-eslint/parser" "^4.27.0"
 

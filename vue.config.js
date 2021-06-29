@@ -21,12 +21,5 @@ module.exports = {
       }
     }
   },
-  css: {
-    loaderOptions: {
-      sass: {
-        data: '@import "@/style/variable.scss";'
-      }
-    }
-  },
   productionSourceMap: false
 }
