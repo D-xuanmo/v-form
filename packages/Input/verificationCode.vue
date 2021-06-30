@@ -57,7 +57,7 @@ export default {
   methods: {
     async handlerButtonClick() {
       let valid = null
-      this.__eventHandler('verification-code-button-click', async (callback) => {
+      this.__eventHandler('verification-code-valid', async (callback) => {
         // 倒计时前执行需要关联校验的字段
         const crossVerificationFields = this.formModel.rules.crossVerificationFields
         if (Array.isArray(crossVerificationFields)) {
@@ -76,11 +76,11 @@ export default {
         this.loading = true
         let flag = false
         const cancel = countdown(this.formModel.rules.countdown, `VForm-timer-${Date.now()}`, () => {
-          this.__eventHandler('verification-code-countdown-over')
+          this.__eventHandler('verification-code-over')
           this.reset()
         }, () => {
           this.countdown--
-          !flag && this.__eventHandler('verification-code-countdown-timer', () => {
+          !flag && this.__eventHandler('verification-code-click', () => {
             cancel()
             this.reset()
           })
