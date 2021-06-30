@@ -68,13 +68,14 @@ export default {
     },
     _event ({ type, value, model }) {
       // console.log(type, value, model)
-      if (type === 'verification-code-button-click') {
-        value(async (formRoot) => {
-          // 返回 true 代表通过，开始倒计时；false 则不执行
-        })
-      }
+      // if (type === 'verification-code-valid') {
+      //   value(async (formRoot) => {
+      //     // 返回 true 代表通过，开始倒计时；false 则不执行
+      //     return true
+      //   })
+      // }
       // 可以在这里写异步回调函数，比如验证码请求失败需要恢复点击状态，执行 value() 即可
-      if (type === 'verification-code-countdown-timer') {
+      if (type === 'verification-code-button-click') {
         setTimeout(() => {
           Toast('验证码发送失败了')
           value()

@@ -39,6 +39,7 @@ export default [
       type: 'VVerificationCode',
       buttonText: '发送验证码',
       placeholder: '请输入验证码',
+      errorMsg: '请输入验证码',
       vRules: 'required',
       countdown: 60,
       crossVerificationFields: ['phone']
