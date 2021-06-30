@@ -60,6 +60,10 @@ export default {
       model: formModel
     }
   },
+
+  mounted() {
+    this.$refs.vform.setModelItemOptions('1qw', [])
+  },
   methods: {
     _change ({ value, errorMsg, isValid }) {
       this.formData = value

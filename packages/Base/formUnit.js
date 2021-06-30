@@ -152,6 +152,7 @@ const formUnitBase = Vue.extend({
         this.$set(this.formModel[this.findModelItemIndexByKey(key)].rules, 'options', data)
       } catch (err) {
         // eslint-disable-next-line
+        if (err.message.indexOf('rules') !== -1) throw new TypeError(`[VForm] setModelItemOptions key "${key}" is not defined.`)
         console.error(err)
       }
     },
