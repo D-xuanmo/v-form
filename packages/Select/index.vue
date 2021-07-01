@@ -7,18 +7,18 @@
       :disabled="disabled"
       :placeholder="formModel.rules.placeholder"
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
-      @focus="isShow = true"
-      @click-right-icon="!VFormRoot.disabled && (isShow = true)"
+      @focus="isShowPopup = true"
+      @click-right-icon="!VFormRoot.disabled && (isShowPopup = true)"
       @change="e__change"
       @click="__eventHandler('click', formModel)"
     />
-    <v-popup v-model="isShow" position="bottom">
+    <v-popup v-model="isShowPopup" position="bottom">
       <van-picker
         ref="picker"
         show-toolbar
         :columns="options"
         @confirm="confirm"
-        @cancel="isShow = false"
+        @cancel="isShowPopup = false"
       />
     </v-popup>
   </div>
@@ -44,7 +44,7 @@ export default {
 
   data() {
     return {
-      isShow: false,
+      isShowPopup: false,
       innerValue: '',
       format: [],
       options: []
@@ -52,39 +52,30 @@ export default {
   },
 
   watch: {
-    // 生成vant picker所需要的数据格式
+    // 生成 vant picker 所需要的数据格式
     'formModel.rules.options': {
       immediate: true,
       deep: true,
-      handler(val) {
+      handler(value) {
         let result = []
-        if (val.length) {
-          if (isObject(val[0])) {
-            result.push({
-              values: val
-            })
-          } else if (Array.isArray(val[0])) {
-            val.forEach((item) => {
-              result.push({
-                values: item
-              })
-            })
-          }
+        if (isObject(value[0])) {
+          result.push({ values: value })
+        } else if (Array.isArray(value[0])) {
+          value.forEach((item) => {
+            result.push({ values: item })
+          })
         }
         this.options = result
       }
     },
 
-    value(v) {
-      this.__validator(v)
-      v ? this.valueToIndex() : this.reset()
+    value(value) {
+      this.__validator(value)
+      value ? this.valueToIndex() : this.reset()
     },
 
-    isShow(v) {
-      v &&
-        this.$nextTick(() => {
-          this.$refs.picker.setValues(this.format.map(({ text }) => text))
-        })
+    isShowPopup(value) {
+      value && this.$nextTick(() => this.$refs.picker.setValues(this.format.map(({ text }) => text)))
     }
   },
 
@@ -95,7 +86,7 @@ export default {
   methods: {
     confirm(val) {
       this.format = val
-      this.isShow = false
+      this.isShowPopup = false
       this.innerValue = val.map(({ text }) => text).join('/')
       this.e__input(val.map(({ value }) => value).join(','))
     },

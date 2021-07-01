@@ -33,8 +33,11 @@
 </template>
 
 <script>
+import formItemBaseProps from '../mixins/formItemBaseProps'
 export default {
   name: 'Row2Col',
+
+  mixins: [formItemBaseProps],
 
   inject: ['VFormRoot'],
 
@@ -57,13 +60,6 @@ export default {
     error: {
       type: Object,
       default: () => ({})
-    },
-
-    formModel: {
-      type: Object,
-      default: () => ({
-        rules: {}
-      })
     }
   },
 

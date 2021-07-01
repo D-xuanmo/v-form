@@ -13,13 +13,9 @@
 </template>
 
 <script>
+import formItemBaseProps from '../mixins/formItemBaseProps'
 export default {
   name: 'VCell',
-  props: {
-    formModel: {
-      type: Object,
-      default: () => ({})
-    }
-  }
+  mixins: [formItemBaseProps]
 }
 </script>

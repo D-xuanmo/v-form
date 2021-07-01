@@ -1,7 +1,10 @@
 // 基础表单公用
 import { debounce, isEmpty, isRegexp } from '@xuanmo/javascript-utils'
+import baseProps from './formItemBaseProps'
 export default {
   inject: ['VFormRoot', '$validate'],
+
+  mixins: [baseProps],
 
   props: {
     value: {
@@ -17,11 +20,6 @@ export default {
     placeholder: {
       type: String,
       default: ''
-    },
-
-    formModel: {
-      type: Object,
-      default: () => ({})
     }
   },
 
