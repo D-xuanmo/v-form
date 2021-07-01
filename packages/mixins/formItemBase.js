@@ -1,5 +1,5 @@
 // 基础表单公用
-import { debounce, isRegexp } from '@xuanmo/javascript-utils'
+import { debounce, isEmpty, isRegexp } from '@xuanmo/javascript-utils'
 export default {
   inject: ['VFormRoot', '$validate'],
 
@@ -29,7 +29,8 @@ export default {
     return {
       rulesList: [],
       errorMessage: {},
-      debounce: null
+      debounce: null,
+      isNotVerified: true
     }
   },
 
@@ -43,6 +44,10 @@ export default {
       if (typeof pattern === 'string') return new RegExp(pattern)
       if (isRegexp(pattern)) return pattern
       return pattern
+    },
+
+    isValid() {
+      return !this.isNotVerified && isEmpty(this.errorMessage.errorMsg)
     }
   },
 
@@ -222,6 +227,7 @@ export default {
 
     // 执行校验
     async __validator(value = this.value, visible = false) {
+      this.isNotVerified = false
       const rules = this.rulesList
       let errorInfo = {}
       for (let i = 0; i < rules.length; i++) {

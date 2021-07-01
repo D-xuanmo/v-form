@@ -138,12 +138,22 @@ const formUnitBase = Vue.extend({
     // 执行校验
     async validate(callback) {
       this.showErrorMessage = true
+
+      // 回调执行标识
       let implemented = false
+
+      // 已经执行过校验的组件
       const completed = []
+
       const refs = this.formItemRefs
       for (const i in refs) {
-        completed.push(refs[i].formModel.key)
-        const result = await refs[i].__validator()
+        const current = refs[i]
+        completed.push(current.formModel.key)
+
+        // 如果已经校验完成则不需要校验
+        if (current.isValid) continue
+
+        const result = await current.__validator()
         if (result.errorMsg && !implemented) {
           isFunction(callback) && callback(false, [result])
           implemented = true
@@ -151,7 +161,7 @@ const formUnitBase = Vue.extend({
         }
       }
 
-      // 将为执行完成的校验放入异步队列，以免影响页面渲染
+      // 将未执行完成的校验放入异步队列，以免影响页面渲染
       setTimeout(() => {
         for (const i in refs) {
           if (completed.includes(refs[i].formModel.key)) continue
