@@ -3,7 +3,7 @@
 * 组件不满足的情况可自定义开发组件或者使用 `slot` 的形式
 * 组件的调用方式采取 `JSON` 配置的形式，具体参数见model数据说明
 * 校验规则已经集成 `VeeValidate` 插件，也可以自定义扩展规则，更多资料 [https://logaretm.github.io/vee-validate](https://logaretm.github.io/vee-validate)
-* [在线演示](https://codesandbox.io/s/v-formshili-3hs2c)
+* [在线演示，可编辑](https://codesandbox.io/s/v-formshili-3hs2c)
 
 ## 语法约定
 * `Mixin` 公用方法使用 `__` 作为前缀

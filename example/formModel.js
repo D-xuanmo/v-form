@@ -1,6 +1,10 @@
 export default [
+  { rules: { type: 'VCell' } },
   {
-    rules: { type: 'VCell' }
+    rules: {
+      type: 'VCell',
+      label: '自定义组件示例'
+    }
   },
   {
     key: 'formItemTest',
@@ -16,12 +20,57 @@ export default [
     }
   },
   {
-    rules: { type: 'VCell' }
+    key: 'text4',
+    value: '这是一段纯文字内容展示',
+    rules: {
+      label: '文字 4',
+      type: 'VText'
+    }
   },
+
+  { rules: { type: 'VCell' } },
+  { rules: { type: 'VCell', label: '关联校验示例' } },
+  {
+    key: 'text1',
+    value: '',
+    rules: {
+      label: '关联文字 1',
+      type: 'VInput',
+      vRules: 'required|custom:@text2,@text3',
+      placeholder: '请输入关联文字 1',
+      errorMsg: '请输入关联文字 1',
+      extra: 'extra'
+    }
+  },
+  {
+    key: 'text2',
+    value: '',
+    rules: {
+      label: '关联文字 2',
+      type: 'VInput',
+      vRules: 'required|@custom',
+      placeholder: '请输入关联文字 2',
+      errorMsg: '请输入关联文字 2',
+      extra: 'extra'
+    }
+  },
+  {
+    key: 'text3',
+    value: '',
+    rules: {
+      label: '关联文字 3',
+      type: 'VInput',
+      vRules: 'required|@custom',
+      placeholder: '请输入关联文字 3',
+      errorMsg: '请输入关联文字 3'
+    }
+  },
+
+  { rules: { type: 'VCell' } },
   {
     rules: {
       type: 'VCell',
-      label: '我是标题'
+      label: '短信验证码示例'
     }
   },
   {
@@ -50,8 +99,30 @@ export default [
       // buttonDisabled: true,
     }
   },
+
+  { rules: { type: 'VCell' } },
+  { rules: { type: 'VCell', label: '基础表单示例' } },
   {
-    rules: { type: 'VCell' }
+    key: 'inputBase',
+    value: '',
+    rules: {
+      label: '输入框',
+      type: 'VInput',
+      vRules: 'required',
+      placeholder: '请输入内容',
+      errorMsg: '请输入内容'
+    }
+  },
+  {
+    key: 'textarea',
+    value: '',
+    rules: {
+      label: '文本域',
+      type: 'VInput|textarea',
+      vRules: 'required',
+      placeholder: '文本域',
+      errorMsg: '文本域'
+    }
   },
   {
     key: 'numberKeyboard',
@@ -60,8 +131,8 @@ export default [
       label: '数字键盘',
       type: 'VNumberKeyboard',
       placeholder: '点击输入',
-      // theme: 'custom',
       extraKey: '.'
+      // theme: 'custom',
       // closeButtonText: '完成'
     }
   },
@@ -69,7 +140,7 @@ export default [
     key: 'number',
     value: '',
     rules: {
-      label: '数字',
+      label: '原生数字键盘',
       type: 'VInput|digit',
       vRules: 'required',
       placeholder: '请输入数字',
@@ -85,10 +156,77 @@ export default [
       vRules: 'required',
       pattern: '^\\d+$',
       // pattern: /^\d+$/,
-      placeholder: '请输入',
+      placeholder: '只能输入数字',
       errorMsg: '只能输入数字'
     }
   },
+  {
+    key: 'radio',
+    value: 'b',
+    rules: {
+      label: '单选框',
+      type: 'VRadio',
+      vRules: 'required',
+      placeholder: '请输入单选框',
+      errorMsg: '请输入单选框',
+      direction: 'horizontal',
+      options: [
+        { label: '复选框 a', value: 'a' },
+        { label: '复选框 b', value: 'b' },
+        { label: '复选框 c', value: 'c' }
+      ]
+    }
+  },
+  {
+    key: 'checkbox',
+    value: ['a'],
+    rules: {
+      label: '复选框',
+      type: 'VCheckbox',
+      vRules: 'required',
+      placeholder: '请输入复选框',
+      errorMsg: '请输入复选框',
+      direction: 'horizontal',
+      options: [
+        { label: '复选框 a', value: 'a' },
+        { label: '复选框 b', value: 'b' },
+        { label: '复选框 c', value: 'c' }
+      ]
+    }
+  },
+  {
+    key: 'switch',
+    value: true,
+    rules: {
+      label: '开关',
+      type: 'VSwitch'
+    }
+  },
+
+  { rules: { type: 'VCell' } },
+  { rules: { type: 'VCell', label: '日期时间选择器' } },
+  {
+    key: 'date',
+    value: Date.now(),
+    rules: {
+      label: '时间',
+      type: 'VDatePicker|datetime',
+      valueFormat: 'timestamp'
+    }
+  },
+  {
+    key: 'dateRange',
+    value: [Date.now(), Date.now()],
+    rules: {
+      label: '时间',
+      type: 'VDatePickerRange|time',
+      valueFormat: 'timestamp',
+      rangeSeparator: '至'
+    }
+  },
+
+  { rules: { type: 'VCell' } },
+  { rules: { type: 'VCell', label: '文件上传示例' } },
   {
     key: 'file',
     value: [
@@ -112,116 +250,9 @@ export default [
       }
     }
   },
-  {
-    key: 'switch',
-    value: true,
-    rules: {
-      label: '开关',
-      type: 'VSwitch'
-    }
-  },
-  {
-    rules: { type: 'VCell' }
-  },
-  {
-    key: 'text1',
-    value: '',
-    rules: {
-      label: '关联文字1',
-      type: 'VInput',
-      vRules: 'required|custom:@text2,@text3',
-      placeholder: '请输入关联文字1',
-      errorMsg: '请输入关联文字1',
-      extra: 'extra'
-    }
-  },
-  {
-    key: 'text2',
-    value: '',
-    rules: {
-      label: '关联文字2',
-      type: 'VInput',
-      vRules: 'required|@custom',
-      placeholder: '请输入关联文字2',
-      errorMsg: '请输入关联文字2',
-      extra: 'extra'
-    }
-  },
-  {
-    key: 'text3',
-    value: '',
-    rules: {
-      label: '关联文字3',
-      type: 'VInput',
-      vRules: 'required|@custom',
-      placeholder: '请输入关联文字3',
-      errorMsg: '请输入关联文字3'
-    }
-  },
-  {
-    rules: { type: 'VCell' }
-  },
-  {
-    key: 'text4',
-    value: '文字内容',
-    rules: {
-      label: '文字4',
-      type: 'VText'
-    }
-  },
-  {
-    key: 'checkbox',
-    value: ['a'],
-    rules: {
-      label: '复选框',
-      type: 'VCheckbox',
-      vRules: 'required',
-      placeholder: '请输入复选框',
-      errorMsg: '请输入复选框',
-      direction: 'horizontal',
-      options: [
-        { label: '复选框 a', value: 'a' },
-        { label: '复选框 b', value: 'b' },
-        { label: '复选框 c', value: 'c' }
-      ]
-    }
-  },
-  {
-    key: 'radio',
-    value: 'b',
-    rules: {
-      label: '单选框',
-      type: 'VRadio',
-      vRules: 'required',
-      placeholder: '请输入单选框',
-      errorMsg: '请输入单选框',
-      direction: 'horizontal',
-      options: [
-        { label: '复选框 a', value: 'a' },
-        { label: '复选框 b', value: 'b' },
-        { label: '复选框 c', value: 'c' }
-      ]
-    }
-  },
-  {
-    key: 'date',
-    value: Date.now(),
-    rules: {
-      label: '时间',
-      type: 'VDatePicker|datetime',
-      valueFormat: 'timestamp'
-    }
-  },
-  {
-    key: 'dateRange',
-    value: [Date.now(), Date.now()],
-    rules: {
-      label: '时间',
-      type: 'VDatePickerRange|time',
-      valueFormat: 'timestamp',
-      rangeSeparator: '至'
-    }
-  },
+
+  { rules: { type: 'VCell' } },
+  { rules: { type: 'VCell', label: '下拉选择器示例' } },
   {
     key: 'address',
     value: '110000,110100,110114',
@@ -234,24 +265,13 @@ export default [
     }
   },
   {
-    key: 'textarea',
-    value: '',
-    rules: {
-      label: '文本域',
-      type: 'VInput|textarea',
-      vRules: 'required',
-      placeholder: '文本域',
-      errorMsg: '文本域'
-    }
-  },
-  {
     key: 'select',
     value: '4',
     rules: {
-      label: '选择器',
+      label: '单列选择器',
       type: 'VSelect',
-      placeholder: 'picker选择器',
-      errorMsg: 'picker选择器',
+      placeholder: 'picker 选择器',
+      errorMsg: 'picker 选择器',
       vRules: 'required',
       options: [
         { text: '杭州', value: 1 },
@@ -268,8 +288,8 @@ export default [
     rules: {
       label: '多列选择器',
       type: 'VSelect',
-      placeholder: 'picker选择器',
-      errorMsg: 'picker选择器',
+      placeholder: 'picker 选择器',
+      errorMsg: 'picker 选择器',
       options: [
         [
           { text: '杭州', value: '1' },

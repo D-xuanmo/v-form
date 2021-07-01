@@ -1,29 +1,34 @@
 <template>
   <div id="app">
-    <div style="margin-bottom: 30px">
-      <span style="vertical-align: super;">切换表单禁用状态</span>
-      <van-switch v-model="disabled" size="20px" />
-    </div>
+    <ul class="doc-wrap">
+      <li><a href="https://github.com/D-xuanmo/v-form/blob/master/example/App.vue" target="_blank">点我查看示例代码，Go</a></li>
+      <li><a href="https://codesandbox.io/s/v-formshili-3hs2c?file=/src/App.vue" target="_blank">点我可在线编辑预览（PC端），Go</a></li>
+      <li>
+        <span style="vertical-align: super;">切换表单禁用状态 </span>
+        <van-switch v-model="disabled" size="20px" />
+      </li>
+    </ul>
     <v-form
       ref="vform"
       v-model="formValue"
       :model="model"
       :disabled="disabled"
       label-width="100px"
+      :label-color="labelColor"
       :validator="validator"
-      @change="_change"
-      @event="_event"
+      @change="change"
+      @event="handleEvent"
     >
       <template #text4-label>
-        自定义label
+        自定义 label
       </template>
       <template #text4-extra>
         <!-- <van-field v-model="data.value"></van-field> -->
         extra
       </template>
     </v-form>
-    <div style="margin: 20px 0;text-align: center;">
-      <van-button type="primary" @click="_submit">提交数据</van-button>
+    <div style="margin: 20px 0 50px;text-align: center;">
+      <van-button type="info" @click="submit">提交数据</van-button>
     </div>
   </div>
 </template>
@@ -57,20 +62,17 @@ export default {
       formError: [],
       isValid: false,
       disabled: false,
-      model: formModel
+      model: formModel,
+      labelColor: 'inherit'
     }
   },
-
-  mounted() {
-    this.$refs.vform.setModelItemOptions('1qw', [])
-  },
   methods: {
-    _change ({ value, errorMsg, isValid }) {
+    change ({ value, errorMsg, isValid }) {
       this.formData = value
       this.formError = errorMsg
       this.isValid = isValid
     },
-    _event ({ type, value, model }) {
+    handleEvent ({ type, value, model }) {
       // console.log(type, value, model)
       // if (type === 'verification-code-valid') {
       //   value(async (formRoot) => {
@@ -86,7 +88,7 @@ export default {
         }, 3000)
       }
     },
-    _submit () {
+    submit () {
       this.$refs.vform.validate((isValid, formError) => {
         if (!isValid) return Toast(formError[0].errorMsg)
         Toast('提交成功')
@@ -100,6 +102,7 @@ export default {
 @import "./assets/style/index.less";
 </style>
 <style lang="less" scoped>
+@import "./assets/style/var.less";
 /deep/ .v-form-conatiner {
   .v-form-cell {
     &.has-child {
@@ -114,7 +117,8 @@ export default {
       width: 3px;
       height: 15px;
       margin-right: 5px;
-      background: #f00;
+      border-radius: 2px;
+      background: @blue;
       vertical-align: middle;
     }
   }

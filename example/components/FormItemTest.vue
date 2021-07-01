@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" :value="value" @input="$event => e__input($event.target.value)">
+    <input type="text" :value="value" :disabled="disabled" @input="$event => e__input($event.target.value)">
   </div>
 </template>
 
