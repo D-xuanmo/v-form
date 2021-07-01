@@ -5,7 +5,7 @@
       :placeholder="formModel.rules.placeholder"
       readonly
       :disabled="disabled"
-      @touchstart.native.stop="() => !disabled && (isShow = true)"
+      @touchstart.native.stop="hanldeKeyboardShow"
     />
     <van-number-keyboard
       v-model="numberKeyboardValue"
@@ -55,6 +55,17 @@ export default {
         this.innerValue = val
         this.e__input(val)
       }
+    }
+  },
+
+  methods: {
+    hanldeKeyboardShow(event) {
+      if (!this.disabled) this.isShow = true
+      window.scrollTo({
+        top: event.touches[0].pageY - window.innerHeight / 2,
+        left: 0,
+        behavior: 'smooth'
+      })
     }
   }
 }
