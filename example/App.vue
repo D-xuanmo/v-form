@@ -99,3 +99,24 @@ export default {
 <style lang="less">
 @import "./assets/style/index.less";
 </style>
+<style lang="less" scoped>
+/deep/ .v-form-conatiner {
+  .v-form-cell {
+    &.has-child {
+      background: #fff;
+      border-bottom: 1px solid #F0F0F0;
+    }
+  }
+  .v-form-cell__label {
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      height: 15px;
+      margin-right: 5px;
+      background: #f00;
+      vertical-align: middle;
+    }
+  }
+}
+</style>

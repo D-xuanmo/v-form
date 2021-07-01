@@ -16,8 +16,12 @@ export default [
     }
   },
   {
+    rules: { type: 'VCell' }
+  },
+  {
     rules: {
-      type: 'VCell'
+      type: 'VCell',
+      label: '我是标题'
     }
   },
   {
