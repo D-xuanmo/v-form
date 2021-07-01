@@ -72,10 +72,7 @@ export default {
       })
     }, this.$VForm.debounceTime)
 
-    if (!this.disabled) {
-      this.e__input(this.value)
-      this.__validator(this.value)
-    }
+    if (!this.disabled) this.e__input(this.value)
   },
 
   methods: {

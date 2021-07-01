@@ -138,12 +138,26 @@ const formUnitBase = Vue.extend({
     // 执行校验
     async validate(callback) {
       this.showErrorMessage = true
-      // TODO: 此处校验性能待优化
-      // const refs = Object.values(this.$refs)
-      // for (let i = 0; i < refs.length; i++) {
-      //   await refs[i][0].__validator()
-      // }
-      isFunction(callback) && callback(this.isValid, this.formErrorList)
+      let implemented = false
+      const completed = []
+      const refs = this.formItemRefs
+      for (const i in refs) {
+        completed.push(refs[i].formModel.key)
+        const result = await refs[i].__validator()
+        if (result.errorMsg && !implemented) {
+          isFunction(callback) && callback(false, [result])
+          implemented = true
+          break
+        }
+      }
+
+      // 将为执行完成的校验放入异步队列，以免影响页面渲染
+      setTimeout(() => {
+        for (const i in refs) {
+          if (completed.includes(refs[i].formModel.key)) continue
+          refs[i].__validator()
+        }
+      }, 0)
     },
 
     async setModelItemOptions(key, callback) {
