@@ -61,7 +61,9 @@ export default {
 
     formModel: {
       type: Object,
-      default: () => ({})
+      default: () => ({
+        rules: {}
+      })
     }
   },
 
