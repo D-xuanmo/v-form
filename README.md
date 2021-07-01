@@ -331,4 +331,4 @@ const model = [
 
 ## 示例图片
 
-![示例](./example/assets/example.png)
+![示例](./example.png)
