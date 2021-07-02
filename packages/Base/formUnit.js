@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import components from './components'
 import validate, { extend } from '../validator'
-import { isRegexp, isFunction, debounce } from '@xuanmo/javascript-utils'
+import { isRegexp, isFunction, debounce, isEmpty } from '@xuanmo/javascript-utils'
 
 const formUnitBase = Vue.extend({
   components,
@@ -139,11 +139,9 @@ const formUnitBase = Vue.extend({
     async validate(callback) {
       this.showErrorMessage = true
 
-      // 回调执行标识
-      let implemented = false
-
       // 已经执行过校验的组件
       const completed = []
+      let result = {}
 
       const refs = this.formItemRefs
       for (const i in refs) {
@@ -153,13 +151,11 @@ const formUnitBase = Vue.extend({
         // 如果已经校验完成则不需要校验
         if (current.isValid) continue
 
-        const result = await current.__validator()
-        if (result.errorMsg && !implemented) {
-          isFunction(callback) && callback(false, [result])
-          implemented = true
-          break
-        }
+        // 存在错误信息直接终止本次循环，执行回调
+        result = await current.__validator()
+        if (!isEmpty(result)) break
       }
+      isFunction(callback) && callback(isEmpty(result), [result])
 
       // 将未执行完成的校验放入异步队列，以免影响页面渲染
       setTimeout(() => {

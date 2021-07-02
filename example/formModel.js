@@ -15,7 +15,7 @@ export default [
       placeholder: '点击输入',
       vRules: 'required',
       pattern: /^\d+$/,
-      errorMsg: '自定义组件错误信息',
+      errorMsg: '自定义组件只能输入数字',
       cellCenter: true
     }
   },
