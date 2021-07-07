@@ -7,18 +7,18 @@
       :disabled="disabled"
       :placeholder="formModel.rules.placeholder"
       :right-icon="formModel.rules.disabled ? '' : 'arrow-down'"
-      @focus="isShow = true"
-      @click-right-icon="!VFormRoot.disabled && (isShow = true)"
+      @focus="isShowPopup = true"
+      @click-right-icon="!VFormRoot.disabled && (isShowPopup = true)"
       @click="__eventHandler('click', formModel)"
     />
-    <v-popup v-model="isShow">
+    <v-popup v-model="isShowPopup">
       <van-picker
         ref="picker"
         show-toolbar
         value-key="label"
         :columns="addressJSON"
-        @confirm="_confirm"
-        @cancel="isShow = false"
+        @confirm="confirm"
+        @cancel="isShowPopup = false"
       />
     </v-popup>
   </div>
@@ -43,7 +43,7 @@ export default {
 
   data() {
     return {
-      isShow: false,
+      isShowPopup: false,
       innerValue: '',
       format: []
     }
@@ -56,15 +56,12 @@ export default {
   },
 
   watch: {
-    value(v) {
-      v ? this.valueToIndex() : this.reset()
+    value(value) {
+      value ? this.valueToIndex() : this.reset()
     },
 
-    isShow(v) {
-      v &&
-        this.$nextTick(() => {
-          this.$refs.picker.setValues(this.format.map(({ label }) => label))
-        })
+    isShowPopup(value) {
+      value && this.$nextTick(() => this.$refs.picker.setValues(this.format.map(({ label }) => label)))
     }
   },
 
@@ -73,10 +70,10 @@ export default {
   },
 
   methods: {
-    _confirm(val) {
+    confirm(val) {
       this.format = this.findValue(this.addressJSON, val)
       const _value = this.format.map(({ value }) => value).join(',')
-      this.isShow = false
+      this.isShowPopup = false
       this.innerValue = this.format.map(({ label }) => label).join('/')
       this.e__input(_value)
       this.__eventHandler('address-change', {
