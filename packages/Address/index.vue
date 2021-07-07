@@ -62,6 +62,11 @@ export default {
 
     isShowPopup(value) {
       value && this.$nextTick(() => this.$refs.picker.setValues(this.format.map(({ label }) => label)))
+    },
+
+    // 避免 options 后加载 value 未回显问题
+    'formModel.rules.options'() {
+      this.value && this.valueToIndex()
     }
   },
 
