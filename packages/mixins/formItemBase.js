@@ -50,14 +50,6 @@ export default {
   },
 
   watch: {
-    formModel: {
-      immediate: true,
-      deep: true,
-      handler(v) {
-        this.__createRules(v.rules, v)
-      }
-    },
-
     value: {
       deep: true,
       handler(value) {
@@ -75,7 +67,10 @@ export default {
       })
     }, this.$VForm.debounceTime)
 
-    if (!this.disabled) this.e__input(this.value)
+    if (!this.disabled) {
+      this.__createRules()
+      this.e__input(this.value)
+    }
   },
 
   methods: {
@@ -85,21 +80,30 @@ export default {
 
     // 创建校验规则
     // 校验顺序：required => pattern => vRules 剩余规则
-    __createRules({ vRules }) {
-      if (vRules) {
-        const rules = vRules.split('|')
-        if (this.pattern) {
-          rules[0] === 'required'
-            ? rules.splice(1, 0, this.pattern)
-            : rules.unshift(this.pattern)
+    __createRules() {
+      this.$watch(() => ({
+        pattern: this.formModel.rules.pattern,
+        vRules: this.formModel.rules.vRules
+      }), ({ pattern, vRules }) => {
+        if (vRules) {
+          const rules = vRules.split('|')
+          if (pattern) {
+            rules[0] === 'required'
+              ? rules.splice(1, 0, pattern)
+              : rules.unshift(pattern)
+          }
+          this.rulesList = rules
+          return
         }
-        this.rulesList = rules
-        return
-      }
-      if (this.pattern) {
-        this.rulesList = [this.pattern]
-        return
-      }
+
+        if (pattern) {
+          this.rulesList = [pattern]
+          return
+        }
+      }, {
+        deep: true,
+        immediate: true
+      })
     },
 
     /**

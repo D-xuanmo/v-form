@@ -29,6 +29,7 @@ import VBaseInput from '../components/VBaseInput.vue'
 import { Picker } from 'vant'
 import VPopup from '../components/VPopup.vue'
 import formItemBase from '../mixins/formItemBase'
+import { isEmpty } from '@xuanmo/javascript-utils'
 
 export default {
   name: 'VAddress',
@@ -65,8 +66,9 @@ export default {
     },
 
     // 避免 options 后加载 value 未回显问题
-    'formModel.rules.options'() {
-      this.value && this.valueToIndex()
+    'formModel.rules.options'(value, oldValue) {
+      if (value === oldValue) return
+      this.value && !isEmpty(value) && this.valueToIndex()
     }
   },
 
@@ -76,8 +78,8 @@ export default {
 
   methods: {
     confirm(val) {
-      this.format = this.findValue(this.addressJSON, val)
       const _value = this.format.map(({ value }) => value).join(',')
+      this.format = this.findValue(this.addressJSON, val)
       this.isShowPopup = false
       this.innerValue = this.format.map(({ label }) => label).join('/')
       this.e__input(_value)
