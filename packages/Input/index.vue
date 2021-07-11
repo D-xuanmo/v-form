@@ -30,6 +30,11 @@ export default {
   mixins: [formItemBase],
 
   props: {
+    value: {
+      type: String,
+      default: ''
+    },
+
     type: {
       type: String,
       default: 'text'

@@ -68,7 +68,7 @@ export default {
   name: 'VDatePickerRange',
 
   components: {
-    [VPopup.name]: VPopup,
+    VPopup,
     row2col,
     DatePicker,
     VBaseInput

@@ -7,11 +7,6 @@ export default {
   mixins: [baseProps],
 
   props: {
-    value: {
-      type: [String, Array, Number, Date, Boolean],
-      default: ''
-    },
-
     customerType: {
       type: String,
       default: ''
@@ -84,20 +79,20 @@ export default {
       this.$watch(() => ({
         pattern: this.formModel.rules.pattern,
         vRules: this.formModel.rules.vRules
-      }), ({ pattern, vRules }) => {
+      }), ({ vRules }) => {
         if (vRules) {
           const rules = vRules.split('|')
-          if (pattern) {
+          if (this.pattern) {
             rules[0] === 'required'
-              ? rules.splice(1, 0, pattern)
-              : rules.unshift(pattern)
+              ? rules.splice(1, 0, this.pattern)
+              : rules.unshift(this.pattern)
           }
           this.rulesList = rules
           return
         }
 
-        if (pattern) {
-          this.rulesList = [pattern]
+        if (this.pattern) {
+          this.rulesList = [this.pattern]
           return
         }
       }, {

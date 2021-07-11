@@ -284,7 +284,8 @@ export default [
   },
   {
     key: 'selectMultiple',
-    value: '4,2',
+    // value: '4,2',
+    value: ['4', '2'],
     rules: {
       label: '多列选择器',
       type: 'VSelect',

@@ -40,6 +40,13 @@ export default {
 
   mixins: [formItemBase],
 
+  props: {
+    value: {
+      type: [String, Number, Date],
+      default: ''
+    }
+  },
+
   data() {
     return {
       isShowPicker: false,

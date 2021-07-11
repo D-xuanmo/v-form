@@ -35,6 +35,13 @@ export default {
 
   mixins: [formItemBase],
 
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  },
+
   data() {
     const defaultCountDown = 60
     return {

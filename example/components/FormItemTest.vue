@@ -9,6 +9,13 @@ import { vFormItemBaseMixin } from '@'
 export default {
   name: 'FormItemTest',
 
-  mixins: [vFormItemBaseMixin]
+  mixins: [vFormItemBaseMixin],
+
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>

@@ -16,11 +16,17 @@
 <script>
 import { Switch } from 'vant'
 import formItemBase from '../mixins/formItemBase'
+
 export default {
   name: 'VSwitch',
+
   components: {
     [Switch.name]: Switch
   },
-  mixins: [formItemBase]
+
+  mixins: [formItemBase],
+
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['value']
 }
 </script>

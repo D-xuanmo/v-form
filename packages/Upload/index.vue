@@ -63,6 +63,13 @@ export default {
 
   mixins: [formItemBase],
 
+  props: {
+    value: {
+      type: Array,
+      default: () => []
+    }
+  },
+
   data() {
     return {
       files: [],

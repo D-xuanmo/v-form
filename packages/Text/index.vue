@@ -12,8 +12,13 @@
 
 <script>
 import formItemBase from '../mixins/formItemBase'
+
 export default {
   name: 'VText',
-  mixins: [formItemBase]
+
+  mixins: [formItemBase],
+
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['value']
 }
 </script>

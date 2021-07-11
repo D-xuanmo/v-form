@@ -96,11 +96,9 @@ const formUnitBase = Vue.extend({
       immediate: true,
       handler(value) {
         this.formValues = value
-        for (let [_key, _value] of Object.entries(value)) {
+        for (const [key, value] of Object.entries(value)) {
           this.model.forEach((item) => {
-            if (item.key === _key) {
-              item.value = _value
-            }
+            if (item.key === key) item.value = value
           })
         }
       }

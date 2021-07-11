@@ -22,12 +22,22 @@
 <script>
 import { Checkbox, CheckboxGroup } from 'vant'
 import formItemBase from '../mixins/formItemBase'
+
 export default {
   name: 'VCheckbox',
+
   components: {
     [Checkbox.name]: Checkbox,
     [CheckboxGroup.name]: CheckboxGroup,
   },
-  mixins: [formItemBase]
+
+  mixins: [formItemBase],
+
+  props: {
+    value: {
+      type: Array,
+      default: () => []
+    }
+  }
 }
 </script>
