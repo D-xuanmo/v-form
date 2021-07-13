@@ -73,8 +73,7 @@ export default {
     },
 
     // 避免 options 后加载 value 未回显问题
-    'formModel.rules.options'(value, oldValue) {
-      if (value === oldValue) return
+    'formModel.rules.options'(value) {
       this.value && !isEmpty(value) && this.valueToIndex()
     }
   },

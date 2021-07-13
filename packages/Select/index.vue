@@ -63,8 +63,7 @@ export default {
     'formModel.rules.options': {
       immediate: true,
       deep: true,
-      handler(value, oldValue) {
-        if (value === oldValue) return
+      handler(value) {
         let result = []
         if (isObject(value[0])) {
           result.push({ values: value })

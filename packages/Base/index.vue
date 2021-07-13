@@ -19,10 +19,10 @@
           <slot slot="extra" :name="`${item.key}-extra`" />
           <slot :name="item.key" :data="item">
             <component
-              :is="splitComponentType(item.rules.type)[0]"
+              :is="item.componentTypes[0]"
               :ref="item.key"
-              :customer-type="splitComponentType(item.rules.type)[1]"
-              :value="item.value"
+              :customer-type="item.componentTypes[1]"
+              :value="formValues[item.key]"
               :form-model="{
                 ...item,
                 name: item.key,

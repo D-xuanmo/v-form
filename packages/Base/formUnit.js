@@ -93,14 +93,8 @@ const formUnitBase = Vue.extend({
   watch: {
     value: {
       deep: true,
-      immediate: true,
       handler(value) {
         this.formValues = value
-        for (const [key, value] of Object.entries(value)) {
-          this.model.forEach((item) => {
-            if (item.key === key) item.value = value
-          })
-        }
       }
     }
   },
@@ -187,16 +181,17 @@ const formUnitBase = Vue.extend({
       const formModel = this.$VForm.primaryData
         ? this.modelFormatter(this.model)
         : this.model
-      this.formModel = formModel
 
       const formValues = {}
 
-      formModel.forEach((item) => {
+      const propsValue = this.value
+
+      this.formModel = formModel.map((item) => {
         const { key, value, rules } = item
 
         // 排除展示类组件
         if (!['VCell', 'VText'].includes(rules.type)) {
-          formValues[key] = value
+          formValues[key] = isEmpty(propsValue[key]) ? value : propsValue[key]
         }
 
         // 生成跨域校验字段
@@ -210,6 +205,12 @@ const formUnitBase = Vue.extend({
             }
           })
         }
+
+        // 分割组件类型
+        item.componentTypes = this.splitComponentType(item.rules.type)
+
+        delete item.value
+        return item
       })
       this.formValues = formValues
       this.debounceChange(formValues)
@@ -245,7 +246,6 @@ const formUnitBase = Vue.extend({
     // 数据上报
     updateFormValues(index, value) {
       this.$set(this.formValues, this.formModel[index].key, value)
-      this.formModel[index].value = value
       this.debounceChange(this.formValues)
     },
 
