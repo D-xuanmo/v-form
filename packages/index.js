@@ -33,4 +33,6 @@ export { default as vFormItemBaseMixin } from './mixins/formItemBase'
 
 export * from './components/export'
 
+export * from './utils'
+
 export default VForm

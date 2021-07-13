@@ -209,7 +209,8 @@ const model = [
 |方法|说明|参数
 |---|---|---|
 |validate|对整个表单执行校验|Function(callback:Function(boolean, ErrorList))|
-|setModelItemOptions|设置表单options，目前支持的组件：VAddress、VCheckbox、VRadio、VSelect|(key, data)接受两个参数，1. 数据key，2. data为一个数组或者 `() => []`|
+|setModelItemOptions|设置表单options，目前支持的组件：VAddress、VCheckbox、VRadio、VSelect|(key, data)接受两个参数，1. 数据key，2. data为一个数组或者 `() => <Promise>[]`|
+
 ## Events
 |事件名|说明|回调参数
 |---|---|---|

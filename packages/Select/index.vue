@@ -29,7 +29,7 @@ import VBaseInput from '../components/VBaseInput.vue'
 import { Picker } from 'vant'
 import VPopup from '../components/VPopup.vue'
 import formItemBase from '../mixins/formItemBase'
-import { isObject } from '@xuanmo/javascript-utils'
+import { formatOption } from '../utils'
 
 export default {
   name: 'VSelect',
@@ -64,15 +64,7 @@ export default {
       immediate: true,
       deep: true,
       handler(value) {
-        let result = []
-        if (isObject(value[0])) {
-          result.push({ values: value })
-        } else if (Array.isArray(value[0])) {
-          value.forEach((item) => {
-            result.push({ values: item })
-          })
-        }
-        this.options = result
+        this.options = formatOption(value)
       }
     },
 
