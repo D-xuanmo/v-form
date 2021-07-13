@@ -70,7 +70,7 @@ export default {
 
   methods: {
     findModelByKey(key) {
-      return this.VFormRoot.model.find((item) => item.key === key)
+      return this.VFormRoot.formModel.find((item) => item.key === key)
     },
 
     // 创建校验规则
@@ -161,11 +161,11 @@ export default {
         const createCrossParams = (params, target) => {
           const crossParams = {}
           const context = {}
-          target.forEach((item, i) => {
-            crossParams[params[i]] = this.findModelByKey(item).value
+          target.forEach((key, i) => {
+            crossParams[params[i]] = formRoot.formValues[key]
 
             // 当前关联组件实例
-            context[item] = formRoot.$refs[item][0]
+            context[key] = formRoot.$refs[key][0]
           })
           return {
             crossParams,
