@@ -96,6 +96,13 @@ const formUnitBase = Vue.extend({
       handler(value) {
         this.formValues = value
       }
+    },
+
+    model: {
+      deep: true,
+      handler(model) {
+        this.createModel()
+      }
     }
   },
 
@@ -110,11 +117,10 @@ const formUnitBase = Vue.extend({
       })
     }, this.$VForm.debounceTime)
 
-    // 创建数据模型
-    this.createModel()
-
     // 注册局部校验规则
     extend(this.validator)
+
+    this.createModel()
 
     this.$emit('input', this.formValues)
   },
@@ -177,6 +183,7 @@ const formUnitBase = Vue.extend({
       return this.formModel.findIndex((item) => item.key === key)
     },
 
+    // 创建数据模型
     createModel() {
       const formModel = this.$VForm.primaryData
         ? this.modelFormatter(this.model)

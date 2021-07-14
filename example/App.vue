@@ -36,6 +36,7 @@
 <script>
 import { Switch, Button, Toast } from 'vant'
 import formModel from './formModel'
+
 export default {
   name: 'App',
   components: {
@@ -50,7 +51,7 @@ export default {
           message: '关联文字校验未通过',
           params: ['target1', 'target2'],
           validate: (value, { target1, target2 }, ctx) => {
-            console.log('关联校验context：', ctx)
+            console.log('关联校验context：', value, target1, target2, ctx)
             return value === target1 && value === target2
           }
         }
@@ -66,6 +67,14 @@ export default {
       labelColor: 'inherit'
     }
   },
+
+  created() {
+    // 模拟异步请求的方式
+    // setTimeout(() => {
+    //   this.model = formModel
+    // }, 0)
+  },
+
   methods: {
     change ({ value, errorMsg, isValid }) {
       this.formData = value
