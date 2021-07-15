@@ -183,7 +183,10 @@ export default {
 
           const { crossParams, context } = createCrossParams(validator.params, crossFields.target)
 
-          let valid = validator.validate(value, crossParams, context)
+          let valid = validator.validate(value, crossParams, {
+            [crossFields.local]: formRoot.$refs[crossFields.local][0],
+            ...context
+          })
 
           ;[crossFields.local, ...crossFields.target].forEach(key => {
             if (key !== this.formModel.key) {
