@@ -1,9 +1,15 @@
 <template>
   <div class="v-form-conatiner">
     <template v-for="(item, index) in formModel">
-      <v-cell v-if="item.rules.type === 'VCell'" :key="item.key" :form-model="item" />
+      <v-cell
+        v-if="item.rules.type === 'VCell'"
+        v-show="item.show === undefined || item.show"
+        :key="item.key"
+        :form-model="item"
+      />
       <template v-else>
         <row-2-col
+          v-show="item.show === undefined || item.show"
           :key="item.key"
           :label="item.rules.label"
           :required="(item.rules.vRules || '').toString().indexOf('required') !== -1"
