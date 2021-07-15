@@ -102,6 +102,7 @@ const formUnitBase = Vue.extend({
       deep: true,
       handler(model) {
         this.createModel()
+        this.createRefs()
       }
     }
   },
@@ -126,10 +127,7 @@ const formUnitBase = Vue.extend({
   },
 
   mounted() {
-    const refs = this.$refs
-    for (const key in refs) {
-      this.formItemRefs[key] = refs[key][0]
-    }
+    this.createRefs()
   },
 
   methods: {
@@ -221,6 +219,14 @@ const formUnitBase = Vue.extend({
       })
       this.formValues = formValues
       this.debounceChange(formValues)
+    },
+
+    async createRefs() {
+      await this.$nextTick()
+      const refs = this.$refs
+      for (const key in refs) {
+        this.formItemRefs[key] = refs[key][0]
+      }
     },
 
     // 处理数据模型
