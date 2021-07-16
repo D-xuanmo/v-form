@@ -202,7 +202,9 @@ export default {
 
           const { crossParams, context } = createCrossParams(validator.params, crossFields.target)
 
+          // 执行校验时传递当前相关联的组件实例与整个表单组件实例到回调函数
           let valid = validator.validate(value, crossParams, {
+            formRoot,
             [crossFields.local]: formRoot.$refs[crossFields.local][0],
             ...context
           })
