@@ -7,6 +7,10 @@
         <span style="vertical-align: super;">切换表单禁用状态 </span>
         <van-switch v-model="disabled" size="20px" />
       </li>
+      <li>
+        <span style="vertical-align: super;">切换测试组件显示状态 </span>
+        <van-switch v-model="testFormItemVisible" size="20px" @change="toggleFormItemVisible" />
+      </li>
     </ul>
     <v-form
       ref="vform"
@@ -64,23 +68,30 @@ export default {
       isValid: false,
       disabled: false,
       model: formModel,
-      labelColor: 'inherit'
+      // model: [],
+      labelColor: 'inherit',
+      testFormItemVisible: true
     }
   },
 
   created() {
     // 模拟异步请求的方式
     // setTimeout(() => {
-    //   this.model = formModel
+    // this.model = formModel
     // }, 0)
   },
 
   methods: {
+    toggleFormItemVisible() {
+      this.$refs.vform.toggleFormItemVisible('formItemTest', this.testFormItemVisible)
+    },
+
     change ({ value, errorMsg, isValid }) {
       this.formData = value
       this.formError = errorMsg
       this.isValid = isValid
     },
+
     handleEvent ({ type, value, model }) {
       // console.log(type, value, model)
       // if (type === 'verification-code-valid') {
@@ -97,6 +108,7 @@ export default {
         }, 3000)
       }
     },
+
     submit () {
       this.$refs.vform.validate((isValid, formError) => {
         if (!isValid) return Toast(formError[0].errorMsg)
