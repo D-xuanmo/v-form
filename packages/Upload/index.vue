@@ -153,7 +153,10 @@ export default {
 
     // 删除文件
     _removeFile(index) {
-      this.__eventHandler('file-remove', this.previewList.splice(index, 1), this.previewList)
+      this.__eventHandler('file-remove', {
+        removed: this.previewList.splice(index, 1),
+        list: this.previewList
+      })
     },
 
     // 执行上传操作
@@ -212,7 +215,10 @@ export default {
         // 释放本地预览的对象，防止继续停留在内存中
         URL.revokeObjectURL(_removed)
 
-        this.__eventHandler('file-success', response, this.previewList)
+        this.__eventHandler('file-success', {
+          response,
+          list: this.previewList
+        })
 
         return Promise.resolve()
       } catch ({ status, statusText }) {

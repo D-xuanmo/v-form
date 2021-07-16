@@ -131,7 +131,11 @@ const formUnitBase = Vue.extend({
   },
 
   methods: {
-    // 执行校验
+    /**
+     * 执行校验
+     * @param {Function} callback
+     * @returns {Promise<void>}
+     */
     async validate(callback) {
       this.showErrorMessage = true
 
@@ -162,6 +166,12 @@ const formUnitBase = Vue.extend({
       }, 0)
     },
 
+    /**
+     * 设置数据单元 option 字段
+     * @param {string} key
+     * @param {Array | Function} callback
+     * @returns {Promise<void>}
+     */
     async setModelItemOptions(key, callback) {
       try {
         const data = isFunction(callback) ? await callback() : callback
@@ -173,15 +183,27 @@ const formUnitBase = Vue.extend({
       }
     },
 
+    /**
+     * 通过 key 查找数据单元
+     * @param {string} key
+     * @returns {object}
+     */
     findModelItemByKey(key) {
       return this.formModel.find((item) => item.key === key) || {}
     },
 
+    /**
+     * 通过 key 查找数据单元 index
+     * @param {string} key
+     * @returns {number}
+     */
     findModelItemIndexByKey(key) {
       return this.formModel.findIndex((item) => item.key === key)
     },
 
-    // 创建数据模型
+    /**
+     * 创建数据模型
+     */
     createModel() {
       const formModel = this.$VForm.primaryData
         ? this.modelFormatter(this.model)
@@ -221,6 +243,10 @@ const formUnitBase = Vue.extend({
       this.debounceChange(formValues)
     },
 
+    /**
+     * 创建 vue refs
+     * @returns {Promise<void>}
+     */
     async createRefs() {
       await this.$nextTick()
       const refs = this.$refs
@@ -229,8 +255,11 @@ const formUnitBase = Vue.extend({
       }
     },
 
-    // 处理数据模型
-    // 当所有的属性不存在 rules 字段的情况下调用
+    /**
+     * 处理数据模型，当所有的属性不存在 rules 字段的情况下调用
+     * @param {Array} model 数据模型
+     * @returns {Array} model
+     */
     modelFormatter(model) {
       const fixedKeys = ['key', 'value']
       const result = []
@@ -250,19 +279,31 @@ const formUnitBase = Vue.extend({
       return result
     },
 
-    // 分割组件类型
+    /**
+     * 分割组件类型
+     * @param {string} type
+     * @returns {string[]}
+     */
     splitComponentType(type) {
       let [compType, compParameter = ''] = type.split('|')
       return [compType, compParameter]
     },
 
-    // 数据上报
+    /**
+     * 数据上报
+     * @param {number} index
+     * @param {object} value
+     */
     updateFormValues(index, value) {
       this.$set(this.formValues, this.formModel[index].key, value)
       this.debounceChange(this.formValues)
     },
 
-    // 获取子级错误信息
+    /**
+     * 获取子级错误信息
+     * @param {string} name
+     * @param {object} err
+     */
     getChildError(name, err) {
       this.$set(this.formErrors, name, err)
       this.debounceChange(this.value)

@@ -69,12 +69,19 @@ export default {
   },
 
   methods: {
+    /**
+     * 通过 key 查找数据单元
+     * @param {string} key
+     * @returns {object}
+     */
     findModelByKey(key) {
       return this.VFormRoot.formModel.find((item) => item.key === key)
     },
 
-    // 创建校验规则
-    // 校验顺序：required => pattern => vRules 剩余规则
+    /**
+     * 创建校验规则
+     * 校验顺序：required => pattern => vRules 剩余规则
+     */
     __createRules() {
       this.$watch(() => ({
         pattern: this.formModel.rules.pattern,
@@ -91,10 +98,7 @@ export default {
           return
         }
 
-        if (this.pattern) {
-          this.rulesList = [this.pattern]
-          return
-        }
+        if (this.pattern) this.rulesList = [this.pattern]
       }, {
         deep: true,
         immediate: true
@@ -110,7 +114,10 @@ export default {
       this.debounce(type, value, this.VFormRoot.model)
     },
 
-    // 向父级提交当前组件的值
+    /**
+     * 向父级提交当前组件的值
+     * @param {any} value
+     */
     e__input(value) {
       this.$emit('input', this.formModel.index, value)
       this.__eventHandler('input', {
@@ -119,6 +126,10 @@ export default {
       })
     },
 
+    /**
+     * 执行 change 事件
+     * @param {any} value
+     */
     e__change(value) {
       this.$emit('change', {
         ...this.formModel,
@@ -126,11 +137,19 @@ export default {
       })
     },
 
-    // 向父级传递校验结果
+    /**
+     * 向父级传递校验结果
+     */
     e__error() {
       this.$emit('error', this.formModel.name, this.errorMessage)
     },
 
+    /**
+     * 校验执行方法
+     * @param {any} value 组件的数据
+     * @param {string} rule 校验规则
+     * @returns {*|Promise<{valid, failedRules: {required: boolean}}>|Promise<{valid, failedRules: {required: null}, errors: *[]}>}
+     */
     _handlerValidate(value, rule) {
       const formRoot = this.VFormRoot
 
@@ -225,7 +244,12 @@ export default {
       return this.$validate(value, rule)
     },
 
-    // 执行校验
+    /**
+     * 执行校验
+     * @param {any} value 组件数据
+     * @param {boolean} visible 是否显示错误信息
+     * @returns {Promise<{}>}
+     */
     async __validator(value = this.value, visible = false) {
       this.isNotVerified = false
       const rules = this.rulesList
