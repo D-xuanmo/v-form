@@ -3,13 +3,13 @@
     <template v-for="(item, index) in formModel">
       <v-cell
         v-if="item.rules.type === 'VCell'"
-        v-show="item.rules.show === undefined || item.show"
+        v-show="item.rules.visible === undefined || item.rules.visible"
         :key="item.key"
         :form-model="item"
       />
       <template v-else>
         <row-2-col
-          v-show="item.rules.show === undefined || item.show"
+          v-show="item.rules.visible === undefined || item.rules.visible"
           :key="item.key"
           :label="item.rules.label"
           :required="(item.rules.vRules || '').toString().indexOf('required') !== -1"

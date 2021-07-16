@@ -167,6 +167,15 @@ const formUnitBase = Vue.extend({
     },
 
     /**
+     * 切换组件单元显示状态
+     * @param {string} key
+     * @param {boolean} visible
+     */
+    toggleFormItemVisible(key, visible) {
+      this.formItemRefs[key].$parent.$el.style.display = visible ? null : 'none'
+    },
+
+    /**
      * 设置数据单元 option 字段
      * @param {string} key
      * @param {Array | Function} callback

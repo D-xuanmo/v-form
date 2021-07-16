@@ -208,7 +208,8 @@ const model = [
 ## Methods
 |方法|说明|参数
 |---|---|---|
-|validate|对整个表单执行校验|Function(callback:Function(boolean, ErrorList))|
+|validate|对整个表单执行校验|(callback: Function, ErrorList: []) => void|
+|toggleFormItemVisible|切换表单单元的显示与隐藏状态|(key: string, visible: boolean) => void|
 |setModelItemOptions|设置表单options，目前支持的组件：VAddress、VCheckbox、VRadio、VSelect|(key, data)接受两个参数，1. 数据key，2. data为一个数组或者 `() => <Promise>[]`|
 
 ## Events
