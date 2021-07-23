@@ -226,7 +226,7 @@ const formUnitBase = Vue.extend({
         const { key, value, rules } = item
 
         // 排除展示类组件
-        if (!['VCell', 'VText'].includes(rules.type)) {
+        if (!['VCell'].includes(rules.type)) {
           formValues[key] = isEmpty(propsValue[key]) ? value : propsValue[key]
         }
 
