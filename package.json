@@ -9,15 +9,15 @@
     "url": "https://github.com/D-xuanmo/v-form"
   },
   "scripts": {
-    "bootstrap": "yarn || npm i",
-    "dev": "npm run serve",
-    "serve": "vue-cli-service serve",
+    "bootstrap": "yarn || npm i && npm run prepare",
+    "dev": "vue-cli-service serve",
     "build": "npm run build:lib && npm run build:less",
     "build:lib": "vue-cli-service build --target lib --name VForm packages/index.js --dest dist",
     "build:less": "lessc packages/style/index.less dist/index.css --npm-import=\"prefix=~\" --clean-css=\"--s1 --advanced --compatibility=*\"",
     "build:example": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "push": "git push && git push gitee master && git push gitlab master"
+    "push": "git push && git push gitee master && git push gitlab master",
+    "prepare": "husky install && npx husky add .husky/pre-commit \"npm run lint\""
   },
   "dependencies": {
     "@xuanmo/datejs": "^1.0.3",
@@ -38,6 +38,7 @@
     "babel-eslint": "10.0.3",
     "eslint": "^7.28.0",
     "eslint-plugin-vue": "^7.10.0",
+    "husky": "^7.0.1",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "less-plugin-clean-css": "^1.5.1",
