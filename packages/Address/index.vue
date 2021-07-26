@@ -84,8 +84,8 @@ export default {
 
   methods: {
     confirm(val) {
-      const _value = this.format.map(({ value }) => value).join(',')
       this.format = this.findValue(this.addressJSON, val)
+      const _value = this.format.map(({ value }) => value).join(',')
       this.isShowPopup = false
       this.innerValue = this.format.map(({ label }) => label).join('/')
       this.e__input(_value)
