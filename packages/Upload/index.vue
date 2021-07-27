@@ -207,7 +207,7 @@ export default {
         // 接收自定义处理数据
         if (typeof this.formModel.rules.onSuccess === 'function') {
           const _res = this.formModel.rules.onSuccess(response)
-          response = _res ? _res : response
+          response = _res || response
         }
 
         const [{ path: _removed }] = this.previewList.splice(_index, 1, response)
@@ -228,6 +228,7 @@ export default {
           status,
           statusText
         })
+        // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject({
           status,
           statusText

@@ -83,14 +83,14 @@ export default {
         return new Promise((resolve) => {
           this.__eventHandler('verification-code-valid', async (callback) => {
             if (isFunction(callback)) {
-              let valid = await callback(this.VFormRoot)
+              const valid = await callback(this.VFormRoot)
               if (valid === false) resolve(false)
             }
           })
           resolve(true)
         })
       }
-      let valid = await handleCustomValidator()
+      const valid = await handleCustomValidator()
       if (!valid) return
 
       // 开始执行倒计时

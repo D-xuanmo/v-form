@@ -93,7 +93,7 @@ export default {
     valueToIndex() {
       if (!this.value) return
       const indexs = this.value.toString().split(',')
-      let format = []
+      const format = []
       this.options.forEach((_, index) => {
         format.push(_.values.find((v) => v.value.toString() === indexs[index].toString()))
       })

@@ -33,7 +33,7 @@ export default {
     },
 
     pattern() {
-      let pattern = this.formModel.rules.pattern
+      const pattern = this.formModel.rules.pattern
       if (typeof pattern === 'string') return new RegExp(pattern)
       if (isRegexp(pattern)) return pattern
       return pattern
@@ -198,12 +198,12 @@ export default {
 
           if (!validator) return Promise.reject(`[VForm]: '${corssRuleName}' 关联校验规则未注册！`)
 
-          let crossFields = formRoot.crossFields[corssRuleName]
+          const crossFields = formRoot.crossFields[corssRuleName]
 
           const { crossParams, context } = createCrossParams(validator.params, crossFields.target)
 
           // 执行校验时传递当前相关联的组件实例与整个表单组件实例到回调函数
-          let valid = validator.validate(value, crossParams, {
+          const valid = validator.validate(value, crossParams, {
             formRoot,
             [crossFields.local]: formRoot.$refs[crossFields.local][0],
             ...context
@@ -259,7 +259,7 @@ export default {
       for (let i = 0; i < rules.length; i++) {
         try {
           const rule = rules[i]
-          let { valid, failedRules, errors } = await this._handlerValidate(value, rule)
+          const { valid, failedRules, errors } = await this._handlerValidate(value, rule)
           if (!valid) {
             errorInfo = {
               name: this.formModel.name,

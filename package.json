@@ -9,7 +9,7 @@
     "url": "https://github.com/D-xuanmo/v-form"
   },
   "scripts": {
-    "bootstrap": "yarn || npm i && npm run prepare",
+    "bootstrap": "yarn || npm i",
     "dev": "vue-cli-service serve",
     "build": "npm run build:lib && npm run build:less",
     "build:lib": "vue-cli-service build --target lib --name VForm packages/index.js --dest dist",
@@ -37,6 +37,11 @@
     "@vue/cli-service": "^4.5.13",
     "babel-eslint": "10.0.3",
     "eslint": "^7.28.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.10.0",
     "husky": "^7.0.1",
     "less": "^3.11.1",

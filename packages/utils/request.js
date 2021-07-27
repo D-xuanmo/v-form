@@ -24,6 +24,7 @@ export default function request({
       }
     }
 
+    // eslint-disable-next-line prefer-promise-reject-errors
     xhr.ontimeout = () => reject({
       message: '请求超时'
     })

@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-Vue.config.productionTip = false
-
 import FormItemTest from './components/FormItemTest'
-Vue.component(FormItemTest.name, FormItemTest)
 
 import VForm from '../packages'
 import ADDRESS_JSON from '../packages/Address/data.json'
+
+Vue.config.productionTip = false
+Vue.component(FormItemTest.name, FormItemTest)
 
 Vue.use(VForm, {
   // primaryData: true,

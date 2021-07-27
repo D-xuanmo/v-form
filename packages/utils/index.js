@@ -6,7 +6,7 @@ import { isObject } from '@xuanmo/javascript-utils'
  * @returns {object[] | object[][]}
  */
 export const formatOption = data => {
-  let result = []
+  const result = []
   if (isObject(data[0])) {
     result.push({ values: data })
   } else if (Array.isArray(data[0])) {
