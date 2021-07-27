@@ -95,7 +95,8 @@ export default [
       errorMsg: '请输入验证码',
       vRules: 'required',
       countdown: 60,
-      crossVerificationFields: ['phone']
+      //crossVerificationFields: ['phone']
+      crossVerificationFields: 'phone'
       // buttonDisabled: true,
     }
   },

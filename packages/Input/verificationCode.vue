@@ -69,14 +69,21 @@ export default {
     // 4. verification-code-countdown-over 倒计时结束触发
     async handlerButtonClick() {
       // 倒计时前执行需要关联校验的字段
-      const crossVerificationFields = this.formModel.rules.crossVerificationFields
-      if (Array.isArray(crossVerificationFields)) {
-        for (let i = 0; i < crossVerificationFields.length; i++) {
-          const field = crossVerificationFields[i]
-          const { errorMsg } = await this.VFormRoot.formItemRefs[field].__validator(this.VFormRoot.formValues[field], true)
-          if (!isEmpty(errorMsg)) return
-        }
+      let crossVerificationFields = {}
+      //const crossVerificationFields = this.formModel.rules.crossVerificationFields
+      if (Array.isArray(this.formModel.rules.crossVerificationFields)) {
+        crossVerificationFields = this.formModel.rules.crossVerificationFields
+      }else{
+        crossVerificationFields = this.formModel.rules.crossVerificationFields.split(',');
       }
+
+      let isErrorMsg = false;
+      for (let i = 0; i < crossVerificationFields.length; i++) {
+        const field = crossVerificationFields[i]
+        const { errorMsg } = await this.VFormRoot.formItemRefs[field].__validator(this.VFormRoot.formValues[field], true)
+        if (!isEmpty(errorMsg)) isErrorMsg = true;
+      }
+      if(isErrorMsg) return;
 
       // 执行自定义校验
       const handleCustomValidator = () => {
