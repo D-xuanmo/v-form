@@ -1,18 +1,17 @@
-import Vue from 'vue'
 import Base from './Base/index.vue'
 import { extend } from './validator'
 
 const VForm = {
   /**
    * 注册组件函数
-   * @param {object} vue Vue
+   * @param Vue
    * @param {object} options 扩展参数
    * @param {boolean} options.primaryData 组件配置项是否在 rules 字段下
    * @param {object} options.validator 需要全局注册的自定义校验规则
    * @param {number} options.debounceTime 防抖时间，单位：ms
    * @param {array} options.addressJSON 地址选择器数据源，格式参考：https://github.com/D-xuanmo/v-form/blob/master/src/Address/data.json
    */
-  install (vue, options = {}) {
+  install (Vue, options = {}) {
     Vue.component('VForm', Base)
     const { debounceTime } = options
     Vue.prototype.$VForm = {

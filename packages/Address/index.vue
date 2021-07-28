@@ -96,11 +96,11 @@ export default {
     },
 
     findValue(arr, queryList, key = 'label') {
-      let result = []
+      const result = []
       let i = 0
       const find = (arr, q) => {
         try {
-          let r = arr.find((v) => v[key] === q)
+          const r = arr.find((v) => v[key] === q)
           result.push({
             label: r.label,
             value: r.value
@@ -110,6 +110,7 @@ export default {
             find(r.children, queryList[i])
           }
         } catch (err) {
+          // eslint-disable-next-line no-useless-return
           return
         }
       }

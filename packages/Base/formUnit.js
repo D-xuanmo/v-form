@@ -294,7 +294,7 @@ const formUnitBase = Vue.extend({
      * @returns {string[]}
      */
     splitComponentType(type) {
-      let [compType, compParameter = ''] = type.split('|')
+      const [compType, compParameter = ''] = type.split('|')
       return [compType, compParameter]
     },
 
