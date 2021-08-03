@@ -53,7 +53,7 @@ export default {
     }
   },
 
-  created () {
+  created() {
     this.debounce = debounce((type, value, model) => {
       this.$emit('event', {
         type,
@@ -174,8 +174,7 @@ export default {
           const crossParams = {}
           const context = {}
           target.forEach((key, i) => {
-            crossParams[params[i]] = formRoot.formValues[key]
-
+            crossParams[params[i]] = { key: key, value: formRoot.formValues[key] };
             // 当前关联组件实例
             context[key] = formRoot.$refs[key][0]
           })
@@ -193,14 +192,17 @@ export default {
 
           const { crossParams, context } = createCrossParams(validator.params, crossFields.target)
 
+          //处理value值
+          const valueParam = { key: crossFields.local, value: value }
+
           // 执行校验时传递当前相关联的组件实例与整个表单组件实例到回调函数
-          const valid = validator.validate(value, crossParams, {
+          const valid = validator.validate(valueParam, crossParams, {
             formRoot,
             [crossFields.local]: formRoot.$refs[crossFields.local][0],
             ...context
           })
 
-          ;[crossFields.local, ...crossFields.target].forEach(key => {
+            ;[crossFields.local, ...crossFields.target].forEach(key => {
             if (key !== this.formModel.key) {
               const self = formRoot.$refs[key][0]
               if (valid) {

@@ -54,9 +54,14 @@ export default {
         custom: {
           message: '关联字段必须相同，校验未通过',
           params: ['target1'],
-          validate: (value, { target1 }, ctx) => {
-            console.log('关联校验context：', value, "target1",target1, ctx)
-            return value === target1
+          validate: (current, { target1 }, ctx) => {
+            console.log('关联校验context：', current, "target1",target1.value, ctx)
+            console.log("从ctx取当前字段：",ctx[current.key],"ctx当前字段值",ctx[current.key].value);
+
+            if(current.key === 'text1'){
+              console.log("text1进行关联校验，Value：",current.value);
+            }
+            return current.value === target1.value
           }
         }
       },
