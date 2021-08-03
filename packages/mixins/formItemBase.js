@@ -165,6 +165,9 @@ export default {
       }
 
       const crossFields = formRoot.crossFields[this.formModel.key]
+      //处理value值
+      const valueParam = { key: this.formModel.key, value: value }
+
       // 关联校验
       if (crossFields) {
         const corssRuleName = crossFields.name;
@@ -192,17 +195,14 @@ export default {
 
           const { crossParams, context } = createCrossParams(validator.params, crossFields.target)
 
-          //处理value值
-          const valueParam = { key: crossFields.local, value: value }
-
           // 执行校验时传递当前相关联的组件实例与整个表单组件实例到回调函数
           const valid = validator.validate(valueParam, crossParams, {
             formRoot,
             [crossFields.local]: formRoot.$refs[crossFields.local][0],
             ...context
-          })
-
-            ;[crossFields.local, ...crossFields.target].forEach(key => {
+          });
+          
+          [crossFields.local, ...crossFields.target].forEach(key => {
             if (key !== this.formModel.key) {
               const self = formRoot.$refs[key][0]
               if (valid) {
@@ -236,7 +236,7 @@ export default {
       }
 
       // veeValidate插件校验
-      return this.$validate(value, rule)
+      return this.$validate(valueParam, rule)
     },
 
     /**
