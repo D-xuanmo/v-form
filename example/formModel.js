@@ -36,7 +36,7 @@ export default [
     rules: {
       label: '关联文字 1',
       type: 'VInput',
-      vRules: 'required|custom:@text2,@text3',
+      vRules: 'required|custom:@text2',
       placeholder: '请输入关联文字 1',
       errorMsg: '请输入关联文字 1',
       extra: 'extra'
@@ -48,7 +48,7 @@ export default [
     rules: {
       label: '关联文字 2',
       type: 'VInput',
-      vRules: 'required|@custom',
+      vRules: 'required|custom:@text1',
       placeholder: '请输入关联文字 2',
       errorMsg: '请输入关联文字 2',
       extra: 'extra'
@@ -60,12 +60,22 @@ export default [
     rules: {
       label: '关联文字 3',
       type: 'VInput',
-      vRules: 'required|@custom',
+      vRules: 'required|custom:@text5',
       placeholder: '请输入关联文字 3',
       errorMsg: '请输入关联文字 3'
     }
   },
-
+  {
+    key: 'text5',
+    value: '',
+    rules: {
+      label: '关联文字 5',
+      type: 'VInput',
+      vRules: 'required|custom:@text3',
+      placeholder: '请输入关联文字 5',
+      errorMsg: '请输入关联文字 5'
+    }
+  },
   { rules: { type: 'VCell' } },
   {
     rules: {

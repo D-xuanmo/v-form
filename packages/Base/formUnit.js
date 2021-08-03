@@ -235,8 +235,9 @@ const formUnitBase = Vue.extend({
           const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
           crossFields.forEach((_) => {
             const [name, cross] = _.split(':')
-            this.crossFields[name] = {
+            this.crossFields[key] = {
               local: key,
+              name:name,
               target: cross.split(',').map((_) => _.replace('@', ''))
             }
           })

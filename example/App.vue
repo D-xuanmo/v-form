@@ -52,11 +52,11 @@ export default {
     return {
       validator: {
         custom: {
-          message: '关联文字校验未通过',
-          params: ['target1', 'target2'],
-          validate: (value, { target1, target2 }, ctx) => {
-            console.log('关联校验context：', value, target1, target2, ctx)
-            return value === target1 && value === target2
+          message: '关联字段必须相同，校验未通过',
+          params: ['target1'],
+          validate: (value, { target1 }, ctx) => {
+            console.log('关联校验context：', value, "target1",target1, ctx)
+            return value === target1
           }
         }
       },

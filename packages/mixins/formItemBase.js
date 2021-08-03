@@ -164,17 +164,10 @@ export default {
         })
       }
 
-      const rules = rule.split(':')
-
-      // 是否为关联校验
-      const isCrossField = /^@/.test(rules[1])
-
-      // 是否为关联校验的接收字段
-      const isCrossTarget = /^@/.test(rule)
-
+      const crossFields = formRoot.crossFields[this.formModel.key]
       // 关联校验
-      if (isCrossField || isCrossTarget) {
-        const corssRuleName = (rules[0] || rule).replace('@', '')
+      if (crossFields) {
+        const corssRuleName = crossFields.name;
 
         // 生成关联校验的相关数据
         const createCrossParams = (params, target) => {
@@ -197,8 +190,6 @@ export default {
           const validator = formRoot.validator[corssRuleName] || this.$VForm.validator[corssRuleName]
 
           if (!validator) return Promise.reject(`[VForm]: '${corssRuleName}' 关联校验规则未注册！`)
-
-          const crossFields = formRoot.crossFields[corssRuleName]
 
           const { crossParams, context } = createCrossParams(validator.params, crossFields.target)
 
