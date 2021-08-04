@@ -70,10 +70,9 @@ export default {
     async handlerButtonClick() {
       // 倒计时前执行需要关联校验的字段
       let crossVerificationFields = {}
-      //const crossVerificationFields = this.formModel.rules.crossVerificationFields
       if (Array.isArray(this.formModel.rules.crossVerificationFields)) {
         crossVerificationFields = this.formModel.rules.crossVerificationFields
-      }else{
+      } else {
         crossVerificationFields = this.formModel.rules.crossVerificationFields.split(',');
       }
 
@@ -83,7 +82,7 @@ export default {
         const { errorMsg } = await this.VFormRoot.formItemRefs[field].__validator(this.VFormRoot.formValues[field], true)
         if (!isEmpty(errorMsg)) isErrorMsg = true;
       }
-      if(isErrorMsg) return;
+      if (isErrorMsg) return;
 
       // 执行自定义校验
       const handleCustomValidator = () => {
