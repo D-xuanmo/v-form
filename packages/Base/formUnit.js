@@ -148,8 +148,8 @@ const formUnitBase = Vue.extend({
         const current = refs[i]
         completed.push(current.formModel.key)
 
-        // 如果已经校验完成则不需要校验
-        if (current.isValid) continue
+        // 如果已经校验完成或者已经隐藏的控件则不需要校验
+        if (current.formModel.rules.visible === false || current.isValid) continue
 
         // 存在错误信息直接终止本次循环，执行回调
         result = await current.__validator()
@@ -172,7 +172,7 @@ const formUnitBase = Vue.extend({
      * @param {boolean} visible
      */
     toggleFormItemVisible(key, visible) {
-      this.formItemRefs[key].$parent.$el.style.display = visible ? null : 'none'
+      this.$set(this.formModel[this.findModelItemIndexByKey(key)].rules, 'visible', visible)
     },
 
     /**
