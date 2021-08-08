@@ -62,7 +62,7 @@ export default {
       model: formModel,
       // model: [],
       labelColor: 'inherit',
-      testFormItemVisible: true
+      testFormItemVisible: false
     }
   },
 

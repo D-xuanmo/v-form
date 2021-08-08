@@ -16,7 +16,8 @@ export default [
       vRules: 'required',
       pattern: /^\d+$/,
       errorMsg: '自定义组件只能输入数字',
-      cellCenter: true
+      cellCenter: true,
+      visible: false
     }
   },
   {
