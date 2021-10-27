@@ -11,6 +11,10 @@
         <span style="vertical-align: super;">切换测试组件显示状态 </span>
         <van-switch v-model="testFormItemVisible" size="20px" @change="toggleFormItemVisible" />
       </li>
+      <li>
+        <span style="vertical-align: super;">切换 label 显示状态 </span>
+        <van-switch v-model="isShowLabel" size="20px" />
+      </li>
     </ul>
 
     <v-form
@@ -20,6 +24,7 @@
       :disabled="disabled"
       label-width="100px"
       :label-color="labelColor"
+      :show-label="isShowLabel"
       @change="change"
       @event="handleEvent"
     >
@@ -62,7 +67,8 @@ export default {
       model: formModel,
       // model: [],
       labelColor: 'inherit',
-      testFormItemVisible: false
+      testFormItemVisible: true,
+      isShowLabel: true
     }
   },
 

@@ -16,8 +16,17 @@ export default [
       vRules: 'required',
       pattern: /^\d+$/,
       errorMsg: '自定义组件只能输入数字',
-      cellCenter: true,
-      visible: false
+      cellCenter: true
+    }
+  },
+  {
+    key: 'hideLable',
+    value: '',
+    rules: {
+      label: '隐藏 Label',
+      type: 'VInput',
+      placeholder: '我是输入框',
+      showLabel: false
     }
   },
   {
