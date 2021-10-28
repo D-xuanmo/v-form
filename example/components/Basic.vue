@@ -93,12 +93,13 @@ export default {
     handleEvent({ type, value, model }) {
       // console.log(type, value, model)
       // 此事件需要配置 needCustomValidate: true
-      // if (type === 'verification-code-valid') {
-      //   value(async (formRoot) => {
-      //     // 返回 true 代表通过，开始倒计时；false 则不执行
-      //     return true
-      //   })
-      // }
+      if (type === 'verification-code-valid') {
+        value(async (formRoot) => {
+          Toast('验证码自定义校验未通过')
+          // 返回 true 代表通过，开始倒计时；false 则不执行
+          return false
+        })
+      }
       // 可以在这里写异步回调函数，比如验证码请求失败需要恢复点击状态，执行 value() 即可
       if (type === 'verification-code-button-click') {
         setTimeout(() => {
