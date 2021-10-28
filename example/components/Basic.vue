@@ -92,6 +92,7 @@ export default {
 
     handleEvent({ type, value, model }) {
       // console.log(type, value, model)
+      // 此事件需要配置 needCustomValidate: true
       // if (type === 'verification-code-valid') {
       //   value(async (formRoot) => {
       //     // 返回 true 代表通过，开始倒计时；false 则不执行

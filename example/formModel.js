@@ -47,7 +47,7 @@ export default [
   },
   {
     key: 'phone',
-    value: '',
+    value: '13411111111',
     rules: {
       label: '手机号',
       type: 'VInput|number',
@@ -67,7 +67,8 @@ export default [
       errorMsg: '请输入验证码',
       vRules: 'required',
       countdown: 60,
-      crossVerificationFields: ['phone']
+      crossVerificationFields: ['phone'],
+      needCustomValidate: true
       // buttonDisabled: true,
     }
   },

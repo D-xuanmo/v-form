@@ -62,6 +62,21 @@ export default {
   },
 
   methods: {
+    /**
+     * 执行自定义校验规则
+     * @returns {Promise<unknown>}
+     */
+    async handleCustomValidator() {
+      return new Promise((resolve) => {
+        this.__eventHandler('verification-code-valid', async (callback) => {
+          if (isFunction(callback)) {
+            const isValid = await callback(this.VFormRoot)
+            resolve(isValid)
+          }
+        })
+      })
+    },
+
     // 这里的校验流程为：
     // 1. crossVerificationFields 关联字段校验通过
     // 2. verification-code-valid 校验事件通过
@@ -78,20 +93,11 @@ export default {
         }
       }
 
-      // 执行自定义校验
-      const handleCustomValidator = () => {
-        return new Promise((resolve) => {
-          this.__eventHandler('verification-code-valid', async (callback) => {
-            if (isFunction(callback)) {
-              const valid = await callback(this.VFormRoot)
-              if (valid === false) resolve(false)
-            }
-          })
-          resolve(true)
-        })
+      // 先判断是否需要自定义校验
+      if (this.formModel.rules.needCustomValidate) {
+        const isValid = await this.handleCustomValidator()
+        if (!isValid) return
       }
-      const valid = await handleCustomValidator()
-      if (!valid) return
 
       // 开始执行倒计时
       this.loading = true
