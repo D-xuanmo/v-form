@@ -295,7 +295,8 @@ export default {
       for (let i = 0; i < rules.length; i++) {
         try {
           const rule = rules[i]
-          const { valid, failedRules, isCorss, errors: [error] } = await this._handlerValidate(value, rule)
+          const { valid, failedRules, isCorss, errors } = await this._handlerValidate(value, rule)
+          const [error] = errors || []
           if (!valid) {
             errorInfo = {
               name,
