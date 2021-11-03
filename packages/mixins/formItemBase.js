@@ -47,8 +47,11 @@ export default {
   watch: {
     value: {
       deep: true,
-      handler(value) {
-        !this.disabled && this.__validator(value, true)
+      async handler(value) {
+        if (!this.disabled) {
+          const { isValid, isLastValid } = await this.customValidator?.() || { isValid: true }
+          isValid && !isLastValid && this.__validator(value, true)
+        }
       }
     }
   },
@@ -76,6 +79,31 @@ export default {
      */
     findModelByKey(key) {
       return this.VFormRoot.formModel.find((item) => item.key === key)
+    },
+
+    /**
+     * 自定义校验规则公用方法，需要自定义校验调用次方法
+     * @param {string} errorMsg 错误信息
+     * @param {boolean} isValid 是否校验通过
+     * @param {boolean} isLastValid 是否执行完跳出本次校验，不执行后续校验规则
+     * @returns 错误信息对象
+     */
+    customValidatorHelper(errorMsg, isValid, isLastValid = false) {
+      const { name, index } = this.formModel
+      const errorInfo = {
+        name,
+        index,
+        value: this.value,
+        visible: true,
+        errorMsg
+      }
+      this.$set(this, 'errorMessage', errorInfo)
+      this.e__error()
+      return {
+        ...errorInfo,
+        isValid,
+        isLastValid
+      }
     },
 
     /**
