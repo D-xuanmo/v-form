@@ -23,7 +23,10 @@ export default {
       rulesList: [],
       errorMessage: {},
       debounce: null,
-      isNotVerified: true
+      isNotVerified: true,
+
+      // 用于取消 rules 的监听
+      unwatchRules: null
     }
   },
 
@@ -111,7 +114,7 @@ export default {
      * 校验顺序：required => pattern => vRules 剩余规则
      */
     __createRules() {
-      this.$watch(() => ({
+      this.unwatchRules = this.$watch(() => ({
         pattern: this.formModel.rules.pattern,
         vRules: this.formModel.rules.vRules
       }), ({ vRules }) => {
