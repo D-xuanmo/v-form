@@ -74,6 +74,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.unwatchRules()
+  },
+
   methods: {
     /**
      * 通过 key 查找数据单元
