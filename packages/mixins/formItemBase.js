@@ -26,7 +26,7 @@ export default {
       isNotVerified: true,
 
       // 用于取消 rules 的监听
-      unwatchRules: null
+      unWatchRules: null
     }
   },
 
@@ -75,7 +75,7 @@ export default {
   },
 
   mounted() {
-    this.unwatchRules()
+    this.unWatchRules()
   },
 
   methods: {
@@ -118,7 +118,7 @@ export default {
      * 校验顺序：required => pattern => vRules 剩余规则
      */
     __createRules() {
-      this.unwatchRules = this.$watch(() => ({
+      this.unWatchRules = this.$watch(() => ({
         pattern: this.formModel.rules.pattern,
         vRules: this.formModel.rules.vRules
       }), ({ vRules }) => {
@@ -260,7 +260,7 @@ export default {
           // 第一个字段校验失败的错误信息，需要上报给父组件
           let firstFieldMessage = ''
 
-          ;[crossFields.local, ...crossFields.target].forEach((key, index) => {
+          ;[crossFields.local, ...crossFields.target].forEach((key) => {
             const self = formRoot.$refs[key][0]
 
             // 如果错误信息是函数，则返回相关参数做自定义提示
