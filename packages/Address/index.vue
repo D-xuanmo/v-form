@@ -17,7 +17,7 @@
         show-toolbar
         value-key="label"
         :columns="addressJSON"
-        @confirm="confirm"
+        @confirm="onConfirm"
         @cancel="isShowPopup = false"
       />
     </v-popup>
@@ -51,8 +51,13 @@ export default {
 
   data() {
     return {
+      isConfirm: false,
       isShowPopup: false,
+
+      // 当前回显在输入框中的文字
       innerValue: '',
+
+      // 记录当前的原始 value 数据
       format: []
     }
   },
@@ -65,7 +70,8 @@ export default {
 
   watch: {
     value(value) {
-      value ? this.valueToIndex() : this.reset()
+      if (this.isConfirm) return
+      value ? this.formatValue() : this.reset()
     },
 
     isShowPopup(value) {
@@ -74,55 +80,65 @@ export default {
 
     // 避免 options 后加载 value 未回显问题
     'formModel.rules.options'(value) {
-      this.value && !isEmpty(value) && this.valueToIndex()
+      this.value && !isEmpty(value) && this.formatValue()
     }
   },
 
   created() {
-    this.valueToIndex()
+    this.formatValue()
   },
 
   methods: {
-    confirm(val) {
-      this.format = this.findValue(this.addressJSON, val)
-      const _value = this.format.map(({ value }) => value).join(',')
+    /**
+     * 通过 key 查找对应列表
+     * @param data 树形结构数据
+     * @param queryList 查找的列表
+     * @param key 关键字
+     * @returns {Array<{label: string; value: string;}>}
+     */
+    findValueByKey(data, queryList, key = 'label') {
+      const result = []
+      let i = 0
+      const deep = (current, value) => {
+        try {
+          const _res = current.find((item) => item[key] === value)
+          result.push({
+            label: _res.label,
+            value: _res.value
+          })
+          i++
+          if (Array.isArray(_res.children)) deep(_res.children, queryList[i])
+        } catch (err) {
+          return undefined
+        }
+      }
+      deep(data, queryList[i])
+      return result
+    },
+
+    /**
+     * 格式化数据
+     */
+    formatValue() {
+      if (!this.value) return
+      const query = this.value.toString().split(',')
+      this.format = this.findValueByKey(this.addressJSON, query, 'value')
+      this.innerValue = this.format.map(({ label }) => label).join('/')
+    },
+
+    async onConfirm(val) {
+      this.isConfirm = true
       this.isShowPopup = false
+      this.format = this.findValueByKey(this.addressJSON, val)
+      const _value = this.format.map(({ value }) => value).join(',')
       this.innerValue = this.format.map(({ label }) => label).join('/')
       this.e__input(_value)
       this.__eventHandler('address-change', {
         label: this.innerValue,
         value: _value
       })
-    },
-
-    findValue(arr, queryList, key = 'label') {
-      const result = []
-      let i = 0
-      const find = (arr, q) => {
-        try {
-          const r = arr.find((v) => v[key] === q)
-          result.push({
-            label: r.label,
-            value: r.value
-          })
-          i++
-          if (Array.isArray(r.children)) {
-            find(r.children, queryList[i])
-          }
-        } catch (err) {
-          // eslint-disable-next-line no-useless-return
-          return
-        }
-      }
-      find(arr, queryList[i])
-      return result
-    },
-
-    valueToIndex() {
-      if (!this.value) return
-      const query = this.value.toString().split(',')
-      this.$set(this, 'format', this.findValue(this.addressJSON, query, 'value'))
-      this.innerValue = this.format.map(({ label }) => label).join('/')
+      await this.$nextTick()
+      this.isConfirm = false
     },
 
     reset() {

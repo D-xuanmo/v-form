@@ -9,16 +9,16 @@ localize('zh_CN', zh_CN)
 const validator = {
   phone: {
     message: '手机号格式错误',
-    validate: current => /^1[3456789]\d{9}$/g.test(current.value)
+    validate: value => /^1[3456789]\d{9}$/g.test(value)
   },
   telphone: {
     message: '固定电话格式错误',
-    validate: current => /^0\d{2,3}((-\d{7,8}$)|(\d{7,8}$))/.test(current.value)
+    validate: value => /^0\d{2,3}((-\d{7,8}$)|(\d{7,8}$))/.test(value)
   },
   idcard: {
     message: '身份证格式错误',
-    validate: (current, args) => {
-      let num = current.value
+    validate: (value, args) => {
+      let num = value
       let ret = false
       //  身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X。
       if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/i.test(num))) {

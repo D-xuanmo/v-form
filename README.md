@@ -42,7 +42,10 @@ import '@xuanmo/v-form/packages/style/index.less'
 
 // 注册组件
 // 更多参数说明：https://github.com/D-xuanmo/v-form/blob/master/src/index.js#L6-L14
-// 设置地址选择器 JSON，不用组件自带的 JSON 只需按此种格式引入即可
+/**
+ * 设置地址选择组件数据 JSON，组件默认不注册数据
+ * 如果需要自定义数据，参考此文件结构即可
+ */
 import ADDRESS_JSON from '@xuanmo/v-form/packages/Address/data.json'
 Vue.use(VForm, {
   addressJSON: ADDRESS_JSON
@@ -332,11 +335,16 @@ const model = [
 ```
 
 ## 组件 change 事件返回的数据
+|字段名|说明|
+|:---:|:---:|
+|value|所有的数据经过处理后会以一个对象存放在这个字段|
+|errorMsg|所有的校验失败的错误信息集合|
+|isValid|是否有通过所有的校验标识|
 ```json
 {
-  "value": {}, // 所有的数据经过处理后会以一个对象存放在这个字段
-  "errorMsg": [], // 所有的校验失败的错误信息集合
-  "isValid": false // 是否有通过所有的校验标识
+  "value": {},
+  "errorMsg": [],
+  "isValid": false
 }
 ```
 
