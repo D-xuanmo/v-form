@@ -1,6 +1,6 @@
 {
   "name": "@xuanmo/v-form",
-  "version": "1.4.30",
+  "version": "1.4.36",
   "private": false,
   "main": "packages/index.js",
   "author": "xuanmo <me@xuanmo.xin>",
@@ -9,15 +9,14 @@
     "url": "https://github.com/D-xuanmo/v-form"
   },
   "scripts": {
-    "bootstrap": "yarn || npm i",
+    "bootstrap": "yarn || npm i && husky install && npx husky add .husky/pre-commit \"npm run lint\"",
     "dev": "vue-cli-service serve",
     "build": "npm run build:lib && npm run build:less",
     "build:lib": "vue-cli-service build --target lib --name VForm packages/index.js --dest dist",
     "build:less": "lessc packages/style/index.less dist/index.css --npm-import=\"prefix=~\" --clean-css=\"--s1 --advanced --compatibility=*\"",
     "build:example": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "push": "git push && git push gitee master && git push gitlab master",
-    "prepare": "husky install && npx husky add .husky/pre-commit \"npm run lint\""
+    "push": "git push && git push gitee master && git push gitlab master"
   },
   "dependencies": {
     "@xuanmo/datejs": "^1.0.3",
@@ -29,7 +28,8 @@
   },
   "peerDependencies": {
     "vant": ">2.12.0",
-    "vue": ">2.6.0"
+    "vue": ">2.6.0",
+    "@vue/cli-plugin-babel": ">4.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.13",

@@ -148,7 +148,30 @@ const formUnitBase = Vue.extend({
         const current = refs[i]
         completed.push(current.formModel.key)
 
-        // 如果已经校验完成则不需要校验
+        // 控件隐藏直接跳过校验
+        if (current.formModel.rules.visible === false) continue
+
+        // 如果当前存在未校验通过的信息，直接结束循环
+        if (current.errorMessage.errorMsg) {
+          result = current.errorMessage
+          break
+        }
+
+        /**
+         * 组件校验规则顺序说明
+         * 1. 优先执行组件内部的自定义校验规则
+         * 2. 执行表单组件统一校验规则
+         */
+        if (current.customValidator) {
+          result = await current.customValidator?.()
+          // 校验未通过终止本次循环，执行回调
+          if (!result?.isValid && current.isNotVerified) break
+
+          // 校验通过，并且未最后一次校验，跳过本次循环
+          if (result?.isValid && result?.isLastValid && current.isNotVerified) continue
+        }
+
+        // 如果已经校验完成或者已经隐藏的控件则不需要校验
         if (current.isValid) continue
 
         // 存在错误信息直接终止本次循环，执行回调
@@ -172,7 +195,7 @@ const formUnitBase = Vue.extend({
      * @param {boolean} visible
      */
     toggleFormItemVisible(key, visible) {
-      this.formItemRefs[key].$parent.$el.style.display = visible ? null : 'none'
+      this.$set(this.formModel[this.findModelItemIndexByKey(key)].rules, 'visible', visible)
     },
 
     /**
@@ -235,9 +258,8 @@ const formUnitBase = Vue.extend({
           const crossFields = (rules.vRules || '').match(/\w+:@\w+(,@\w+)*/g) || []
           crossFields.forEach((_) => {
             const [name, cross] = _.split(':')
-            this.crossFields[key] = {
+            this.crossFields[name] = {
               local: key,
-              name:name,
               target: cross.split(',').map((_) => _.replace('@', ''))
             }
           })

@@ -20,6 +20,16 @@ export default [
     }
   },
   {
+    key: 'hideLable',
+    value: '',
+    rules: {
+      label: '隐藏 Label',
+      type: 'VInput',
+      placeholder: '我是输入框',
+      showLabel: false
+    }
+  },
+  {
     key: 'text4',
     value: '这是一段纯文字内容展示',
     rules: {
@@ -28,54 +38,6 @@ export default [
     }
   },
 
-  { rules: { type: 'VCell' } },
-  { rules: { type: 'VCell', label: '关联校验示例' } },
-  {
-    key: 'text1',
-    value: '',
-    rules: {
-      label: '关联文字 1',
-      type: 'VInput',
-      vRules: 'required|custom:@text2',
-      placeholder: '请输入关联文字 1',
-      errorMsg: '请输入关联文字 1',
-      extra: 'extra'
-    }
-  },
-  {
-    key: 'text2',
-    value: '',
-    rules: {
-      label: '关联文字 2',
-      type: 'VInput',
-      vRules: 'required|custom:@text1',
-      placeholder: '请输入关联文字 2',
-      errorMsg: '请输入关联文字 2',
-      extra: 'extra'
-    }
-  },
-  {
-    key: 'text3',
-    value: '',
-    rules: {
-      label: '关联文字 3',
-      type: 'VInput',
-      vRules: 'required|custom:@text5',
-      placeholder: '请输入关联文字 3',
-      errorMsg: '请输入关联文字 3'
-    }
-  },
-  {
-    key: 'text5',
-    value: '',
-    rules: {
-      label: '关联文字 5',
-      type: 'VInput',
-      vRules: 'required|custom:@text3',
-      placeholder: '请输入关联文字 5',
-      errorMsg: '请输入关联文字 5'
-    }
-  },
   { rules: { type: 'VCell' } },
   {
     rules: {
@@ -105,8 +67,9 @@ export default [
       errorMsg: '请输入验证码',
       vRules: 'required',
       countdown: 60,
-      //crossVerificationFields: ['phone']
-      crossVerificationFields: 'phone'
+      crossVerificationFields: ['phone'],
+      // 如果需要使用自定义校验需要设置此属性
+      needCustomValidate: true
       // buttonDisabled: true,
     }
   },

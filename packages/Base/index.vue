@@ -12,6 +12,7 @@
           v-show="item.rules.visible === undefined || item.rules.visible"
           :key="item.key"
           :label="item.rules.label"
+          :show-label="item.rules.showLabel"
           :required="(item.rules.vRules || '').toString().indexOf('required') !== -1"
           :disabled="item.rules.disabled"
           :error="formErrors[item.key]"

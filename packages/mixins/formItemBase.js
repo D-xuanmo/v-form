@@ -1,5 +1,5 @@
 // 基础表单公用
-import { debounce, isEmpty, isRegexp } from '@xuanmo/javascript-utils'
+import { debounce, isEmpty, isFunction, isRegexp } from '@xuanmo/javascript-utils'
 import baseProps from './formItemBaseProps'
 export default {
   inject: ['VFormRoot', '$validate'],
@@ -23,7 +23,10 @@ export default {
       rulesList: [],
       errorMessage: {},
       debounce: null,
-      isNotVerified: true
+      isNotVerified: true,
+
+      // 用于取消 rules 的监听
+      unWatchRules: null
     }
   },
 
@@ -47,13 +50,16 @@ export default {
   watch: {
     value: {
       deep: true,
-      handler(value) {
-        !this.disabled && this.__validator(value, true)
+      async handler(value) {
+        if (!this.disabled) {
+          const { isValid, isLastValid } = await this.customValidator?.() || { isValid: true }
+          isValid && !isLastValid && this.__validator(value, true)
+        }
       }
     }
   },
 
-  created() {
+  created () {
     this.debounce = debounce((type, value, model) => {
       this.$emit('event', {
         type,
@@ -68,6 +74,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.unWatchRules()
+  },
+
   methods: {
     /**
      * 通过 key 查找数据单元
@@ -79,11 +89,36 @@ export default {
     },
 
     /**
+     * 自定义校验规则公用方法，需要自定义校验调用次方法
+     * @param {string} errorMsg 错误信息
+     * @param {boolean} isValid 是否校验通过
+     * @param {boolean} isLastValid 是否执行完跳出本次校验，不执行后续校验规则
+     * @returns 错误信息对象
+     */
+    customValidatorHelper(errorMsg, isValid, isLastValid = false) {
+      const { name, index } = this.formModel
+      const errorInfo = {
+        name,
+        index,
+        value: this.value,
+        visible: true,
+        errorMsg
+      }
+      this.$set(this, 'errorMessage', errorInfo)
+      this.e__error()
+      return {
+        ...errorInfo,
+        isValid,
+        isLastValid
+      }
+    },
+
+    /**
      * 创建校验规则
      * 校验顺序：required => pattern => vRules 剩余规则
      */
     __createRules() {
-      this.$watch(() => ({
+      this.unWatchRules = this.$watch(() => ({
         pattern: this.formModel.rules.pattern,
         vRules: this.formModel.rules.vRules
       }), ({ vRules }) => {
@@ -144,6 +179,10 @@ export default {
       this.$emit('error', this.formModel.name, this.errorMessage)
     },
 
+    _formatErrorMsg(message) {
+      return message.replace('{_field_}', this.formModel.rules.label).replace('{_key_}', this.formModel.key)
+    },
+
     /**
      * 校验执行方法
      * @param {any} value 组件的数据
@@ -164,70 +203,103 @@ export default {
         })
       }
 
-      const crossFields = formRoot.crossFields[this.formModel.key]
-      //处理value值
-      const valueParam = { key: this.formModel.key, value: value }
+      const rules = rule.split(':')
+
+      // 是否为关联校验
+      const isCrossField = /^@/.test(rules[1])
+
+      // 是否为关联校验的接收字段
+      const isCrossTarget = /^@/.test(rule)
 
       // 关联校验
-      if (crossFields) {
-        const corssRuleName = crossFields.name;
+      if (isCrossField || isCrossTarget) {
+        const corssRuleName = (rules[0] || rule).replace('@', '')
 
         // 生成关联校验的相关数据
         const createCrossParams = (params, target) => {
           const crossParams = {}
+          const crossNamesMap = {}
           const context = {}
           target.forEach((key, i) => {
-            crossParams[params[i]] = { key: key, value: formRoot.formValues[key] };
+            crossParams[params[i]] = formRoot.formValues[key]
+            crossNamesMap[target[i]] = params[i]
+
             // 当前关联组件实例
             context[key] = formRoot.$refs[key][0]
           })
           return {
             crossParams,
+            crossNamesMap,
             context
           }
         }
 
         const handlerCorssValidate = () => {
-          // 跨域校验规则
+          // 关联校验规则
           const validator = formRoot.validator[corssRuleName] || this.$VForm.validator[corssRuleName]
 
           if (!validator) return Promise.reject(`[VForm]: '${corssRuleName}' 关联校验规则未注册！`)
 
-          const { crossParams, context } = createCrossParams(validator.params, crossFields.target)
+          const crossFields = formRoot.crossFields[corssRuleName]
+
+          const { crossParams, context, crossNamesMap } = createCrossParams(validator.params, crossFields.target)
+
+          // 主字段组件
+          const mainFieldComp = formRoot.$refs[crossFields.local][0]
 
           // 执行校验时传递当前相关联的组件实例与整个表单组件实例到回调函数
-          const valid = validator.validate(valueParam, crossParams, {
+          const valid = validator.validate(mainFieldComp.value, crossParams, {
             formRoot,
-            [crossFields.local]: formRoot.$refs[crossFields.local][0],
+            [crossFields.local]: mainFieldComp,
             ...context
-          });
-          
-          [crossFields.local, ...crossFields.target].forEach(key => {
-            if (key !== this.formModel.key) {
-              const self = formRoot.$refs[key][0]
-              if (valid) {
-                self.$set(self, 'errorMessage', {})
-              } else {
-                self.$set(self, 'errorMessage', {
-                  name: self.formModel.name,
-                  value,
-                  visible: true,
-                  index: self.formModel.index,
-                  errorMsg: validator.message
-                })
-              }
-              self.e__error(key)
+          })
+
+          // 当前组件需要提示的错误信息
+          let message = ''
+
+          // 第一个字段校验失败的错误信息，需要上报给父组件
+          let firstFieldMessage = ''
+
+          ;[crossFields.local, ...crossFields.target].forEach((key) => {
+            const self = formRoot.$refs[key][0]
+
+            // 如果错误信息是函数，则返回相关参数做自定义提示
+            message = isFunction(validator.message)
+              ? validator.message(value, crossParams, {
+                name: crossNamesMap[key] || 'main',
+                trigger: crossNamesMap[this.formModel.key] || 'main',
+                index: self.formModel.index,
+                valid
+              })
+              : validator.message
+
+            if (!firstFieldMessage) firstFieldMessage = message
+
+            if (valid) {
+              self.$set(self, 'errorMessage', {})
+            } else {
+              // 更新当前组件的错误信息
+              self.$set(self, 'errorMessage', {
+                name: self.formModel.name,
+                value,
+                visible: true,
+                index: self.formModel.index,
+                errorMsg: message
+              })
             }
+            self.e__error(key)
           })
           return {
             valid,
-            message: validator.message
+            isCorss: true,
+            message: firstFieldMessage
           }
         }
 
-        const { valid, message } = handlerCorssValidate()
+        const { valid, message, isCorss } = handlerCorssValidate()
         return Promise.resolve({
           valid,
+          isCorss,
           failedRules: {
             required: null
           },
@@ -236,7 +308,7 @@ export default {
       }
 
       // veeValidate插件校验
-      return this.$validate(valueParam, rule)
+      return this.$validate(value, rule)
     },
 
     /**
@@ -246,31 +318,47 @@ export default {
      * @returns {Promise<{}>}
      */
     async __validator(value = this.value, visible = false) {
+      // 是否已经执行过校验
       this.isNotVerified = false
+
+      // 当前组件的校验规则列表
       const rules = this.rulesList
+
       let errorInfo = {}
+
+      const { name, index: compIndex } = this.formModel
       for (let i = 0; i < rules.length; i++) {
         try {
           const rule = rules[i]
-          const { valid, failedRules, errors } = await this._handlerValidate(value, rule)
+          const { valid, failedRules, isCorss, errors } = await this._handlerValidate(value, rule)
+          const [error] = errors || []
           if (!valid) {
             errorInfo = {
-              name: this.formModel.name,
+              name,
               value,
               visible,
-              index: this.formModel.index,
+              index: compIndex,
+
+              /**
+               * 1. 错误信息先校验必填
+               * 2. 如果为函数则执行自定义错误信息
+               * 3. 否则执行 message
+               */
               errorMsg: failedRules.required
                 ? this.formModel.rules.errorMsg
-                : errors[0].replace('{field}', this.formModel.rules.label)
+                : isFunction(error)
+                  ? error({ value, name, index: compIndex })
+                  : this._formatErrorMsg(error)
             }
-            this.$set(this, 'errorMessage', errorInfo)
+
+            // 关联校验的错误信息自定义处理
+            !isCorss && this.$set(this, 'errorMessage', errorInfo)
             break
           } else {
             errorInfo = {}
             this.$set(this, 'errorMessage', errorInfo)
           }
         } catch (err) {
-          console.error(err)
           return Promise.reject(err)
         }
       }

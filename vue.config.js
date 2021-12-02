@@ -11,6 +11,7 @@ module.exports = {
     }
   },
   configureWebpack: {
+    devtool: 'source-map',
     entry: {
       app: path.resolve(__dirname, './example/main.js')
     },

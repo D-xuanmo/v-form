@@ -3,11 +3,12 @@
     class="v-form-row"
     :class="{
       'is-disabled': disabled,
-      'cell--center': isCellCenter
+      'cell--center': isCellCenter,
+      'hide-label': !isShowLabel
     }"
   >
     <div
-      v-if="VFormRoot.showLabel"
+      v-if="isShowLabel"
       class="v-form-row__label"
       :style="{
         width: VFormRoot.labelWidth,
@@ -47,6 +48,11 @@ export default {
       default: ''
     },
 
+    showLabel: {
+      type: Boolean,
+      default: true
+    },
+
     required: {
       type: Boolean,
       default: false
@@ -66,6 +72,10 @@ export default {
   computed: {
     showErrorMsg() {
       return this.VFormRoot.showErrorMessage || this.error.visible
+    },
+
+    isShowLabel() {
+      return this.showLabel !== false && this.VFormRoot.showLabel
     },
 
     isCellCenter() {
