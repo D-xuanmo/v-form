@@ -90,21 +90,23 @@ export default {
       this.isValid = isValid
     },
 
-    handleEvent({ type, value, model }) {
+    handleEvent({ type, value, model, extend }) {
       // console.log(type, value, model)
       // 此事件需要配置 needCustomValidate: true
       if (type === 'verification-code-valid') {
         value(async (formRoot) => {
+          console.log('formRoot', formRoot);
           Toast('验证码自定义校验未通过')
           // 返回 true 代表通过，开始倒计时；false 则不执行
-          return false
+          return true
         })
       }
       // 可以在这里写异步回调函数，比如验证码请求失败需要恢复点击状态，执行 value() 即可
       if (type === 'verification-code-button-click') {
+        console.log('setTimeout mobile', extend);
         setTimeout(() => {
           Toast('验证码发送失败了')
-          value()
+          value();
         }, 3000)
       }
     },

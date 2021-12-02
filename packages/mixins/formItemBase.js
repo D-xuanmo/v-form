@@ -60,11 +60,12 @@ export default {
   },
 
   created () {
-    this.debounce = debounce((type, value, model) => {
+    this.debounce = debounce((type, value, model, extend) => {
       this.$emit('event', {
         type,
         value,
-        model
+        model,
+        extend
       })
     }, this.$VForm.debounceTime)
 
@@ -145,8 +146,8 @@ export default {
      * @param {string} type 事件名
      * @param {*} value 任意数据
      */
-    __eventHandler(type, value = this.formModel) {
-      this.debounce(type, value, this.VFormRoot.model)
+    __eventHandler(type, value = this.formModel, extend) {
+      this.debounce(type, value, this.VFormRoot.model, extend)
     },
 
     /**
