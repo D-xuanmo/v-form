@@ -69,7 +69,8 @@ export default [
       countdown: 60,
       crossVerificationFields: ['phone'],
       // 如果需要使用自定义校验需要设置此属性
-      needCustomValidate: true
+      needCustomValidate: true,
+      mobile: 'phone'
       // buttonDisabled: true,
     }
   },

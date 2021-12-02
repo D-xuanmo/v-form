@@ -99,6 +99,7 @@ export default {
         if (!isValid) return
       }
 
+      const mobile = this.VFormRoot.formValues[this.formModel.rules.mobile];
       // 开始执行倒计时
       this.loading = true
       let flag = false
@@ -110,7 +111,7 @@ export default {
         !flag && this.__eventHandler('verification-code-button-click', () => {
           cancel()
           this.reset()
-        })
+        }, mobile)
         flag = true
       })
     },
