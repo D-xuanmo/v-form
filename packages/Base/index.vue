@@ -1,5 +1,5 @@
 <template>
-  <div class="v-form-conatiner">
+  <div class="v-form-container">
     <template v-for="(item, index) in formModel">
       <v-cell
         v-if="item.rules.type === 'VCell'"

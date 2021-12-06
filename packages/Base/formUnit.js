@@ -100,7 +100,7 @@ const formUnitBase = Vue.extend({
 
     model: {
       deep: true,
-      handler(model) {
+      handler() {
         this.createModel()
         this.createRefs()
       }
