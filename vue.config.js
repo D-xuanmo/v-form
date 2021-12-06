@@ -8,6 +8,12 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true
+    },
+    proxy: {
+      '/api': {
+        target: 'http://private.xuanmo.xin',
+        changeOrigin: true
+      }
     }
   },
   configureWebpack: {

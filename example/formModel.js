@@ -1,3 +1,4 @@
+const { token: csrfToken } = document.cookie.match(/csrfToken=(?<token>\S+)/)?.groups ?? {}
 export default [
   { rules: { type: 'VCell' } },
   {
@@ -202,26 +203,44 @@ export default [
 
   { rules: { type: 'VCell' } },
   { rules: { type: 'VCell', label: '文件上传示例' } },
+
+  {
+    key: 'uploadTips',
+    value: '如果想看上传图片示例，第一次上传会失败，然后刷新一次在上传即可',
+    rules: {
+      type: 'VText',
+      showLabel: false
+    }
+  },
   {
     key: 'file',
     value: [
       {
-        path:
-          'https://www.xuanmo.xin/wp-content/uploads/2019/10/xuanmo_avatar.JPG'
+        url: 'https://avatar.xuanmo.xin/avatar/628f530d2780b0fd0a7590a90d08cafb?s=200'
       }
     ],
     rules: {
       label: '文件上传',
       type: 'VUpload',
-      action: 'xxx',
-      accept: 'image/png',
+      action: '/api/my-admin/upload',
+      accept: 'image/*',
       multiple: true,
-      name: 'file',
+      name: 'files',
       data: {
-        dir: 'test'
+        type: 'media',
+        path: '/v-form'
+      },
+      headers: {
+        'x-csrf-token': csrfToken
       },
       props: {
-        url: 'path'
+        url: 'url'
+      },
+
+      // 后端返回的数据自定义处理，每个图片会发一次请求
+      // 如果后端返回的格式是数组取第一个就行了
+      onSuccess({ data }) {
+        return data[0]
       }
     }
   },
