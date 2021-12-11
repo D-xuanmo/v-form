@@ -1,4 +1,4 @@
-const { token: csrfToken } = document.cookie.match(/csrfToken=(?<token>\S+)/)?.groups ?? {}
+import { dCookie } from '@xuanmo/javascript-utils'
 export default [
   { rules: { type: 'VCell' } },
   {
@@ -216,7 +216,7 @@ export default [
     key: 'file',
     value: [
       {
-        url: 'https://avatar.xuanmo.xin/avatar/628f530d2780b0fd0a7590a90d08cafb?s=200'
+        url: '/api/my-admin/readFile?path=/upload/v-form/20211211151251521209.png'
       }
     ],
     rules: {
@@ -231,7 +231,7 @@ export default [
         path: '/v-form'
       },
       headers: {
-        'x-csrf-token': csrfToken
+        'x-csrf-token': dCookie.getItem('csrfToken')
       },
       props: {
         url: 'url'

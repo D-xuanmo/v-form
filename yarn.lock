@@ -1687,10 +1687,10 @@
   dependencies:
     "@typescript-eslint/parser" "^4.27.0"
 
-"@xuanmo/javascript-utils@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.npmmirror.com/@xuanmo/javascript-utils/download/@xuanmo/javascript-utils-0.0.9.tgz#5f12e9dbc0cf74a36046814bb104f7d77631c195"
-  integrity sha1-XxLp28DPdKNgRoFLsQT313YxwZU=
+"@xuanmo/javascript-utils@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.npmmirror.com/@xuanmo/javascript-utils/download/@xuanmo/javascript-utils-0.0.29.tgz#330457c4de73b8f1e572f7a1b6a2daa75c12fcae"
+  integrity sha512-CDEVzd1ipH06EatrM0vkZxvBZZfCiFufIrdb6Y7UkaLViQxbcvSUD1grzHR7KJ+sh8JoqMLG7vQqW4SYB7laDA==
   dependencies:
     "@typescript-eslint/parser" "^4.27.0"
 

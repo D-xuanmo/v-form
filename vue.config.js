@@ -11,7 +11,7 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        target: 'http://private.xuanmo.xin',
+        target: 'https://admin.xuanmo.xin/',
         changeOrigin: true
       }
     }
