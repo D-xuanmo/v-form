@@ -231,7 +231,7 @@ export default [
         path: '/v-form'
       },
       headers: {
-        'x-csrf-token': dCookie.getItem('csrfToken')
+        'X-XSRF-TOKEN': dCookie.getItem('csrfToken')
       },
       props: {
         url: 'url'
