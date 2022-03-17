@@ -1,5 +1,6 @@
 build:
   script:
+    - whoami
     - echo '任务开始'
     - cd /htdocs/assets/v-form
     - git pull
