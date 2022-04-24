@@ -205,14 +205,6 @@ export default [
   { rules: { type: 'VCell', label: '文件上传示例' } },
 
   {
-    key: 'uploadTips',
-    value: '如果想看上传图片示例，第一次上传会失败，然后刷新一次在上传即可',
-    rules: {
-      type: 'VText',
-      showLabel: false
-    }
-  },
-  {
     key: 'file',
     value: [
       {
