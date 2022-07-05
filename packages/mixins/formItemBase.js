@@ -76,7 +76,7 @@ export default {
   },
 
   mounted() {
-    this.unWatchRules()
+    this.unWatchRules?.()
   },
 
   methods: {
