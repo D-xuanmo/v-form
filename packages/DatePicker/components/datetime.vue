@@ -8,7 +8,7 @@
     @confirm="__confirm"
     @cancel="__cancel"
     @change="!showToolbar && __change($event)"
-  ></van-datetime-picker>
+  />
 </template>
 
 <script>

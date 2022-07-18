@@ -73,13 +73,13 @@ export default {
       /* eslint-disable */
       switch (this.customerType) {
         case 'year-month':
-          result = currentFormat.format('yyyy-MM')
+          result = currentFormat.format('yyyy/MM')
           break
         case 'datetime':
-          result = currentFormat.format('yyyy-MM-dd HH:mm')
+          result = currentFormat.format('yyyy/MM/dd HH:mm')
           break
         case 'date':
-          result = currentFormat.format('yyyy-MM-dd')
+          result = currentFormat.format('yyyy/MM/dd')
           break
         case 'time':
           result = currentFormat.format('HH:mm')
