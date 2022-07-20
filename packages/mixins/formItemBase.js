@@ -94,7 +94,6 @@ export default {
      * @param {string} errorMsg 错误信息
      * @param {boolean} isValid 是否校验通过
      * @param {boolean} isLastValid 是否执行完跳出本次校验，不执行后续校验规则
-     * @returns 错误信息对象
      */
     customValidatorHelper(errorMsg, isValid, isLastValid = false) {
       const { name, index } = this.formModel
@@ -145,6 +144,7 @@ export default {
      * 自定义事件传递
      * @param {string} type 事件名
      * @param {*} value 任意数据
+     * @param extend
      */
     __eventHandler(type, value = this.formModel, extend) {
       this.debounce(type, value, this.VFormRoot.model, extend)
@@ -187,7 +187,7 @@ export default {
     /**
      * 校验执行方法
      * @param {any} value 组件的数据
-     * @param {string} rule 校验规则
+     * @param {string | RegExp} rule 校验规则
      * @returns {*|Promise<{valid, failedRules: {required: boolean}}>|Promise<{valid, failedRules: {required: null}, errors: *[]}>}
      */
     _handlerValidate(value, rule) {
