@@ -181,7 +181,8 @@ export default {
     },
 
     _formatErrorMsg(message) {
-      return message.replace('{_field_}', this.formModel.rules.label).replace('{_key_}', this.formModel.key)
+      // fix: https://github.com/D-xuanmo/v-form/issues/59
+      return message.replace(/\{_?field_?}/, this.formModel.rules.label).replace('{_key_}', this.formModel.key)
     },
 
     /**
