@@ -23,7 +23,7 @@
 import VBaseInput from '../components/VBaseInput.vue'
 import { Button } from 'vant'
 import formItemBase from '../mixins/formItemBase'
-import { isEmpty, isFunction, countdown } from '@xuanmo/javascript-utils'
+import { isEmpty, isFunction, countDown } from '@xuanmo/javascript-utils'
 
 export default {
   name: 'VVerificationCode',
@@ -103,7 +103,7 @@ export default {
       // 开始执行倒计时
       this.loading = true
       let flag = false
-      const cancel = countdown(this.formModel.rules.countdown, `VForm-timer-${Date.now()}`, () => {
+      const cancel = countDown(this.formModel.rules.countdown, `VForm-timer-${Date.now()}`, () => {
         this.__eventHandler('verification-code-countdown-over')
         this.reset()
       }, () => {
