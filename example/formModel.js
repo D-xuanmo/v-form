@@ -219,6 +219,7 @@ export default [
       multiple: true,
       name: 'files',
       data: {
+        type: 'media'
       },
       headers: {
         'X-XSRF-TOKEN': dCookie.getItem('csrfToken')
