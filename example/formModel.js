@@ -208,19 +208,17 @@ export default [
     key: 'file',
     value: [
       {
-        url: '/api/my-admin/readFile?path=/upload/v-form/20211211151251521209.png'
+        url: '/api/file-server/read-file/cf5be5e5-a84b-41e9-b91a-c99646039f15'
       }
     ],
     rules: {
       label: '文件上传',
       type: 'VUpload',
-      action: '/api/my-admin/upload',
+      action: '/api/file-server/p/upload',
       accept: 'image/*',
       multiple: true,
       name: 'files',
       data: {
-        type: 'media',
-        path: '/v-form'
       },
       headers: {
         'X-XSRF-TOKEN': dCookie.getItem('csrfToken')
