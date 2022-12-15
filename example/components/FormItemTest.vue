@@ -1,6 +1,7 @@
 <template>
   <div>
-    <input type="text" :value="value" :disabled="disabled" @input="$event => e__input($event.target.value)">
+    <input type="text" :value="value" :disabled="disabled" @input="e__input($event.target.value)">
+    <img src="/api/file-server/captcha" alt="">
   </div>
 </template>
 
