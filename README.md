@@ -1,4 +1,7 @@
 # 基于 Vant-UI 表单封装的动态表单组件
+
+> Vue3 版动态表单 [https://github.com/D-xuanmo/dynamic-form](https://github.com/D-xuanmo/dynamic-form)
+
 * 目前已经集成的组件（Address/Checkbox/DatePicker/Input/Radio/Select/Text/Switch/Upload）
 * 组件不满足的情况可自定义开发组件或者使用 `slot` 的形式
 * 组件的调用方式采取 `JSON` 配置的形式，具体参数见model数据说明
