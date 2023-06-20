@@ -1,9 +1,0 @@
-build:
-  script:
-    - echo '任务开始'
-    - cd /htdocs/assets/v-form
-    - git pull
-    - yarn && yarn build:example
-    - echo '任务结束'
-  tags:
-    - my-runner
